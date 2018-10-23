@@ -1,7 +1,12 @@
-/* Background color */
-.get-purple {
-    background-color: #756BB0 !important;
-    color: #ffffff !important;
+/* Width */
+.btn-group-width {
+    min-width: 90px !important;
+}
+
+/* Scroll */
+.vertical-scroll {
+    height: 60vh;
+    overflow-y: scroll;
 }
 
 /* Panel Header */

@@ -76,8 +76,8 @@
             <div class="col-md-12">
                 <div class="mrg10B pull-right">
                     <div class="btn-group">
-                        <button class="btn get-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
-                        <button class="btn get-purple" type=""><i class="fa fa-fw fa-plus"></i></button>
+                        <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
+                        <button class="btn bg-purple" type=""><i class="fa fa-fw fa-plus"></i></button>
                     </div>
                 </div>
             </div>

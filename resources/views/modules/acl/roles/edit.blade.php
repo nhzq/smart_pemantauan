@@ -16,16 +16,16 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Create role</h3>
+                        <h3 class="box-title">Update role</h3>
                     </div>
                     <div class="box-body">
                         <div class="mrg10T mrg10B">
-                            {{ Form::open(['url' => route('roles.store'), 'method' => 'POST']) }}
+                            {{ Form::open(['url' => route('roles.update', $role->id), 'method' => 'PUT']) }}
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label>Role Name</label>
-                                            <input class="form-control" type="text" name="role_name" placeholder="Role name">
+                                            <input class="form-control" type="text" name="role_name" placeholder="Role name" value="{{ $role->name ?? '' }}">
                                         </div>
                                         <div class="col-md-8">
                                             <label>Permission</label>
@@ -43,10 +43,17 @@
                                                             @if (!empty($permissions))
                                                                 @foreach ($permissions as $permission)
                                                                     <tr>
+                                                                        <?php
+                                                                            if (in_array($permission->name, $role->getAllPermissions()->pluck('name')->toArray())) {
+                                                                                $checked = 'checked';
+                                                                            } else {
+                                                                                $checked = '';
+                                                                            }
+                                                                        ?>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ $permission->name }}</td>
                                                                         <td>
-                                                                            <input type="checkbox" name="permission_name[]" class="flat-red" value="{{ $permission->name }}">
+                                                                            <input type="checkbox" name="permission_name[]" class="flat-red" value="{{ $permission->name }}" {{ $checked }}>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach

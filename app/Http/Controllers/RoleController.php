@@ -8,25 +8,15 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $roles = Role::paginate(20);
+        $roles = Role::paginate(5);
 
         return view('modules.acl.roles.index', [
             'roles' => $roles
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $permissions = Permission::all();
@@ -36,57 +26,63 @@ class RoleController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $role_name = strtolower($request->role_name);
+
+        if (!empty($role_name)) {
+            $findRole = Role::where('name', '=', $role_name)->first();
+            
+            if (!empty($findRole)) {
+                return redirect()
+                        ->back()
+                        ->with('error', ucwords($request->role_name) . ' already exists. Please use different name');
+            } else {
+                $role = Role::create(['name' => $role_name]);
+                $permission = $role->syncPermissions($request->permission_name);
+
+                return redirect()
+                        ->route('roles.index')
+                        ->with('success', ucwords($request->role_name) . ' has been saved');
+            }
+        }
+
+        return redirect()->route('roles.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $role = Role::find($id);
+        $permissions = Permission::all();
+
+        return view('modules.acl.roles.edit', [
+            'role' => $role, 
+            'permissions' => $permissions 
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+
+        if (!empty($role)) {
+            $role->name = strtolower($request->role_name);
+            $role->save();
+
+            // Update permission
+            $role->syncPermissions($request->permission_name);
+
+            return redirect()
+                    ->route('roles.index')
+                    ->with('success', ucwords($request->role_name) . ' has been updated');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
