@@ -24,8 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::resource('/users', 'UserController');
-    Route::get('/users-data', [
-        'uses' => 'UserController@datatableIndex',
-        'as' => 'user-datatable.index'
-    ]);
+    Route::get('/users-search', 'UserController@search')->name('search');
+
+    Route::resource('/roles', 'RoleController');
 });

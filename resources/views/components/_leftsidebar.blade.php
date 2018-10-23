@@ -30,7 +30,12 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li class="{{ request()->is('users*') ? 'active' : '' }} treeview">
+
+            @if (request()->is('users*') || request()->is('roles*'))
+                <li class="active treeview">
+            @else 
+                <li class="treeview">
+            @endif
                 <a href="#">
                     <i class="fa fa-pie-chart"></i>
                     <span>Setting</span>
@@ -39,7 +44,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ request()->is('users*') ? 'active' : '' }}"><a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('users*') ? 'text-aqua' : '' }}"></i> User Management</a></li>
+                    <li class="{{ request()->is('users*') ? 'active' : '' }}">
+                        <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('users*') ? 'text-aqua' : '' }}"></i> User</a>
+                    </li>
+                    <li class="{{ request()->is('roles*') ? 'active' : '' }}">
+                        <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('roles*') ? 'text-aqua' : '' }}"></i> Roles</a>
+                    </li>
                 </ul>
             </li>
         </ul>

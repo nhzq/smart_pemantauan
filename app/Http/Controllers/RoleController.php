@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,24 +15,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(12);
+        $roles = Role::paginate(20);
 
-        return view('modules.acl.users.index', [
-            'users' => $users
+        return view('modules.acl.roles.index', [
+            'roles' => $roles
         ]);
-    }
-
-    public function search(Request $request)
-    {
-        $users = User::where('name', 'LIKE', '%' . $request->term_name . '%')
-                    ->where('email', 'LIKE', '%' . $request->term_email . '%')
-                    ->paginate(12);
-
-        if (!empty($users)) {
-            return view('modules.acl.users.index', [
-                'users' => $users
-            ]);
-        } 
     }
 
     /**
@@ -41,7 +29,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+
+        return view('modules.acl.roles.create', [
+            'permissions' => $permissions 
+        ]);
     }
 
     /**

@@ -1,0 +1,14 @@
+/* Background color */
+.get-purple {
+    background-color: #756BB0 !important;
+    color: #ffffff !important;
+}
+
+/* Panel Header */
+.panel-header-border-blue {
+    border-bottom: 5px solid #00c0ef !important;
+}
+
+.panel-header-border-yellow {
+    border-bottom: 5px solid #f39c12 !important;
+}
