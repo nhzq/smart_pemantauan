@@ -29,14 +29,14 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{ count(\Spatie\Permission\Models\Role::all()) }}</h3>
 
                         <p>Total Roles</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('roles.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -71,13 +71,17 @@
             </div>
             <!-- ./col -->
         </div>
+
+        @include ('components._flashes')
         
         <div class="row">
             <div class="col-md-12">
                 <div class="mrg10B pull-right">
                     <div class="btn-group">
                         <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
-                        <button class="btn bg-purple" type=""><i class="fa fa-fw fa-plus"></i></button>
+                        <a href="{{ route('users.create') }}" class="btn bg-purple">
+                            <i class="fa fa-fw fa-plus"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -165,7 +169,18 @@
                                                 <td>{{ $user->email ?? 'N/A' }}</td>
                                                 <td>{{ 'N/A' }}</td>
                                                 <td>{{ 'N/A' }}</td>
-                                                <td>Action</td>
+                                                <td>
+                                                    <div class="btn-group-width">
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('users.edit', $user->id) }}" class="btn bg-purple">
+                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                            </a>
+                                                            <a href="" class="btn btn-danger">
+                                                                <i class="fa fa-fw fa-trash-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @else

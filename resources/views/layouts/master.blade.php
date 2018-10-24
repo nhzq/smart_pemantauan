@@ -1,41 +1,3 @@
-<?php
-    $assets = [
-        'css' => [
-            'components/bootstrap/dist/css/bootstrap.min.css',
-            'components/font-awesome/css/font-awesome.min.css',
-            'components/Ionicons/css/ionicons.min.css',
-            'components/morris.js/morris.css',
-            'components/jvectormap/jquery-jvectormap.css',
-            'components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
-            'components/bootstrap-daterangepicker/daterangepicker.css',
-            'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
-            'dist/css/AdminLTE.min.css',
-            'dist/css/spacing.css',
-            'dist/css/skins/skin-blue.min.css',
-        ],
-        'js' => [
-            'components/jquery/dist/jquery.min.js',
-            'components/jquery-ui/jquery-ui.min.js',
-            'components/bootstrap/dist/js/bootstrap.min.js',
-            'components/raphael/raphael.min.js',
-            'components/morris.js/morris.min.js',
-            'components/jquery-sparkline/dist/jquery.sparkline.min.js',
-            'components/jquery-knob/dist/jquery.knob.min.js',
-            'components/moment/min/moment.min.js',
-            'components/bootstrap-daterangepicker/daterangepicker.js',
-            'components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-            'components/jquery-slimscroll/jquery.slimscroll.min.js',
-            'components/fastclick/lib/fastclick.js',
-            'plugins/jvectormap/jquery-jvectormap-1.2.2.min.js',
-            'plugins/jvectormap/jquery-jvectormap-world-mill-en.js',
-            'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js',
-            'dist/js/adminlte.min.js',
-            'dist/js/pages/dashboard.js',
-            'dist/js/demo.js',
-        ]
-    ];
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,10 +6,19 @@
         <title>AdminLTE 2 | Dashboard</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-      
-        @foreach ($assets['css'] as $css)
-            <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/' . $css) }}">
-        @endforeach
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/css/ionicons.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/css/AdminLTE.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/css/skins/skin-blue.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/plugin/morris/morris.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/plugin/jvectormap/jquery-jvectormap.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/spacing.css') }}">
+
         @stack ('css')
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -83,11 +54,30 @@
             </footer>
         </div>
         <!-- ./wrapper -->
-  
 
-        @foreach ($assets['js'] as $js)
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+        <script src="{{ asset('adminlte/plugin/morris/morris.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+        <script src="{{ asset('adminlte/plugin/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+        <script src="{{ asset('adminlte/plugin/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.17/daterangepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/adminlte.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/demo.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/pages/dashboard.js"></script>
+
+
+        {{-- @foreach ($assets['js'] as $js)
             <script src="{{ asset('adminlte/' . $js) }}"></script>
-        @endforeach
+        @endforeach --}}
         @stack ('script')
     </body>
 </html>

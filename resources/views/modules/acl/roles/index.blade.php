@@ -63,10 +63,11 @@
                                                     <td>
                                                         <div class="btn-group-width">
                                                             <div class="btn-group">
-                                                                <a href="{{ route('roles.edit', $role->id) }}">
-                                                                    <button class="btn bg-purple" type="submit">
-                                                                        <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                                    </button>
+                                                                <a href="{{ route('roles.edit', $role->id) }}" class="btn bg-purple">
+                                                                    <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                                </a>
+                                                                <a href="" class="btn btn-danger">
+                                                                    <i class="fa fa-fw fa-trash-o"></i>
                                                                 </a>
                                                             </div>
                                                         </div>

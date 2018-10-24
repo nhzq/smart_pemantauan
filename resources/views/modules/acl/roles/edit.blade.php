@@ -44,10 +44,10 @@
                                                                 @foreach ($permissions as $permission)
                                                                     <tr>
                                                                         <?php
+                                                                            $checked = '';
+                                                                            
                                                                             if (in_array($permission->name, $role->getAllPermissions()->pluck('name')->toArray())) {
                                                                                 $checked = 'checked';
-                                                                            } else {
-                                                                                $checked = '';
                                                                             }
                                                                         ?>
                                                                         <td>{{ $loop->iteration }}</td>

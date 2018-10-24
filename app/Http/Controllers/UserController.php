@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -41,7 +42,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+
+        return view('modules.acl.users.create', [
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -52,7 +57,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create([
+            'name' => $request->user_name,
+            'email' => $request->user_email,
+            'password' => bcrypt('password')
+        ]);
+
+        $user->syncRoles($request->user_role);
+
+        return redirect()
+                ->route('users.index')
+                ->with('success', 'User has been created');
     }
 
     /**
@@ -74,7 +89,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $roles = Role::all();
+
+        return view('modules.acl.users.edit', [
+            'user' => $user,
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -86,7 +107,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->user_name;
+        $user->email = $request->user_email;
+        $user->save();
+
+        $user->syncRoles($request->user_role);
+
+        return redirect()
+                ->route('users.index')
+                ->with('success', 'User has been updated');
     }
 
     /**

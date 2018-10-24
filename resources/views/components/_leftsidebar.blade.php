@@ -25,12 +25,16 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
+
+            <!-- Dashboard section -->
             <li class="{{ request()->is('home') ? 'active' : '' }}">
                 <a href="{{ url('/home') }}">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-
+            <!-- Dashboard end -->
+            
+            <!-- Setting section -->
             @if (request()->is('users*') || request()->is('roles*'))
                 <li class="active treeview">
             @else 
@@ -44,14 +48,18 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <!-- User section -->
                     <li class="{{ request()->is('users*') ? 'active' : '' }}">
-                        <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('users*') ? 'text-aqua' : '' }}"></i> User</a>
+                        <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('users*') ? 'text-aqua' : '' }}"></i> Users</a>
                     </li>
+
+                    <!-- Role section -->
                     <li class="{{ request()->is('roles*') ? 'active' : '' }}">
                         <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('roles*') ? 'text-aqua' : '' }}"></i> Roles</a>
                     </li>
                 </ul>
             </li>
+            <!-- Setting end -->
         </ul>
     </section>
     <!-- /.sidebar -->
