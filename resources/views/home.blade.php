@@ -69,6 +69,8 @@
             </div>
             <!-- ./col -->
         </div>
+
+        @include ('components._flashes')
         <!-- /.row -->
     </section>
     <!-- /.content -->

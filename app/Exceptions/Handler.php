@@ -48,6 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return redirect()->back()->with('error', 'You are not authorized to view the page');
+        }
+
         return parent::render($request, $exception);
     }
 }

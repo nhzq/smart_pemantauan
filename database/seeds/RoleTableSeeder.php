@@ -12,10 +12,15 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 10; $i++) {
-            Role::create([
-                'name' => 'role-' . $i
-            ]);
+        $roles = [
+            'superadmin',
+            'ketua-unit',
+            'ketua-seksyen',
+            'ketua-jabatan-bahagian-teknologi-maklumat'
+        ];
+
+        foreach ($roles as $role) {
+            Role::create(['name' => $role]);
         }
     }
 }

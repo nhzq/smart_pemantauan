@@ -2,6 +2,7 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
 @endpush
 
 @section ('content')
@@ -29,14 +30,14 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>{{ count(\Spatie\Permission\Models\Role::all()) }}</h3>
+                        <h3>{{ count(\Spatie\Permission\Models\Role::whereNotIn('name', ['superadmin'])->get()) }}</h3>
 
                         <p>Total Roles</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{{ route('roles.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -44,7 +45,7 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>{{ count(\App\Models\User::whereNull('deleted_at')->get()) }}</h3>
 
                         <p>Active Users</p>
                     </div>
@@ -59,7 +60,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>{{ count(\App\Models\User::whereNotNull('deleted_at')->get()) }}</h3>
 
                         <p>Deleted Users</p>
                     </div>
@@ -95,36 +96,53 @@
                     </div>
                     <div class="box-body">
                         &nbsp;
-                        <form action="{{ route('search') }}" method="GET">
+                        {{ Form::open(['url' => route('users.search'), 'method' => 'GET']) }}
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><strong>Name</strong></label>
-                                            <input class="form-control" type="" name="term_name" value="{{ request()->term_name }}">
+                                            <label>Name</label>
+                                            <input class="form-control" type="text" name="user_name" placeholder="Name">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><strong>Email</strong></label>
-                                            <input class="form-control" type="" name="term_email" value="{{ request()->term_email }}">
+                                            <label>Username</label>
+                                            <input class="form-control" type="text" name="user_username" placeholder="Username">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><strong>Role</strong></label>
-                                            <select class="form-control">
-                                                <option value="">1</option>
-                                                <option value="">2</option>
+                                            <label>Email</label>
+                                            <input class="form-control" type="text" name="user_email" placeholder="Email">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Role</label>
+                                            <select class="form-control" name="user_role">
+                                                <option value="0">-- Please choose --</option>
+                                                @if (!empty($roles))
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{ $role->id }}">{{ helperRoleName($role->name) }}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label><strong>Status</strong></label>
-                                            <select class="form-control">
-                                                <option value="">1</option>
-                                                <option value="">2</option>
+                                            <label>Jabatan</label>
+                                            <select class="form-control" name="user_jabatan">
+                                                <option value="0">-- Please choose --</option>
+                                                @if (!empty($jabatans))
+                                                    @foreach ($jabatans as $jabatan)
+                                                        <option value="{{ $jabatan->id }}">{{ $jabatan->nama }}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -135,7 +153,7 @@
                                     Search
                                 </button>
                             </div>
-                        </form>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
@@ -152,7 +170,7 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="max20">#</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
@@ -165,17 +183,19 @@
                                         @foreach ($users as $user)
                                             <tr>
                                                 <th>{{ $loop->iteration }}</th>
-                                                <td>{{ $user->name ?? 'N/A' }}</td>
-                                                <td>{{ $user->email ?? 'N/A' }}</td>
-                                                <td>{{ 'N/A' }}</td>
-                                                <td>{{ 'N/A' }}</td>
+                                                <td class="col-md-4">{{ $user->name ?? 'N/A' }}</td>
+                                                <td class="col-md-2">{{ $user->email ?? 'N/A' }}</td>
+                                                <td class="col-md-2">{{ helperRoleName($user->roles->pluck('name')->first()) }}</td>
+                                                <td class="col-md-2">
+                                                    {!! empty($user->deleted_at) ? '<span class="label label-success">Active</span>' : '' !!}
+                                                </td>
                                                 <td>
-                                                    <div class="btn-group-width">
+                                                    <div class="min90">
                                                         <div class="btn-group">
-                                                            <a href="{{ route('users.edit', $user->id) }}" class="btn bg-purple">
+                                                            <a href="{{ route('users.edit', $user->id) }}" class="btn bg-purple {{ $user->hasRole('superadmin') ? 'disabled' : '' }}">
                                                                 <i class="fa fa-fw fa-pencil-square-o"></i>
                                                             </a>
-                                                            <a href="" class="btn btn-danger">
+                                                            <a href="" class="btn btn-danger {{ $user->hasRole('superadmin') ? 'disabled' : '' }}">
                                                                 <i class="fa fa-fw fa-trash-o"></i>
                                                             </a>
                                                         </div>

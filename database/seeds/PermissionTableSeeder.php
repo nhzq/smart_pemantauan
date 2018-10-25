@@ -12,10 +12,6 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 50; $i++) {
-            Permission::create([
-                'name' => 'permission-' . $i
-            ]);
-        }
+        
     }
 }

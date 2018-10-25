@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\LookupJabatan as Jabatan;
 
 class UserTableSeeder extends Seeder
 {
@@ -12,14 +13,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
-
-        for($i = 0; $i < 1000; $i++) {
-            User::create([
-                'name' => $faker->name,
-                'email' => 'admin' . $i . '@email.com',
-                'password' => bcrypt('123456')
-            ]);
-        }
+        //
     }
 }

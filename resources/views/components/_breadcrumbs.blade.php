@@ -39,44 +39,16 @@
         </ol>
     </section>
 @endif
-<!-- end -->
 
-<!-- Roles -->
-@if (Route::current()->getName() == 'roles.index')
+@if (Route::current()->getName() == 'users.edit')
     <section class="content-header">
         <h1>
-            Roles
-            <small>All Roles with Permissions</small>
+            Users
+            <small>Edit User</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Roles</a></li>
-            <li class="active">All Roles with Permissions</li>
-        </ol>
-    </section>
-@endif
-
-@if (Route::current()->getName() == 'roles.create')
-    <section class="content-header">
-        <h1>
-            Roles
-            <small>Create roles with permission</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Roles</a></li>
-            <li class="active">Create Role with Permissions</li>
-        </ol>
-    </section>
-@endif
-
-@if (Route::current()->getName() == 'roles.edit')
-    <section class="content-header">
-        <h1>
-            Roles
-            <small>Edit role with permissions</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Roles</a></li>
-            <li class="active">Edit Role with Permissions</li>
+            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Users</a></li>
+            <li class="active">Edit User</li>
         </ol>
     </section>
 @endif
