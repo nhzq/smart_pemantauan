@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(12);
+        $users = User::withTrashed()->paginate(12);
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
         $jabatans = Jabatan::whereNotIn('nama', ['Developer'])->get();
 
@@ -53,7 +53,7 @@ class UserController extends Controller
 
         if (!empty($request->user_role)) {
             $users = $users->whereHas('roles', function ($query) use ($request) {
-                         $query->where('id', 'LIKE', '%' . $request->user_role . '%');
+                        $query->where('id', 'LIKE', '%' . $request->user_role . '%');
                     });
         }
 
@@ -98,8 +98,8 @@ class UserController extends Controller
         $user->syncRoles($request->user_role);
 
         return redirect()
-                ->route('users.index')
-                ->with('success', 'User has been created');
+            ->route('users.index')
+            ->with('success', 'User has been created');
     }
 
     public function show($id)
@@ -109,14 +109,14 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->where('id', $id)->first();
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
         $jabatans = Jabatan::whereNotIn('nama', ['Developer'])->get();
 
         if ($user->hasRole('superadmin')) {
             return redirect()
-                    ->back()
-                    ->with('error', 'Superadmin cannot be edited');
+                ->back()
+                ->with('error', 'Superadmin cannot be edited');
         }
 
         return view('modules.users.edit', [
@@ -128,7 +128,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->where('id', $id)->first();
 
         $request->validate([
             'user_name' => 'required|string',
@@ -147,12 +147,57 @@ class UserController extends Controller
         $user->syncRoles($request->user_role);
 
         return redirect()
-                ->route('users.index')
-                ->with('success', 'User has been updated');
+            ->route('users.index')
+            ->with('success', 'User has been updated');
     }
 
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        if (is_null($user)) {
+            return redirect()
+                ->back()
+                ->with('error', 'Inactive user cannot be deleted');
+        }
+
+        if ($user->hasRole('superadmin')) {
+            return redirect()
+                ->back()
+                ->with('error', 'Superadmin cannot be deactivated');
+        }
+
+        $user->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', 'User has been deactivated');
+    }
+
+    public function activate($id)
+    {
+        $user = User::withTrashed()->where('id', $id)->first();
+
+        if (!empty($user)) {
+            $user->restore();
+
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'User has been activated');
+        }
+    }
+
+    public function reset($id)
+    {
+        $user = User::withTrashed()->where('id', $id)->first();
+
+        if (!empty($user)) {
+            $user->password = bcrypt('password');
+            $user->save();
+
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'User\'s password has been reset');
+        }
     }
 }

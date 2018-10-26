@@ -23,6 +23,12 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
+    /* User section */
     Route::resource('/users', 'UserController');
     Route::get('/users-search', 'UserController@search')->name('users.search');
+    Route::get('/{id}/users-activate', 'UserController@activate')->name('users.activate');
+    Route::get('/{id}/users-reset-password', 'UserController@reset')->name('users.reset');
+    /* User section */
+
+    /
 });

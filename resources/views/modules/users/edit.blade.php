@@ -99,6 +99,22 @@
                                         Save
                                     </button>
                                 </div>
+                                
+                                @if (!is_null($user->deleted_at))
+                                    <div class="col-md-2 mrg20B mrg20T pull-left">
+                                        <a href="{{ route('users.activate', $user->id) }}" class="btn btn-block btn-info" type="submit">
+                                            Activate
+                                        </a>
+                                    </div>
+                                @endif
+
+                                @if (is_null($user->deleted_at))
+                                    <div class="col-md-2 mrg20B mrg20T pull-left">
+                                        <a href="{{ route('users.reset', $user->id) }}" class="btn btn-block btn-warning" type="submit">
+                                            Reset Password
+                                        </a>
+                                    </div>
+                                @endif
                             {{ Form::close() }}
                         </div>
                     </div>

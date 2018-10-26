@@ -15,7 +15,7 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>{{ count(\App\Models\User::all()) }}</h3>
+                        <h3>{{ count(\App\Models\User::withTrashed()->get()) }}</h3>
 
                         <p>Total Users</p>
                     </div>
@@ -60,9 +60,9 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>{{ count(\App\Models\User::whereNotNull('deleted_at')->get()) }}</h3>
+                        <h3>{{ count(\App\Models\User::withTrashed()->whereNotNull('deleted_at')->get()) }}</h3>
 
-                        <p>Deleted Users</p>
+                        <p>Inactive Users</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -187,18 +187,20 @@
                                                 <td class="col-md-2">{{ $user->email ?? 'N/A' }}</td>
                                                 <td class="col-md-2">{{ helperRoleName($user->roles->pluck('name')->first()) }}</td>
                                                 <td class="col-md-2">
-                                                    {!! empty($user->deleted_at) ? '<span class="label label-success">Active</span>' : '' !!}
+                                                    {!! empty($user->deleted_at) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>' !!}
                                                 </td>
                                                 <td>
                                                     <div class="min90">
-                                                        <div class="btn-group">
-                                                            <a href="{{ route('users.edit', $user->id) }}" class="btn bg-purple {{ $user->hasRole('superadmin') ? 'disabled' : '' }}">
-                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                            </a>
-                                                            <a href="" class="btn btn-danger {{ $user->hasRole('superadmin') ? 'disabled' : '' }}">
-                                                                <i class="fa fa-fw fa-trash-o"></i>
-                                                            </a>
-                                                        </div>
+                                                        {{ Form::open(['url' => route('users.destroy', $user->id), 'method' => 'DELETE']) }}
+                                                            <div class="btn-group">
+                                                                <a href="{{ route('users.edit', $user->id) }}" class="btn bg-purple">
+                                                                    <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                                </a>
+                                                                <button class="btn btn-danger" type="submit">
+                                                                    <i class="fa fa-fw fa-trash-o"></i>
+                                                                </button>
+                                                            </div>
+                                                        {{ Form::close() }}
                                                     </div>
                                                 </td>
                                             </tr>

@@ -33,6 +33,10 @@
                 </a>
             </li>
             <!-- Dashboard end -->
+
+            <!-- Projek section -->
+
+            <!-- End Projek -->
             
             <!-- Setting section -->
             @if (\Auth::user()->hasRole('superadmin'))
