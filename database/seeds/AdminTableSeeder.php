@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\LookupJabatan as Jabatan;
+use App\Models\LookupDepartment as Department;
 
 class AdminTableSeeder extends Seeder
 {
@@ -15,27 +15,27 @@ class AdminTableSeeder extends Seeder
     {
         $data = [
             [
-                'kod' => 'DEV001', 
-                'nama' => 'Developer'
+                'code' => 'DEV001', 
+                'name' => 'Developer'
             ],
             [
-                'kod' => 'BTM', 
-                'nama' => 'Jabatan Bahagian Teknologi Maklumat'
+                'code' => 'BTM', 
+                'name' => 'Jabatan Bahagian Teknologi Maklumat'
             ]
         ];
 
         foreach ($data as $d) {
-            Jabatan::create(['kod' => $d['kod'], 'nama' => $d['nama']]);
+            Department::create(['code' => $d['code'], 'name' => $d['name']]);
         }
 
 
-        $jabatan_id = Jabatan::where('kod', 'DEV001')->pluck('id')->first();
+        $department_id = Department::where('code', 'DEV001')->pluck('id')->first();
 
         // Admin
         $user = User::create([
             'name' => 'Admin',
             'username' => 'admin',
-            'lookup_jabatan_id' => $jabatan_id,
+            'lookup_department_id' => $department_id,
             'email' => 'admin@email.com',
             'password' => bcrypt('password')
         ]);

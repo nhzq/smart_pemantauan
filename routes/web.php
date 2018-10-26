@@ -30,5 +30,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/{id}/users-reset-password', 'UserController@reset')->name('users.reset');
     /* User section */
 
-    /
+    
 });

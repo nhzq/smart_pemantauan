@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLookupJabatanTable extends Migration
+class CreateLookupDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateLookupJabatanTable extends Migration
      */
     public function up()
     {
-        Schema::create('lookup_jabatan', function (Blueprint $table) {
+        Schema::create('lookup_departments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('kod', 10)->nullable();
-            $table->string('nama');
+            $table->string('code', 10)->nullable();
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ class CreateLookupJabatanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lookup_jabatan');
+        Schema::dropIfExists('lookup_departments');
     }
 }

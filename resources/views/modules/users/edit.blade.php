@@ -68,23 +68,23 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group {{ $errors->has('user_jabatan') ? 'has-error' : '' }}">
+                                            <div class="form-group {{ $errors->has('user_department') ? 'has-error' : '' }}">
                                                 <label>Jabatan</label>
-                                                <select class="form-control" name="user_jabatan">
+                                                <select class="form-control" name="user_department">
                                                     <option value="0">-- Please choose --</option>
-                                                    @if (!empty($jabatans))
-                                                        @foreach ($jabatans as $jabatan)
+                                                    @if (!empty($departments))
+                                                        @foreach ($departments as $department)
                                                             <?php 
                                                                 $selected = '';
 
-                                                                if (!is_null($user->jabatan->id)) {
-                                                                    if ($user->jabatan->id == $jabatan->id) {
+                                                                if (!is_null($user->department->id)) {
+                                                                    if ($user->department->id == $department->id) {
                                                                         $selected = 'selected';
                                                                     }
                                                                 }
                                                             ?>
-                                                            <option value="{{ $jabatan->id }}" {{ $selected }}>
-                                                                {{ $jabatan->nama }}
+                                                            <option value="{{ $department->id }}" {{ $selected }}>
+                                                                {{ $department->name }}
                                                             </option>
                                                         @endforeach
                                                     @endif

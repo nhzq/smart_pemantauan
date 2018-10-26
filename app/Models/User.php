@@ -14,7 +14,7 @@ class User extends Authenticatable
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'lookup_jabatan_id'
+        'name', 'email', 'password', 'username', 'lookup_department_id'
     ];
 
     protected $hidden = [
@@ -26,9 +26,9 @@ class User extends Authenticatable
     /*
      * Relationships
      */
-    public function jabatan()
+    public function department()
     {
-        return $this->belongsTo('App\Models\LookupJabatan', 'lookup_jabatan_id');
+        return $this->belongsTo('App\Models\LookupDepartment', 'lookup_department_id');
     }
 
     /*

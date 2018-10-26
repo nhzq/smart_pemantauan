@@ -136,11 +136,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jabatan</label>
-                                            <select class="form-control" name="user_jabatan">
+                                            <select class="form-control" name="user_department">
                                                 <option value="0">-- Please choose --</option>
-                                                @if (!empty($jabatans))
-                                                    @foreach ($jabatans as $jabatan)
-                                                        <option value="{{ $jabatan->id }}">{{ $jabatan->nama }}</option>
+                                                @if (!empty($departments))
+                                                    @foreach ($departments as $department)
+                                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

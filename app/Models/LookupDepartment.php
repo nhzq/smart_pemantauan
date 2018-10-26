@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class LookupJabatan extends Model
+class LookupDepartment extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'lookup_jabatan';
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'kod', 'nama'
+        'code', 'name'
     ];
 
     /*

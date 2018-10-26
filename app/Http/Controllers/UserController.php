@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
-use App\Models\LookupJabatan as Jabatan;
+use App\Models\LookupDepartment as Department;
 
 class UserController extends Controller
 {
@@ -18,19 +18,19 @@ class UserController extends Controller
     {
         $users = User::withTrashed()->paginate(12);
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
-        $jabatans = Jabatan::whereNotIn('nama', ['Developer'])->get();
+        $departments = Department::whereNotIn('name', ['Developer'])->get();
 
         return view('modules.users.index', [
             'users' => $users,
             'roles' => $roles, 
-            'jabatans' => $jabatans
+            'departments' => $departments
         ]);
     }
 
     public function search(Request $request)
     {
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
-        $jabatans = Jabatan::whereNotIn('nama', ['Developer'])->get();
+        $departments = Department::whereNotIn('name', ['Developer'])->get();
         $users = User::query();
 
         if (!empty($request->user_name)) {
@@ -45,9 +45,9 @@ class UserController extends Controller
             $users = $users->where('email', 'LIKE', '%' . $request->user_email . '%');
         }
 
-        if (!empty($request->user_jabatan)) {
-            $users = $users->whereHas('jabatan', function ($query) use ($request) {
-                        $query->where('id', 'LIKE', '%' . $request->user_jabatan . '%');
+        if (!empty($request->user_department)) {
+            $users = $users->whereHas('department', function ($query) use ($request) {
+                        $query->where('id', 'LIKE', '%' . $request->user_department . '%');
                     });
         }
 
@@ -62,18 +62,18 @@ class UserController extends Controller
         return view('modules.users.index', [
             'users' => $users,
             'roles' => $roles, 
-            'jabatans' => $jabatans
+            'departments' => $departments
         ]);
     }
 
     public function create()
     {
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
-        $jabatans = Jabatan::whereNotIn('nama', ['Developer'])->get();
+        $departments = Department::whereNotIn('name', ['Developer'])->get();
 
         return view('modules.users.create', [
             'roles' => $roles,
-            'jabatans' => $jabatans
+            'departments' => $departments
         ]);
     }
 
@@ -84,14 +84,14 @@ class UserController extends Controller
             'user_username' => 'required|string|unique:users,username',
             'user_email' => 'required|email|unique:users,email',
             'user_role' => 'required|not_in:0',
-            'user_jabatan' => 'required|not_in:0'
+            'user_department' => 'required|not_in:0'
         ]);
 
         $user = User::create([
             'name' => $request->user_name,
             'username' => $request->user_username,
             'email' => $request->user_email,
-            'lookup_jabatan_id' => $request->user_jabatan,
+            'lookup_department_id' => $request->user_department,
             'password' => bcrypt('password')
         ]);
 
@@ -111,7 +111,7 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->where('id', $id)->first();
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
-        $jabatans = Jabatan::whereNotIn('nama', ['Developer'])->get();
+        $departments = Department::whereNotIn('name', ['Developer'])->get();
 
         if ($user->hasRole('superadmin')) {
             return redirect()
@@ -122,7 +122,7 @@ class UserController extends Controller
         return view('modules.users.edit', [
             'user' => $user,
             'roles' => $roles, 
-            'jabatans' => $jabatans
+            'departments' => $departments
         ]);
     }
 
@@ -135,13 +135,13 @@ class UserController extends Controller
             'user_username' => 'required|string|unique:users,username,' . $user->id,
             'user_email' => 'required|email|unique:users,email,' . $user->id,
             'user_role' => 'required|not_in:0',
-            'user_jabatan' => 'required|not_in:0'
+            'user_department' => 'required|not_in:0'
         ]);
 
         $user->name = $request->user_name;
         $user->email = $request->user_email;
         $user->username = $request->user_username;
-        $user->lookup_jabatan_id = $request->user_jabatan;
+        $user->lookup_department_id = $request->user_department;
         $user->save();
 
         $user->syncRoles($request->user_role);

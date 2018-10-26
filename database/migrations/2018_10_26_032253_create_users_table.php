@@ -17,14 +17,14 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('username')->unique();
-            $table->integer('lookup_jabatan_id')->unsigned();
+            $table->integer('lookup_department_id')->unsigned();
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('lookup_jabatan_id')->references('id')->on('lookup_jabatan');
+            $table->foreign('lookup_department_id')->references('id')->on('lookup_departments');
         });
     }
 
