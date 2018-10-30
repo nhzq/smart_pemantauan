@@ -13,6 +13,34 @@
 @endif
 <!-- end -->
 
+<!-- Projects -->
+@if (Route::current()->getName() == 'projects.index')    
+    <section class="content-header">
+        <h1>
+            Projects
+            <small>All Projects</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('projects.index') }}"><i class="fa fa-dashboard"></i> Projects</a></li>
+            <li class="active">All Projects</li>
+        </ol>
+    </section>
+@endif
+
+@if (Route::current()->getName() == 'projects.create')    
+    <section class="content-header">
+        <h1>
+            Projects
+            <small>Create Project</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('projects.index') }}"><i class="fa fa-dashboard"></i> Projects</a></li>
+            <li class="active">Create Project</li>
+        </ol>
+    </section>
+@endif
+<!-- end -->
+
 <!-- User -->
 @if (Route::current()->getName() == 'users.index')
     <section class="content-header">

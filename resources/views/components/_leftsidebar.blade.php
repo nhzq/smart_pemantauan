@@ -34,9 +34,13 @@
             </li>
             <!-- Dashboard end -->
 
-            <!-- Projek section -->
-            
-            <!-- End Projek -->
+            <!-- Project section -->
+            <li class="{{ request()->is('projects*') ? 'active' : '' }}">
+                <a href="{{ route('projects.index') }}">
+                    <i class="fa fa-briefcase"></i> <span>Projects</span>
+                </a>
+            </li>
+            <!-- End Project -->
             
             <!-- Setting section -->
             @if (\Auth::user()->hasRole('superadmin'))
@@ -46,8 +50,8 @@
                     <li class="treeview">
                 @endif
                     <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>Setting</span>
+                        <i class="fa fa-gear"></i>
+                        <span>Settings</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>

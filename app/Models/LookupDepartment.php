@@ -22,4 +22,8 @@ class LookupDepartment extends Model
     {
         return $this->hasMany('App\Models\User');
     }
+
+    /*
+     * Reusable method
+     */
 }

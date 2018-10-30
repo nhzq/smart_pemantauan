@@ -189,7 +189,7 @@
                                                 <td class="col-md-2">
                                                     {!! empty($user->deleted_at) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>' !!}
                                                 </td>
-                                                <td>
+                                                <td class="col-md-1">
                                                     <div class="min90">
                                                         {{ Form::open(['url' => route('users.destroy', $user->id), 'method' => 'DELETE']) }}
                                                             <div class="btn-group">

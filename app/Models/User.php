@@ -32,6 +32,6 @@ class User extends Authenticatable
     }
 
     /*
-     * Reusable function
+     * Reusable method
      */
 }

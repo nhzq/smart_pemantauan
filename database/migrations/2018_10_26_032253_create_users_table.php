@@ -24,7 +24,9 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('lookup_department_id')->references('id')->on('lookup_departments');
+            $table->foreign('lookup_department_id')
+                ->references('id')->on('lookup_departments')
+                ->onDelete('cascade');
         });
     }
 
