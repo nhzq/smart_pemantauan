@@ -13,9 +13,9 @@ class Project extends Model
     /*
      * Relationship
      */
-    public function comments()
+    public function reviews()
     {
-        return $this->hasMany('App\Models\Comment');
+        return $this->hasMany('App\Models\Review');
     }
 
     /*

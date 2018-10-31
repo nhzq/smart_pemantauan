@@ -35,15 +35,27 @@
             <!-- Dashboard end -->
 
             <!-- Project section -->
-            <li class="{{ request()->is('projects*') ? 'active' : '' }}">
-                <a href="{{ route('projects.index') }}">
-                    <i class="fa fa-briefcase"></i> <span>Projects</span>
-                </a>
-            </li>
+            @hasanyrole ('ketua-unit')
+                <li class="{{ request()->is('projects*') ? 'active' : '' }}">
+                    <a href="{{ route('projects.index') }}">
+                        <i class="fa fa-briefcase"></i> <span>Projects</span>
+                    </a>
+                </li>
+            @endhasanyrole
             <!-- End Project -->
+
+            <!-- Reviews -->
+            @hasanyrole ('ketua-seksyen|ketua-jabatan-bahagian-teknologi-maklumat')
+                <li class="{{ request()->is('reviews*') ? 'active' : '' }}">
+                    <a href="{{ route('reviews.index') }}">
+                        <i class="fa fa-lightbulb-o"></i> <span>Reviews</span>
+                    </a>
+                </li>
+            @endhasanyrole
+            <!-- End Reviews -->
             
             <!-- Setting section -->
-            @if (\Auth::user()->hasRole('superadmin'))
+            @hasanyrole ('superadmin')
                 @if (request()->is('users*'))
                     <li class="active treeview">
                 @else 
@@ -63,7 +75,7 @@
                         </li>
                     </ul>
                 </li>
-            @endif
+            @endhasanyrole
             <!-- Setting end -->
         </ul>
     </section>

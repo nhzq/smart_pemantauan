@@ -8,9 +8,14 @@ use App\Helpers\ProjectStatus as Status;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:ketua-unit']);
+    }
+
     public function index()
     {
-        $projects = Project::paginate('20');
+        $projects = Project::paginate(20);
 
         return view('modules.projects.index', [
             'projects' => $projects
@@ -54,6 +59,11 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
+
+        if (Status::isApprovedByKS($project->status) || Status::isApprovedByKJ($project->status)) {
+            return redirect()->back()
+                ->with('error', 'Project: ' . ucwords($project->name) . ' cannot be edited');
+        }
 
         return view('modules.projects.edit', [
             'project' => $project 
@@ -119,6 +129,11 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $last = Project::getLastRow()->first();
+
+        if (Status::isApprovedByKS($project->status) || Status::isApprovedByKJ($project->status)) {
+            return redirect()->back()
+                ->with('error', 'Project: ' . ucwords($project->name) . ' cannot be deleted');
+        }
 
         if ($project->id !== $last->id) {
             $last->total_amount = $last->total_amount - $project->cost;

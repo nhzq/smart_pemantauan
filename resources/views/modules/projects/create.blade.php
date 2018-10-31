@@ -26,13 +26,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('project_name') ? 'has-error' : '' }}">
                                             <label>Project's Name</label>
-                                            <input class="form-control" type="text" name="project_name" placeholder="Name">
+                                            <input class="form-control" type="text" name="project_name" placeholder="Name" value="{{ old('project_name') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('project_cost') ? 'has-error' : '' }}">
                                             <label>Project's Cost</label>
-                                            <input class="form-control" type="text" name="project_cost" placeholder="Name">
+                                            <input class="form-control" type="text" name="project_cost" placeholder="Name" value="{{ old('project_cost') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
                                             <label>Description</label>
-                                            <textarea name="project_description" id="" cols="30" rows="3" class="form-control"></textarea>
+                                            <textarea name="project_description" id="" cols="30" rows="3" class="form-control">{{ old('project_description') }}</textarea>
                                         </div>
                                     </div>
                                 </div>

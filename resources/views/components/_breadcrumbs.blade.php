@@ -41,6 +41,34 @@
 @endif
 <!-- end -->
 
+<!-- Reviews -->
+@if (Route::current()->getName() == 'reviews.index')    
+    <section class="content-header">
+        <h1>
+            Reviews
+            <small>All Projects</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Reviews</a></li>
+            <li class="active">All Projects</li>
+        </ol>
+    </section>
+@endif
+
+@if (Route::current()->getName() == 'reviews.show')    
+    <section class="content-header">
+        <h1>
+            Reviews
+            <small>Project</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Reviews</a></li>
+            <li class="active">Project</li>
+        </ol>
+    </section>
+@endif
+<!-- end -->
+
 <!-- User -->
 @if (Route::current()->getName() == 'users.index')
     <section class="content-header">

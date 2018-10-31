@@ -82,9 +82,7 @@
                                                 <td class="col-md-5 min200">{{ $project->name ?? 'N/A' }}</td>
                                                 <td class="col-md-3">{{ 'RM ' . helperCurrency($project->cost) ?? 'N/A' }}</td>
                                                 <td class="col-md-2">
-                                                    <span class="label label{{ \App\Helpers\ProjectStatus::isAppliedByKU($project->status) ? '-warning' : '' }}">
-                                                        {{ \App\Helpers\ProjectStatus::isAppliedByKU($project->status) ? 'Pending' : '' }}
-                                                    </span>
+                                                    @include ('components._status')
                                                 </td>
                                                 <td class="col-md-1">
                                                     <div class="min90">

@@ -10,6 +10,7 @@ class ProjectStatus
     const REJECTED_BY_KS = 8;
     const REJECTED_BY_KJ = 16;
 
+    // Status by Ketua Unit
     public static function isAppliedByKU($value = null)
     {
         if (!empty($value)) {
@@ -23,23 +24,59 @@ class ProjectStatus
         return false;
     }
 
-    public static function isApprovedByKS($value)
+    // Status by Ketua Seksyen
+    public static function isApprovedByKS($value = null)
     {
-        return self::APPROVED_BY_KS;
+        if (!empty($value)) {
+            if (self::APPROVED_BY_KS == $value) {
+                return true;
+            }
+        } else {
+            return self::APPROVED_BY_KS;
+        }
+
+        return false;
     }
 
-    public static function isApprovedByKJ($value)
+    // Status by Ketua Jabatan
+    public static function isApprovedByKJ($value = null)
     {
-        return self::APPROVED_BY_KJ;
+        if (!empty($value)) {
+            if (self::APPROVED_BY_KJ == $value) {
+                return true;
+            }
+        } else {
+            return self::APPROVED_BY_KJ;
+        }
+
+        return false;
     }
 
-    public static function isRejectedByKS($value)
+    // Status by Ketua Seksyen
+    public static function isRejectedByKS($value = null)
     {
-        return self::REJECTED_BY_KS;
+        if (!empty($value)) {
+            if (self::REJECTED_BY_KS == $value) {
+                return true;
+            }
+        } else {
+            return self::REJECTED_BY_KS;
+        }
+
+        return false;
     }
 
-    public static function isRejectedByKJ($value)
+    // Status by Ketua Seksyen
+    public static function isRejectedByKJ($value = null)
     {
-        return self::REJECTED_BY_KJ;
+        if (!empty($value)) {
+            if (self::REJECTED_BY_KJ == $value) {
+                return true;
+            }
+        } else {
+            return self::REJECTED_BY_KJ;
+        }
+
+        return false;
     }
 }

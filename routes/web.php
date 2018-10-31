@@ -23,14 +23,22 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
+    /* Project section */
+    Route::resource('/projects', 'ProjectController');
+    /* End */
+
+    /* Review section */
+    Route::resource('/reviews', 'ReviewController');
+    Route::get('/reviews/{id}/approve-ks', 'ReviewController@approveKS')->name('reviews.approve.ks');
+    Route::post('/reviews/{id}/reject-ks', 'ReviewController@rejectKS')->name('reviews.reject.ks');
+    Route::get('/reviews/{id}/approve-kj', 'ReviewController@approveKJ')->name('reviews.approve.kj');
+    Route::post('/reviews/{id}/reject-kj', 'ReviewController@rejectKJ')->name('reviews.reject.kj');
+    /* End */
+
     /* User section */
     Route::resource('/users', 'UserController');
     Route::get('/users-search', 'UserController@search')->name('users.search');
     Route::get('/{id}/users-activate', 'UserController@activate')->name('users.activate');
     Route::get('/{id}/users-reset-password', 'UserController@reset')->name('users.reset');
-    /* End */
-
-    /* User section */
-    Route::resource('/projects', 'ProjectController');
     /* End */
 });
