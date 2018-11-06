@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Review;
 use App\Helpers\ProjectStatus as Status;
 
 class ProjectController extends Controller
@@ -53,7 +54,11 @@ class ProjectController extends Controller
 
     public function show($id)
     {
-        //
+        $project = Project::find($id);
+
+        return view('modules.projects.view', [
+            'project' => $project
+        ]);
     }
 
     public function edit($id)

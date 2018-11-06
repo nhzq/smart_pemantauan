@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Project;
 use App\Helpers\ProjectStatus as Status;
 use App\Models\Review;
@@ -34,12 +35,21 @@ class ReviewController extends Controller
         ]);
     }
 
-    public function approveKS($id)
+    public function approveKS(Request $request, $id)
     {
-        $project = Project::find($id);
-        $project->status = Status::isApprovedByKS();
-        $project->updated_by = \Auth::user()->id;
-        $project->save();
+        DB::transaction(function () use ($request, $id) {
+            $project = Project::find($id);
+            $project->status = Status::isApprovedByKS();
+            $project->updated_by = \Auth::user()->id;
+            $project->save();
+
+            $review = Review::create([
+                'project_id' => $id,
+                'status' => Status::isApprovedByKS(),
+                'content' => $request->review_content,
+                'created_by' => \Auth::user()->id
+            ]);
+        });
 
         return redirect()
             ->route('reviews.index')
@@ -48,30 +58,42 @@ class ReviewController extends Controller
 
     public function rejectKS(Request $request, $id)
     {
-        $project = Project::find($id);
-        $project->status = Status::isRejectedByKS();
-        $project->updated_by = \Auth::user()->id;
-        $project->save();
+        DB::transaction(function () use ($request, $id) {
+            $project = Project::find($id);
+            $project->status = Status::isRejectedByKS();
+            $project->updated_by = \Auth::user()->id;
+            $project->save();
 
-        $request->validate(['review_content' => 'required']);
-        
-        $review = Review::create([
-            'project_id' => $id,
-            'content' => $request->review_content,
-            'created_by' => \Auth::user()->id
-        ]);
+            $request->validate(['review_content' => 'required']);
+            
+            $review = Review::create([
+                'project_id' => $id,
+                'status' => Status::isRejectedByKS(),
+                'content' => $request->review_content,
+                'created_by' => \Auth::user()->id
+            ]);
+        });
 
         return redirect()
             ->route('reviews.index')
             ->with('success', 'Project has been rejected');
     }
 
-    public function approveKJ($id)
+    public function approveKJ(Request $request, $id)
     {
-        $project = Project::find($id);
-        $project->status = Status::isApprovedByKJ();
-        $project->updated_by = \Auth::user()->id;
-        $project->save();
+        DB::transaction(function () use ($request, $id) {
+            $project = Project::find($id);
+            $project->status = Status::isApprovedByKJ();
+            $project->updated_by = \Auth::user()->id;
+            $project->save();
+
+            $review = Review::create([
+                'project_id' => $id,
+                'status' => Status::isApprovedByKJ(),
+                'content' => $request->review_content,
+                'created_by' => \Auth::user()->id
+            ]);
+        });
 
         return redirect()
             ->route('reviews.index')
@@ -80,18 +102,21 @@ class ReviewController extends Controller
 
     public function rejectKJ(Request $request, $id)
     {
-        $project = Project::find($id);
-        $project->status = Status::isRejectedByKJ();
-        $project->updated_by = \Auth::user()->id;
-        $project->save();
+        DB::transaction(function () use ($request, $id) {
+            $project = Project::find($id);
+            $project->status = Status::isRejectedByKJ();
+            $project->updated_by = \Auth::user()->id;
+            $project->save();
 
-        $request->validate(['review_content' => 'required']);
-        
-        $review = Review::create([
-            'project_id' => $id,
-            'content' => $request->review_content,
-            'created_by' => \Auth::user()->id
-        ]);
+            $request->validate(['review_content' => 'required']);
+            
+            $review = Review::create([
+                'project_id' => $id,
+                'status' => Status::isRejectedByKJ(),
+                'content' => $request->review_content,
+                'created_by' => \Auth::user()->id
+            ]);
+        });
 
         return redirect()
             ->route('reviews.index')

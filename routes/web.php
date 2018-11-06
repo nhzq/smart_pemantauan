@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('locale/{locale}', function ($locale) {
+    \Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+Route::view('/hello', 'hello');
 
 Route::get('/', function () {
     // If user is not authenticated
@@ -29,9 +35,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Review section */
     Route::resource('/reviews', 'ReviewController');
-    Route::get('/reviews/{id}/approve-ks', 'ReviewController@approveKS')->name('reviews.approve.ks');
+    Route::post('/reviews/{id}/approve-ks', 'ReviewController@approveKS')->name('reviews.approve.ks');
     Route::post('/reviews/{id}/reject-ks', 'ReviewController@rejectKS')->name('reviews.reject.ks');
-    Route::get('/reviews/{id}/approve-kj', 'ReviewController@approveKJ')->name('reviews.approve.kj');
+    Route::post('/reviews/{id}/approve-kj', 'ReviewController@approveKJ')->name('reviews.approve.kj');
     Route::post('/reviews/{id}/reject-kj', 'ReviewController@rejectKJ')->name('reviews.reject.kj');
     /* End */
 

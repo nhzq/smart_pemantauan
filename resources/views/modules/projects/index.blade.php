@@ -79,15 +79,18 @@
                                         @foreach ($projects as $project)
                                             <tr>
                                                 <th class="col-md-1">{{ $projects->perPage() * ($projects->currentPage() - 1) + $loop->iteration }}</th>
-                                                <td class="col-md-5 min200">{{ $project->name ?? 'N/A' }}</td>
+                                                <td class="col-md-4 min200">{{ $project->name ?? 'N/A' }}</td>
                                                 <td class="col-md-3">{{ 'RM ' . helperCurrency($project->cost) ?? 'N/A' }}</td>
                                                 <td class="col-md-2">
                                                     @include ('components._status')
                                                 </td>
-                                                <td class="col-md-1">
-                                                    <div class="min90">
+                                                <td class="col-md-2">
+                                                    <div class="min130">
                                                         {{ Form::open(['url' => route('projects.destroy', $project->id), 'method' => 'DELETE']) }}
                                                             <div class="btn-group">
+                                                                <a href="{{ route('projects.show', $project->id) }}" class="btn bg-purple">
+                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
+                                                                </a>
                                                                 <a href="{{ route('projects.edit', $project->id) }}" class="btn bg-purple">
                                                                     <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                 </a>
