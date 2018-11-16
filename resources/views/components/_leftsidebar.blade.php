@@ -22,6 +22,7 @@
             </div>
         </form> --}}
         <!-- /.search form -->
+
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
@@ -33,6 +34,33 @@
                 </a>
             </li>
             <!-- Dashboard end -->
+
+            <!-- Financial section -->
+            @if (request()->is('*allocations*'))
+                <li class="active treeview">
+            @else 
+                <li class="treeview">
+            @endif
+                    <a href="#">
+                        <i class="fa fa-dollar"></i>
+                        <span>Financial</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <!-- User section -->
+                        <li class="{{ request()->is('*allocations*') ? 'active' : '' }}">
+                            <a href="{{ route('allocations.index') }}"><i class="fa fa-circle-o {{ request()->is('*allocations*') ? 'text-aqua' : '' }}"></i> Allocation</a>
+                        </li>
+
+                        <!-- Role section -->
+                        <li class="{{ request()->is('*roles*') ? 'active' : '' }}">
+                            <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Transfer Allocation</a>
+                        </li>
+                    </ul>
+                </li>
+            <!-- Financial end -->
 
             <!-- Project section -->
             @hasanyrole ('ketua-unit')
@@ -56,7 +84,7 @@
             
             <!-- Setting section -->
             @hasanyrole ('superadmin')
-                @if (request()->is('users*'))
+                @if (request()->is('*users*') || request()->is('*units*') || request()->is('*sections*') || request()->is('*roles*'))
                     <li class="active treeview">
                 @else 
                     <li class="treeview">
@@ -70,8 +98,23 @@
                     </a>
                     <ul class="treeview-menu">
                         <!-- User section -->
-                        <li class="{{ request()->is('users*') ? 'active' : '' }}">
-                            <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('users*') ? 'text-aqua' : '' }}"></i> Users</a>
+                        <li class="{{ request()->is('*users*') ? 'active' : '' }}">
+                            <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('*users*') ? 'text-aqua' : '' }}"></i> Users</a>
+                        </li>
+
+                        <!-- Role section -->
+                        <li class="{{ request()->is('*roles*') ? 'active' : '' }}">
+                            <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Roles</a>
+                        </li>
+
+                        <!-- Section section -->
+                        <li class="{{ request()->is('*sections*') ? 'active' : '' }}">
+                            <a href="{{ route('sections.index') }}"><i class="fa fa-circle-o {{ request()->is('*sections*') ? 'text-aqua' : '' }}"></i> Sections</a>
+                        </li>
+
+                        <!-- Unit section -->
+                        <li class="{{ request()->is('*units*') ? 'active' : '' }}">
+                            <a href="{{ route('units.index') }}"><i class="fa fa-circle-o {{ request()->is('*units*') ? 'text-aqua' : '' }}"></i> Units</a>
                         </li>
                     </ul>
                 </li>

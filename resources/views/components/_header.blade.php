@@ -70,7 +70,7 @@
 
                             <p>
                                 {{ \Auth::user()->name }}
-                                <small>{{ helperRoleName(\Auth::user()->roles->pluck('name')->first()) }}</small>
+                                <small>{{ \Auth::user()->roles->pluck('displayed_name')->first() }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->

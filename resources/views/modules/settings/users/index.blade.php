@@ -3,6 +3,7 @@
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -12,7 +13,6 @@
     <section class="content">
         <div class="row">
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::withTrashed()->get()) }}</h3>
@@ -25,9 +25,8 @@
                     <div class="small-box-footer">&nbsp;</div>
                 </div>
             </div>
-            <!-- ./col -->
+            
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3>{{ count(\Spatie\Permission\Models\Role::whereNotIn('name', ['superadmin'])->get()) }}</h3>
@@ -40,9 +39,8 @@
                     <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
+            
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::whereNull('deleted_at')->get()) }}</h3>
@@ -55,9 +53,8 @@
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
+            
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::withTrashed()->whereNotNull('deleted_at')->get()) }}</h3>
@@ -70,7 +67,6 @@
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
         </div>
 
         @include ('components._flashes')
@@ -94,6 +90,7 @@
                     <div class="box-header with-border panel-header-border-blue">
                         <h3 class="box-title">Search</h3>
                     </div>
+
                     <div class="box-body">
                         &nbsp;
                         {{ Form::open(['url' => route('users.search'), 'method' => 'GET']) }}
@@ -127,12 +124,13 @@
                                                 <option value="0">-- Please choose --</option>
                                                 @if (!empty($roles))
                                                     @foreach ($roles as $role)
-                                                        <option value="{{ $role->id }}">{{ helperRoleName($role->name) }}</option>
+                                                        <option value="{{ $role->id }}">{{ $role->displayed_name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jabatan</label>
@@ -148,6 +146,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-2 mrg20B pull-right">
                                 <button class="btn btn-block btn-primary" type="submit">
                                     Search
@@ -165,15 +164,17 @@
                     <div class="box-header with-border panel-header-border-blue">
                         <h3 class="box-title">List of Users</h3>
                     </div>
+
                     <div class="box-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr class="tbl-row-init tbl-default">
                                         <th class="max20">#</th>
                                         <th>Name</th>
-                                        <th>Email</th>
+                                        <th>IC Number</th>
                                         <th>Role</th>
+                                        <th>Unit/ Section</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -183,10 +184,22 @@
                                         @foreach ($users as $user)
                                             <tr>
                                                 <th>{{ $loop->iteration }}</th>
-                                                <td class="col-md-4">{{ $user->name ?? 'N/A' }}</td>
-                                                <td class="col-md-2">{{ $user->email ?? 'N/A' }}</td>
-                                                <td class="col-md-2">{{ helperRoleName($user->roles->pluck('name')->first()) }}</td>
-                                                <td class="col-md-2">
+                                                <td>{{ $user->name ?? 'N/A' }}</td>
+                                                <td>{{ $user->ic ?? 'N/A' }}</td>
+                                                <td>{{ $user->roles->pluck('displayed_name')->first() }}</td>
+                                                <?php 
+                                                    $position = '';
+
+                                                    if (!empty($user->unit->displayed_name)) {
+                                                        $position = $user->unit->displayed_name;
+                                                    } else if (!empty($user->section->displayed_name)) {
+                                                        $position = $user->section->displayed_name;
+                                                    } else {
+                                                        $position = 'N/A';
+                                                    }
+                                                ?>
+                                                <td>{{ $position }}</td>
+                                                <td>
                                                     {!! empty($user->deleted_at) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>' !!}
                                                 </td>
                                                 <td class="col-md-1">

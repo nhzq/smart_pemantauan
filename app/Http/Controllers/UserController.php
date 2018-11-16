@@ -20,7 +20,7 @@ class UserController extends Controller
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
         $departments = Department::whereNotIn('name', ['Developer'])->get();
 
-        return view('modules.users.index', [
+        return view('modules.settings.users.index', [
             'users' => $users,
             'roles' => $roles, 
             'departments' => $departments
@@ -59,7 +59,7 @@ class UserController extends Controller
 
         $users = $users->paginate(12);
 
-        return view('modules.users.index', [
+        return view('modules.settings.users.index', [
             'users' => $users,
             'roles' => $roles, 
             'departments' => $departments
@@ -71,27 +71,41 @@ class UserController extends Controller
         $roles = Role::whereNotIn('name', ['superadmin'])->get();
         $departments = Department::whereNotIn('name', ['Developer'])->get();
 
-        return view('modules.users.create', [
+        return view('modules.settings.users.create', [
             'roles' => $roles,
             'departments' => $departments
         ]);
+    }
+
+    public function ajaxSection(Request $request)
+    {
+        $data = \App\Models\LookupSection::all();
+
+        return response()->json($data);
+    }
+
+    public function ajaxUnit(Request $request)
+    {
+        $data = \App\Models\LookupUnit::all();
+
+        return response()->json($data);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'user_name' => 'required|string',
-            'user_username' => 'required|string|unique:users,username',
-            'user_email' => 'required|email|unique:users,email',
+            'user_ic' => 'required|digits:12',
+            'user_department' => 'required|not_in:0',
             'user_role' => 'required|not_in:0',
-            'user_department' => 'required|not_in:0'
         ]);
 
         $user = User::create([
-            'name' => $request->user_name,
-            'username' => $request->user_username,
-            'email' => $request->user_email,
+            'name' => strtoupper($request->user_name),
+            'ic' => $request->user_ic,
             'lookup_department_id' => $request->user_department,
+            'lookup_section_id' => $request->user_section ?? null,
+            'lookup_unit_id' => $request->user_unit ?? null,
             'password' => bcrypt('password')
         ]);
 
@@ -119,7 +133,7 @@ class UserController extends Controller
                 ->with('error', 'Superadmin cannot be edited');
         }
 
-        return view('modules.users.edit', [
+        return view('modules.settings.users.edit', [
             'user' => $user,
             'roles' => $roles, 
             'departments' => $departments
@@ -132,16 +146,16 @@ class UserController extends Controller
 
         $request->validate([
             'user_name' => 'required|string',
-            'user_username' => 'required|string|unique:users,username,' . $user->id,
-            'user_email' => 'required|email|unique:users,email,' . $user->id,
+            'user_ic' => 'required|digits:12|unique:users,ic,' . $user->id,
             'user_role' => 'required|not_in:0',
             'user_department' => 'required|not_in:0'
         ]);
 
-        $user->name = $request->user_name;
-        $user->email = $request->user_email;
-        $user->username = $request->user_username;
+        $user->name = strtoupper($request->user_name);
+        $user->ic = $request->user_ic;
         $user->lookup_department_id = $request->user_department;
+        $user->lookup_section_id = $request->user_section ?? null;
+        $user->lookup_unit_id = $request->user_unit ?? null;
         $user->save();
 
         $user->syncRoles($request->user_role);

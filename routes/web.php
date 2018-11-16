@@ -15,8 +15,6 @@ Route::get('locale/{locale}', function ($locale) {
     return redirect()->back();
 });
 
-Route::view('/hello', 'hello');
-
 Route::get('/', function () {
     // If user is not authenticated
     if (empty(\Auth::user())) {
@@ -41,10 +39,37 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reviews/{id}/reject-kj', 'ReviewController@rejectKJ')->name('reviews.reject.kj');
     /* End */
 
-    /* User section */
-    Route::resource('/users', 'UserController');
-    Route::get('/users-search', 'UserController@search')->name('users.search');
-    Route::get('/{id}/users-activate', 'UserController@activate')->name('users.activate');
-    Route::get('/{id}/users-reset-password', 'UserController@reset')->name('users.reset');
+    /* Financial section */
+    Route::group(['prefix' => 'financial'], function () {
+        Route::group(['prefix' => 'allocations'], function () {
+            Route::get('/', 'AllocationController@index')->name('allocations.index');
+            Route::get('/{id}/type', 'AllocationController@type')->name('allocations.type');
+            Route::get('/{id}/create', 'AllocationController@create')->name('allocations.create');
+            Route::post('/{id}/store', 'AllocationController@store')->name('allocations.store');
+        });
+    });
     /* End */
+
+    /* Setting section */
+    Route::group(['prefix' => 'settings'], function () {
+        Route::resource('/users', 'UserController');
+        Route::get('/users-search', 'UserController@search')->name('users.search');
+        Route::get('/users-ajax-section', 'UserController@ajaxSection')->name('users.create.section');
+        Route::get('/users-ajax-unit', 'UserController@ajaxUnit')->name('users.create.unit');
+        Route::get('/{id}/users-activate', 'UserController@activate')->name('users.activate');
+        Route::get('/{id}/users-reset-password', 'UserController@reset')->name('users.reset');
+        /* End */
+
+        /* Role section */
+        Route::resource('/roles', 'RoleController');
+        /* End */
+
+        /* Unit section */
+        Route::resource('/units', 'LookupUnitController');
+        /* End */
+
+        /* Section section */
+        Route::resource('/sections', 'LookupSectionController');
+        /* End */
+    });
 });

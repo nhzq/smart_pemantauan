@@ -25,7 +25,10 @@ class AdminTableSeeder extends Seeder
         ];
 
         foreach ($data as $d) {
-            Department::create(['code' => $d['code'], 'name' => $d['name']]);
+            Department::create([
+                'code' => $d['code'], 
+                'name' => $d['name']
+            ]);
         }
 
 
@@ -34,9 +37,10 @@ class AdminTableSeeder extends Seeder
         // Admin
         $user = User::create([
             'name' => 'Admin',
-            'username' => 'admin',
+            'ic' => '1001',
             'lookup_department_id' => $department_id,
-            'email' => 'admin@email.com',
+            'lookup_section_id' => null,
+            'lookup_unit_id' => null,
             'password' => bcrypt('password')
         ]);
 

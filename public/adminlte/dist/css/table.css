@@ -1,0 +1,12 @@
+.tbl-row-init {
+    border-bottom: 3px solid;
+}
+
+.tbl-row-end {
+    border-top: 3px solid;
+}
+
+.tbl-default {
+    background-color: #f4f4f4;  
+    border-color: #ddd;
+}
