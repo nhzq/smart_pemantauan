@@ -15,32 +15,59 @@
 
         <div class="row">
             <div class="col-md-12">
+                <div class="mrg10B pull-right">
+                    <div class="btn-group">
+                        <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
+                        <a href="{{ route('allocations.create') }}" class="btn bg-purple">
+                            <i class="fa fa-fw fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Budget Type Allocation</h3>
+                        <h3 class="box-title">Jenis Bajet</h3>
                     </div>
 
                     <div class="box-body">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr class="tbl-row-init tbl-default">
+                                        <th>Bajet</th>
                                         <th>#</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Project Cost (RM)</th>
+                                        <th>Butiran</th>
+                                        <th>Peruntukan (RM)</th>
+                                        <th>Anggaran Kos (RM)</th>
+                                        <th>Kos Projek</th>
+                                        <th>Jumlah Belanja</th>
+                                        <th>Baki Belanja</th>
+                                        <th>Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (!empty($budgets))
-                                        @foreach ($budgets as $data)
+                                    @if (!empty($allocations))
+                                        @foreach ($allocations as $data)
                                             <tr>
-                                                <th>{{ $loop->iteration }}</th>
-                                                <td>{{ $data->code ?? 'N/A' }}</td>
+                                                <td >{!! setBudgetTitle($data->budget->code, $data->budget->description) !!}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td class="min300">{!! setBudgetTitle($data->sub->code, $data->sub->description) !!}</td>
+                                                <td>{{ currency($data->amount) ?? 'N/A' }}</td>
+                                                <td>{{ currency($data->amount - $data->balance) ?? 'N/A' }}</td>
+                                                <td>{{ currency($data->project_cost) ?? 'N/A' }}</td>
+                                                <td>{{ currency($data->total_spending) ?? 'N/A' }}</td>
+                                                <td>{{ currency($data->balance) ?? 'N/A' }}</td>
                                                 <td>
-                                                    <a href="{{ route('allocations.type', $data->id) }}">{{ $data->description ?? 'N/A' }}</a>
+                                                    <div class="btn-group">
+                                                        <a href="{{ route('allocations.edit', $data->id) }}" class="btn bg-purple">
+                                                            <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                        </a>
+                                                    </div>
                                                 </td>
-                                                <td></td>
                                             </tr>
                                         @endforeach
                                     @endif

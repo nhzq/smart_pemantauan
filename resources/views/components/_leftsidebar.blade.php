@@ -25,7 +25,7 @@
 
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
+            <li class="header">Navigasi Utama</li>
 
             <!-- Dashboard section -->
             <li class="{{ request()->is('home') ? 'active' : '' }}">
@@ -36,37 +36,39 @@
             <!-- Dashboard end -->
 
             <!-- Financial section -->
-            @if (request()->is('*allocations*'))
-                <li class="active treeview">
-            @else 
-                <li class="treeview">
-            @endif
-                    <a href="#">
-                        <i class="fa fa-dollar"></i>
-                        <span>Financial</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <!-- User section -->
-                        <li class="{{ request()->is('*allocations*') ? 'active' : '' }}">
-                            <a href="{{ route('allocations.index') }}"><i class="fa fa-circle-o {{ request()->is('*allocations*') ? 'text-aqua' : '' }}"></i> Allocation</a>
-                        </li>
+            @hasanyrole ('kw')
+                @if (request()->is('*allocations*'))
+                    <li class="active treeview">
+                @else 
+                    <li class="treeview">
+                @endif
+                        <a href="#">
+                            <i class="fa fa-dollar"></i>
+                            <span>Kewangan</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <!-- User section -->
+                            <li class="{{ request()->is('*allocations*') ? 'active' : '' }}">
+                                <a href="{{ route('allocations.index') }}"><i class="fa fa-circle-o {{ request()->is('*allocations*') ? 'text-aqua' : '' }}"></i> Peruntukan</a>
+                            </li>
 
-                        <!-- Role section -->
-                        <li class="{{ request()->is('*roles*') ? 'active' : '' }}">
-                            <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Transfer Allocation</a>
-                        </li>
-                    </ul>
-                </li>
+                            <!-- Role section -->
+                            <li class="{{ request()->is('*roles*') ? 'active' : '' }}">
+                                <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
+                            </li>
+                        </ul>
+                    </li>
+            @endhasanyrole
             <!-- Financial end -->
 
             <!-- Project section -->
-            @hasanyrole ('ketua-unit')
+            @hasanyrole ('ku|ks|sub')
                 <li class="{{ request()->is('projects*') ? 'active' : '' }}">
                     <a href="{{ route('projects.index') }}">
-                        <i class="fa fa-briefcase"></i> <span>Projects</span>
+                        <i class="fa fa-briefcase"></i> <span>Projek</span>
                     </a>
                 </li>
             @endhasanyrole
@@ -76,7 +78,7 @@
             @hasanyrole ('ketua-seksyen|ketua-jabatan-bahagian-teknologi-maklumat')
                 <li class="{{ request()->is('reviews*') ? 'active' : '' }}">
                     <a href="{{ route('reviews.index') }}">
-                        <i class="fa fa-lightbulb-o"></i> <span>Reviews</span>
+                        <i class="fa fa-lightbulb-o"></i> <span>Semakan</span>
                     </a>
                 </li>
             @endhasanyrole
@@ -91,7 +93,7 @@
                 @endif
                     <a href="#">
                         <i class="fa fa-gear"></i>
-                        <span>Settings</span>
+                        <span>Tetapan</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -99,22 +101,22 @@
                     <ul class="treeview-menu">
                         <!-- User section -->
                         <li class="{{ request()->is('*users*') ? 'active' : '' }}">
-                            <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('*users*') ? 'text-aqua' : '' }}"></i> Users</a>
+                            <a href="{{ route('users.index') }}"><i class="fa fa-circle-o {{ request()->is('*users*') ? 'text-aqua' : '' }}"></i> Pengguna</a>
                         </li>
 
                         <!-- Role section -->
                         <li class="{{ request()->is('*roles*') ? 'active' : '' }}">
-                            <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Roles</a>
+                            <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Peranan</a>
                         </li>
 
                         <!-- Section section -->
                         <li class="{{ request()->is('*sections*') ? 'active' : '' }}">
-                            <a href="{{ route('sections.index') }}"><i class="fa fa-circle-o {{ request()->is('*sections*') ? 'text-aqua' : '' }}"></i> Sections</a>
+                            <a href="{{ route('sections.index') }}"><i class="fa fa-circle-o {{ request()->is('*sections*') ? 'text-aqua' : '' }}"></i> Seksyen</a>
                         </li>
 
                         <!-- Unit section -->
                         <li class="{{ request()->is('*units*') ? 'active' : '' }}">
-                            <a href="{{ route('units.index') }}"><i class="fa fa-circle-o {{ request()->is('*units*') ? 'text-aqua' : '' }}"></i> Units</a>
+                            <a href="{{ route('units.index') }}"><i class="fa fa-circle-o {{ request()->is('*units*') ? 'text-aqua' : '' }}"></i> Unit</a>
                         </li>
                     </ul>
                 </li>

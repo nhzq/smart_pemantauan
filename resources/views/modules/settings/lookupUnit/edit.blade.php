@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Update Section</h3>
+                        <h3 class="box-title">Kemaskini Unit</h3>
                     </div>
 
                     <div class="box-body">
@@ -27,16 +27,16 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group {{ $errors->has('unit_displayed_name') ? 'has-error' : '' }}">
-                                                <label>Displayed Name</label>
-                                                <input class="form-control" type="text" name="unit_displayed_name" placeholder="Displayed Name" value="{{ $unit->displayed_name ?? '' }}">
+                                                <label>Paparan Nama</label>
+                                                <input class="form-control" type="text" name="unit_displayed_name" placeholder="Paparan Nama" value="{{ $unit->displayed_name ?? '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group {{ $errors->has('unit_displayed_name') ? 'has-error' : '' }}">
-                                                <label>Assign To</label>
+                                                <label>Dibawah Seksyen</label>
                                                 <select class="form-control" name="unit_assign_to">
-                                                    <option value="0">-- Please Choose --</option>
+                                                    <option value="0">-- Sila Pilih --</option>
                                                     @foreach ($sections as $section)
                                                         <?php
                                                             $selected = '';
@@ -59,7 +59,7 @@
 
                                 <div class="col-md-2 mrg20B mrg20T pull-right">
                                     <button class="btn btn-block btn-primary" type="submit">
-                                        Save
+                                        Simpan
                                     </button>
                                 </div>
                             {{ Form::close() }}

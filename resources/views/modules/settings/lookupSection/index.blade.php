@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">List of Sections</h3>
+                        <h3 class="box-title">Senarai Seksyen</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -25,9 +25,9 @@
                                 <thead>
                                     <tr class="tbl-row-ini tbl-default">
                                         <th>#</th>
-                                        <th>Displayed Name</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
+                                        <th>Nama Paparan</th>
+                                        <th>Nama (kod)</th>
+                                        <th>Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,8 +35,8 @@
                                         @foreach ($sections as $section)
                                             <tr>
                                                 <th class="col-md-2">{{ $loop->iteration }}</th>
-                                                <td class="col-md-4">{{ $section->displayed_name }}</td>
-                                                <td class="col-md-4">{{ $section->name }}</td>
+                                                <td class="col-md-4">{{ $section->displayed_name ?? 'N/A' }}</td>
+                                                <td class="col-md-4">{{ $section->name ?? 'N/A' }}</td>
                                                 <td class="col-md-2">
                                                     <div class="min90">
                                                         <div class="btn-group">
@@ -50,7 +50,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="text-center" colspan="5">No Records Found</td>
+                                            <td class="text-center" colspan="5">Tiada Rekod Dijumpai</td>
                                         </tr>
                                     @endif
                                 </tbody>

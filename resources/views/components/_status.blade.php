@@ -1,47 +1,45 @@
 <!-- Project -->
-@if (Route::current()->getName() == 'projects.index')
-    @if (\App\Helpers\ProjectStatus::isAppliedByKU($project->status))
-        <span class="label label-default">Reviewed by KS</span>
+@if (Route::current()->getName() == 'projects.index' || Route::current()->getName() == 'projects.show' || Route::current()->getName() == 'reviews.show')
+    <?php 
+        isset($data) ? $data : '';
+        isset($project) ? $data = $project : '';
+    ?>
+    @if (\App\Helpers\Status::isAppliedByKU($data->status))
+        @if (\Auth::user()->hasRole('ks'))
+            <span class="label label-warning">Perlu Semakan</span>
+        @endif
+
+        @if (\Auth::user()->hasRole('ku'))
+            <span class="label label-default">Dalam Semakan KS</span>
+        @endif
     @endif
 
-    @if (\App\Helpers\ProjectStatus::isApprovedByKS($project->status))
-        <span class="label label-info">Reviewed by KJ</span>
+    @if (\App\Helpers\Status::isApprovedByKS($data->status))
+        @if (\Auth::user()->hasAnyRole('ks|ku'))
+            <span class="label label-info">Dalam Semakan SUB</span>
+        @endif
+
+        @if (\Auth::user()->hasRole('sub'))
+            <span class="label label-warning">Perlu Semakan</span>
+        @endif
     @endif
 
-    @if (\App\Helpers\ProjectStatus::isRejectedByKS($project->status))
-        <span class="label label-danger">Rejected by KS</span>
+    @if (\App\Helpers\Status::isRejectedByKS($data->status))
+        @if (\Auth::user()->hasRole('ks'))
+            <span class="label label-danger">Telah Ditolak</span>
+        @endif
+
+        @if (\Auth::user()->hasRole('ku'))
+            <span class="label label-danger">Ditolak KS</span>
+        @endif
     @endif
 
-    @if (\App\Helpers\ProjectStatus::isApprovedByKJ($project->status))
-        <span class="label label-success">Approved by KJ</span>
+    @if (\App\Helpers\Status::isApprovedBySUB($data->status))
+        <span class="label label-success">Diterima SUB</span>
     @endif
 
-    @if (\App\Helpers\ProjectStatus::isRejectedByKJ($project->status))
-        <span class="label label-danger">Rejected by KJ</span>
-    @endif
-@endif
-<!-- End -->
-
-<!-- Reviews -->
-@if (Route::current()->getName() == 'reviews.index')   
-    @if (\App\Helpers\ProjectStatus::isAppliedByKU($project->status))
-        <span class="label label-warning">Review</span>
-    @endif
-
-    @if (\App\Helpers\ProjectStatus::isApprovedByKS($project->status))
-        <span class="label label-info">Pending</span>
-    @endif
-
-    @if (\App\Helpers\ProjectStatus::isRejectedByKS($project->status))
-        <span class="label label-danger">Reject</span>
-    @endif
-
-    @if (\App\Helpers\ProjectStatus::isApprovedByKJ($project->status))
-        <span class="label label-success">Approved</span>
-    @endif
-
-    @if (\App\Helpers\ProjectStatus::isRejectedByKJ($project->status))
-        <span class="label label-danger">Rejected</span>
+    @if (\App\Helpers\Status::isRejectedBySUB($data->status))
+        <span class="label label-danger">Ditolak SUB</span>
     @endif
 @endif
 <!-- End -->

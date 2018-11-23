@@ -17,12 +17,12 @@
 @if (Route::current()->getName() == 'projects.index')    
     <section class="content-header">
         <h1>
-            Projects
-            <small>All Projects</small>
+            Projek
+            <small>Projek Keseluruhan</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('projects.index') }}"><i class="fa fa-dashboard"></i> Projects</a></li>
-            <li class="active">All Projects</li>
+            <li><a href="{{ route('projects.index') }}"><i class="fa fa-dashboard"></i> Projek</a></li>
+            <li class="active">Projek Keseluruhan</li>
         </ol>
     </section>
 @endif
@@ -30,12 +30,12 @@
 @if (Route::current()->getName() == 'projects.create')    
     <section class="content-header">
         <h1>
-            Projects
-            <small>Create Project</small>
+            Projek
+            <small>Projek Baru</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('projects.index') }}"><i class="fa fa-dashboard"></i> Projects</a></li>
-            <li class="active">Create Project</li>
+            <li><a href="{{ route('projects.index') }}"><i class="fa fa-dashboard"></i> Projek</a></li>
+            <li class="active">Projek Baru</li>
         </ol>
     </section>
 @endif
@@ -45,12 +45,12 @@
 @if (Route::current()->getName() == 'reviews.index')    
     <section class="content-header">
         <h1>
-            Reviews
-            <small>All Projects</small>
+            Semakan
+            <small>Projek Keseluruhan</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Reviews</a></li>
-            <li class="active">All Projects</li>
+            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Semakan</a></li>
+            <li class="active">Projek Keseluruhan</li>
         </ol>
     </section>
 @endif
@@ -58,12 +58,12 @@
 @if (Route::current()->getName() == 'reviews.show')    
     <section class="content-header">
         <h1>
-            Reviews
-            <small>Project</small>
+            Semakan
+            <small>Projek</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Reviews</a></li>
-            <li class="active">Project</li>
+            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Semakan</a></li>
+            <li class="active">Projek</li>
         </ol>
     </section>
 @endif
@@ -73,25 +73,38 @@
 @if (Route::current()->getName() == 'allocations.index')
     <section class="content-header">
         <h1>
-            Allocations
-            <small>Budget Types</small>
+            Peruntukan
+            <small>Jenis Bajet</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Allocations</a></li>
-            <li class="active">Budget Types</li>
+            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Peruntukan</a></li>
+            <li class="active">Jenis Bajet</li>
         </ol>
     </section>
 @endif
 
-@if (Route::current()->getName() == 'allocations.type')
+@if (Route::current()->getName() == 'allocations.create')
     <section class="content-header">
         <h1>
-            Allocations
-            <small>Sub Budget Types</small>
+            Peruntukan
+            <small>Peruntukan Baru</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Allocations</a></li>
-            <li class="active">Sub Budget Types</li>
+            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Peruntukan</a></li>
+            <li class="active">Peruntukan Baru</li>
+        </ol>
+    </section>
+@endif
+
+@if (Route::current()->getName() == 'allocations.update')
+    <section class="content-header">
+        <h1>
+            Peruntukan
+            <small>Kemaskini Peruntukan</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Peruntukan</a></li>
+            <li class="active">Kemaskini Peruntukan</li>
         </ol>
     </section>
 @endif
@@ -101,12 +114,12 @@
 @if (Route::current()->getName() == 'users.index')
     <section class="content-header">
         <h1>
-            Users
-            <small>All Users</small>
+            Pengguna
+            <small>Keseluruhan Pengguna</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Users</a></li>
-            <li class="active">All Users</li>
+            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Pengguna</a></li>
+            <li class="active">Keseluruhan Pengguna</li>
         </ol>
     </section>
 @endif
@@ -114,12 +127,12 @@
 @if (Route::current()->getName() == 'users.create')
     <section class="content-header">
         <h1>
-            Users
-            <small>Create New User</small>
+            Pengguna
+            <small>Pengguna Baru</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Users</a></li>
-            <li class="active">Create New User</li>
+            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Pengguna</a></li>
+            <li class="active">Pengguna Baru</li>
         </ol>
     </section>
 @endif
@@ -127,12 +140,12 @@
 @if (Route::current()->getName() == 'users.edit')
     <section class="content-header">
         <h1>
-            Users
-            <small>Update User</small>
+            Pengguna
+            <small>Kemaskini Pengguna</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Users</a></li>
-            <li class="active">Update User</li>
+            <li><a href="{{ route('users.index') }}"><i class="fa fa-dashboard"></i> Pengguna</a></li>
+            <li class="active">Kemaskini Pengguna</li>
         </ol>
     </section>
 @endif
@@ -142,12 +155,12 @@
 @if (Route::current()->getName() == 'roles.index')
     <section class="content-header">
         <h1>
-            Roles
-            <small>All Roles</small>
+            Peranan
+            <small>Keseluruhan Peranan</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Roles</a></li>
-            <li class="active">All Roles</li>
+            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Peranan</a></li>
+            <li class="active">Keseluruhan Peranan</li>
         </ol>
     </section>
 @endif
@@ -155,12 +168,12 @@
 @if (Route::current()->getName() == 'roles.edit')
     <section class="content-header">
         <h1>
-            Roles
-            <small>Update Role</small>
+            Peranan
+            <small>Kemaskini Peranan</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Roles</a></li>
-            <li class="active">Update Role</li>
+            <li><a href="{{ route('roles.index') }}"><i class="fa fa-dashboard"></i> Peranan</a></li>
+            <li class="active">Kemaskini Peranan</li>
         </ol>
     </section>
 @endif
@@ -170,12 +183,12 @@
 @if (Route::current()->getName() == 'sections.index')
     <section class="content-header">
         <h1>
-            Sections
-            <small>All Sections</small>
+            Seksyen
+            <small>Keseluruhan Seksyen</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('sections.index') }}"><i class="fa fa-dashboard"></i> Sections</a></li>
-            <li class="active">All Sections</li>
+            <li><a href="{{ route('sections.index') }}"><i class="fa fa-dashboard"></i> Seksyen</a></li>
+            <li class="active">Keseluruhan Seksyen</li>
         </ol>
     </section>
 @endif
@@ -183,12 +196,12 @@
 @if (Route::current()->getName() == 'sections.edit')
     <section class="content-header">
         <h1>
-            Sections
-            <small>Update Section</small>
+            Seksyen
+            <small>Kemaskini Seksyen</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('sections.index') }}"><i class="fa fa-dashboard"></i> Sections</a></li>
-            <li class="active">Update Section</li>
+            <li><a href="{{ route('sections.index') }}"><i class="fa fa-dashboard"></i> Seksyen</a></li>
+            <li class="active">Kemaskini Seksyen</li>
         </ol>
     </section>
 @endif
@@ -198,12 +211,12 @@
 @if (Route::current()->getName() == 'units.index')
     <section class="content-header">
         <h1>
-            Units
-            <small>All Units</small>
+            Unit
+            <small>Keseluruhan Unit</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('units.index') }}"><i class="fa fa-dashboard"></i> Units</a></li>
-            <li class="active">All Units</li>
+            <li><a href="{{ route('units.index') }}"><i class="fa fa-dashboard"></i> Unit</a></li>
+            <li class="active">Keseluruhan Unit</li>
         </ol>
     </section>
 @endif

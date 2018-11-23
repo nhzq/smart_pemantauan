@@ -13,7 +13,7 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         @if (count(\App\Models\Project::all()) > 0)
-                            <h3>RM {{ helperCurrency(\App\Models\Project::orderBy('id', 'DESC')->pluck('total_amount')->first()) }}</h3>
+                            <h3></h3>
                         @else
                             <h3>RM 0.00</h3>         
                         @endif
@@ -32,12 +32,12 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         @if (count(\App\Models\Project::all()) > 0)
-                            <h3>RM {{ helperCurrency(\App\Models\Project::orderBy('id', 'DESC')->pluck('total_amount')->first() / count(\App\Models\Project::all()))}}</h3>
+                            <h3></h3>
                         @else
                             <h3>RM 0.00</h3>         
                         @endif
 
-                        <p>Average Cost Per Project</p>
+                        <p></p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>

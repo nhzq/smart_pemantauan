@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLookupProjectStatusesTable extends Migration
+class CreateLookupCollectionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLookupProjectStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lookup_project_statuses', function (Blueprint $table) {
+        Schema::create('lookup_collection_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateLookupProjectStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lookup_project_statuses');
+        Schema::dropIfExists('lookup_collection_types');
     }
 }

@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Update User</h3>
+                        <h3 class="box-title">Kemaskini Pengguna</h3>
                     </div>
                     <div class="box-body">
                         <div class="mrg10T mrg10B">
@@ -24,23 +24,23 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group {{ $errors->has('user_name') ? 'has-error' : '' }}">
-                                                <label>Name</label>
-                                                <input class="form-control" type="text" name="user_name" placeholder="Name" value="{{ $user->name ?? '' }}">
+                                                <label>Nama</label>
+                                                <input class="form-control" type="text" name="user_name" placeholder="Nama" value="{{ $user->name ?? '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group {{ $errors->has('user_ic') ? 'has-error' : '' }}">
-                                                <label>IC Number</label>
-                                                <input class="form-control" type="text" name="user_ic" placeholder="IC Number" value="{{ $user->ic ?? '' }}">
+                                                <label>No K/P</label>
+                                                <input class="form-control" type="text" name="user_ic" placeholder="No K/P" value="{{ $user->ic ?? '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group {{ $errors->has('user_department') ? 'has-error' : '' }}">
-                                                <label>Department</label>
+                                                <label>Jabatan</label>
                                                 <select class="form-control" name="user_department">
-                                                    <option value="0">-- Please choose --</option>
+                                                    <option value="0">-- Sila Pilih --</option>
                                                     @if (!empty($departments))
                                                         @foreach ($departments as $department)
                                                             <?php 
@@ -65,9 +65,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group {{ $errors->has('user_role') ? 'has-error' : '' }}">
-                                                <label>Role</label>
+                                                <label>Peranan</label>
                                                 <select id="user_role" class="form-control" name="user_role">
-                                                    <option value="0">-- Please choose --</option>
+                                                    <option value="0">-- Sila Pilih --</option>
                                                     @if (!empty($roles))
                                                         @foreach ($roles as $role)
                                                             <?php 
@@ -96,9 +96,9 @@
                                                             $title = '';
 
                                                             if (!empty($user->lookup_section_id)) {
-                                                                $title = 'Sections Name';
+                                                                $title = 'Nama Seksyen';
                                                             } else if (!empty($user->lookup_unit_id)) {
-                                                                $title = 'Units Name';
+                                                                $title = 'Nama Unit';
                                                             } else {
                                                                 $title = '';
                                                             }
@@ -114,14 +114,14 @@
 
                                 <div class="col-md-2 mrg20B mrg20T pull-right">
                                     <button class="btn btn-block btn-primary" type="submit">
-                                        Save
+                                        Simpan
                                     </button>
                                 </div>
                                 
                                 @if (!is_null($user->deleted_at))
                                     <div class="col-md-2 mrg20B mrg20T pull-left">
                                         <a href="{{ route('users.activate', $user->id) }}" class="btn btn-block btn-info" type="submit">
-                                            Activate
+                                            Mengaktifkan Pengguna
                                         </a>
                                     </div>
                                 @endif
@@ -129,7 +129,7 @@
                                 @if (is_null($user->deleted_at))
                                     <div class="col-md-2 mrg20B mrg20T pull-left">
                                         <a href="{{ route('users.reset', $user->id) }}" class="btn btn-block btn-warning" type="submit">
-                                            Reset Password
+                                            Set Semula Kata Laluan
                                         </a>
                                     </div>
                                 @endif
@@ -161,9 +161,9 @@
                         },
                         success: function (data) {
                             section += '<div class="form-group">';
-                            section += '<label>Units Name</label>';
+                            section += '<label>Nama Unit</label>';
                             section += '<select class="form-control" name="user_unit">';
-                            section += '<option value="0">-- Please choose --</option>';
+                            section += '<option value="0">-- Sila Pilih --</option>';
 
                             for(var i = 0; i < data.length; i++) {
                                 section += '<option value="' + data[i].id + '">' + data[i].displayed_name + '</option>';
@@ -194,9 +194,9 @@
                         },
                         success: function (data) {
                             section += '<div class="form-group">';
-                            section += '<label>Sections Name</label>';
+                            section += '<label>Nama Seksyen</label>';
                             section += '<select class="form-control" name="user_section">';
-                            section += '<option value="0">-- Please choose --</option>';
+                            section += '<option value="0">-- Sila Pilih --</option>';
 
                             for(var i = 0; i < data.length; i++) {
                                 section += '<option value="' + data[i].id + '">' + data[i].displayed_name + '</option>';

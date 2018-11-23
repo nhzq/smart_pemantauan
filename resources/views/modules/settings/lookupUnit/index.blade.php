@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">List of Units</h3>
+                        <h3 class="box-title">Senarai Unit</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -25,10 +25,10 @@
                                 <thead>
                                     <tr class="tbl-row-init tbl-default">
                                         <th class="col-md-1">#</th>
-                                        <th class="col-md-3">Section</th>
-                                        <th class="col-md-3">Displayed Name</th>
-                                        <th class="col-md-1">Name</th>
-                                        <th class="col-md-1">Action</th>
+                                        <th class="col-md-3">Seksyen</th>
+                                        <th class="col-md-3">Nama Paparan</th>
+                                        <th class="col-md-1">Nama (kod)</th>
+                                        <th class="col-md-1">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>

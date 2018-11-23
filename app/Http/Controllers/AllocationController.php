@@ -7,53 +7,94 @@ use App\Models\LookupDepartment as Department;
 use App\Models\LookupBudgetType as Budget;
 use App\Models\LookupSubBudgetType as SubBudget;
 use App\Models\Allocation;
+use App\Models\Project;
 
 class AllocationController extends Controller
 {
     public function index()
     {
-        $budgets = Budget::where('lookup_department_id', 2)->get();
+        $allocations = Allocation::where('lookup_department_id', 2)->where('active', 1)->orderBy('lookup_budget_type_id', 'ASC')->get();
 
         return view('modules.financial.allocation.index', [
-            'budgets' => $budgets
-        ]);
-    }
-
-    public function type($id)
-    {
-        $budget = Budget::find($id);
-        $allocations = Allocation::where('lookup_budget_type_id', $id)->get();
-
-        return view('modules.financial.allocation.type', [
-            'budget' => $budget,
             'allocations' => $allocations
         ]);
     }
 
-    public function create($id)
+    public function create()
     {
-        $budget = Budget::find($id);
+        $budgets = Budget::where('lookup_department_id', 2)->get();
 
         return view('modules.financial.allocation.create', [
-            'budget' => $budget
+            'budgets' => $budgets
         ]);
     }
 
-    public function store(Request $request, $id)
+    public function ajaxType(Request $request)
     {
+        $data = SubBudget::where('lookup_budget_type_id', $request->id)->get();
+
+        return response()->json($data);
+    }
+
+    public function store(Request $request)
+    {
+        $value = Allocation::where('lookup_sub_budget_type_id', $request->budget_sub)->where('active', 1)->first();
+
+        if (count($value) > 0) {
+            return redirect()
+                ->back()
+                ->with('error', $value->sub->code . ' : ' . $value->sub->description . ' ada di dalam pangkalan data. Sila kemaskini sekiranya perlu.');
+        }
+
         Allocation::create([
-            'lookup_department_id' => $request->budget_department_id,
-            'lookup_budget_type_id' => $id,
-            'lookup_sub_budget_type_id' => $request->budget_type,
-            'amount' => $request->budget_allocation,
-            'estimate_cost' =>  $request->budget_estimate,
-            'project_cost' => $request->budget_project_cost,
-            'total_spending' => $request->budget_spending,
-            'balance' => $request->budget_balance
+            'lookup_department_id' => 2,
+            'lookup_budget_type_id' => $request->budget_type,
+            'lookup_sub_budget_type_id' => $request->budget_sub,
+            'amount' => removeMaskMoney($request->budget_allocation),
+            'balance' => removeMaskMoney($request->budget_allocation),
+            'created_by' => \Auth::user()->id,
+            'active' => 1
         ]);
 
         return redirect()
-            ->route('allocations.type', $id)
-            ->with('success', 'Allocation has been saved');
+            ->route('allocations.index')
+            ->with('success', 'Peruntukan telah berjaya disimpan.');
+    }
+
+    public function edit($id)
+    {
+        $allocation = Allocation::find($id);
+        $budgets = Budget::where('lookup_department_id', 2)->get();
+        $subBudgets = \App\Models\LookupSubBudgetType::where('lookup_budget_type_id', $allocation->lookup_budget_type_id)->get();
+
+        return view('modules.financial.allocation.edit', [
+            'allocation' => $allocation,
+            'budgets' => $budgets,
+            'subBudgets' => $subBudgets
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $allocation = Allocation::find($id);
+        $min_total_cost = $allocation->amount - $allocation->balance;
+        $total_estimate_cost = $allocation->amount - $allocation->balance;
+
+        if (removeMaskMoney($request->budget_allocation) > $min_total_cost) {
+            $allocation->lookup_budget_type_id = $request->budget_type;
+            $allocation->lookup_sub_budget_type_id = $request->budget_sub;
+            $allocation->amount = removeMaskMoney($request->budget_allocation);
+            $allocation->balance = removeMaskMoney($request->budget_allocation) - $total_estimate_cost;
+            $allocation->updated_by = \Auth::user()->id;
+            $allocation->save();
+
+            return redirect()
+                ->route('allocations.index')
+                ->with('success', 'Peruntukan telah berjaya dikemaskini.');
+        }
+
+        return redirect()
+            ->back()
+            ->with('error', 'Peruntukan baru tidak boleh lagi rendah dari anggaran kos.');
     }
 }

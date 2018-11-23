@@ -42,6 +42,6 @@ class LookupSectionController extends Controller
 
         return redirect()
             ->route('sections.index')
-            ->with('success', 'Section has been updated');
+            ->with('success', 'Seksyen telah berjaya dikemaskini.');
     }
 }

@@ -54,7 +54,7 @@ class LookupUnitController extends Controller
 
         return redirect()
             ->route('units.index')
-            ->with('success', 'Unit has been updated');
+            ->with('success', 'Unit telah berjaya dikemaskini.');
     }
 
     /**

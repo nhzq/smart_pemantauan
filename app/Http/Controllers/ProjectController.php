@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Helpers\Status;
 use App\Models\Project;
-use App\Models\Review;
-use App\Helpers\ProjectStatus as Status;
+use App\Models\LookupBudgetType as Budget;
+use App\Models\LookupSubBudgetType as SubBudget;
+use App\Models\Allocation;
+use Carbon\Carbon;
 
 class ProjectController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['role:ketua-unit']);
-    }
-
     public function index()
     {
-        $projects = Project::paginate(20);
+        $projects = Project::where('active', 1)->paginate(20);
 
         return view('modules.projects.index', [
             'projects' => $projects
@@ -25,38 +24,81 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return view('modules.projects.create');
+        $budgets = Budget::where('lookup_department_id', 2)->get();
+
+        return view('modules.projects.create', [
+            'budgets' => $budgets
+        ]);
+    }
+
+    public function ajaxSubType(Request $request)
+    {
+        $data = SubBudget::where('lookup_budget_type_id', $request->id)->get();
+
+        return response()->json($data);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'project_name' => 'required',
-            'project_cost' => 'required|numeric|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/',
-            'project_description' => 'required'
-        ]);
+        $get_budget_limit_id = $request->project_sub_budget_type;
+        $estimate_cost = removeMaskMoney($request->project_estimate_cost);
 
-        $project = new Project;
-        $last_amount = Project::orderBy('id', 'desc')->pluck('total_amount')->first();
+        $allocation = Allocation::where('lookup_sub_budget_type_id', $get_budget_limit_id)->first();
 
-        $project->name = $request->project_name;
-        $project->cost = $request->project_cost;
-        $project->description = $request->project_description;
-        $project->total_amount = !empty($last_amount) ? $last_amount + $request->project_cost : $request->project_cost;
-        $project->status = Status::isAppliedByKU();
-        $project->created_by = \Auth::user()->id;
-        $project->save();
+        if (!empty($allocation)) {
+            if ($estimate_cost <= $allocation->balance) {
+                DB::transaction(function () use ($request, $allocation) {
+                    $project = Project::create([
+                        'lookup_budget_type_id' => $request->project_budget_type,
+                        'lookup_sub_budget_type_id' => $request->project_sub_budget_type,
+                        'name' => $request->project_name,
+                        'file_reference_no' => $request->project_file_reference,
+                        'concept' => $request->project_concept,
+                        'estimate_cost' => !is_null($request->project_estimate_cost) ? removeMaskMoney($request->project_estimate_cost) : 0,
+                        'approval_date' => Carbon::parse($request->project_approval_date),
+                        'proposal' => isset($proposal_new_name) ? 'uploads/projects/' . $proposal_new_name : null,
+                        'rmk' => $request->project_rmk,
+                        'market_research' => $request->optradio,
+                        'market_research_file' => isset($market_research_new_name) ? 'uploads/projects/' . $market_research_new_name : null,
+                        'status' => Status::isAppliedByKU(),
+                        'created_by' => \Auth::user()->id,
+                        'active' => 1
+                    ]);
+
+                    $total_estimate_cost = Project::where('lookup_sub_budget_type_id', $request->project_sub_budget_type)->sum('estimate_cost');
+                    $allocation->balance = $allocation->amount - $total_estimate_cost;
+                    $allocation->save();
+                });
+
+                return redirect()
+                    ->route('projects.index')
+                    ->with('success', 'Project telah berjaya disimpan.');
+            }
+
+             return redirect()
+                ->back()
+                ->with('error', 'Anggaran kos projek ini telah melebihi kos projek yang ditetapkan.');
+        }
 
         return redirect()
-            ->route('projects.index')
-            ->with('success', 'Project has been saved');
+            ->back()
+            ->with('error', 'Maaf, peruntukan untuk projek tidak ditetapkan lagi.');
     }
 
     public function show($id)
     {
         $project = Project::find($id);
-
+        
         return view('modules.projects.view', [
+            'project' => $project
+        ]);
+    }
+
+    public function timeline($id)
+    {
+        $project = Project::find($id);
+
+        return view('modules.projects.timeline', [
             'project' => $project
         ]);
     }
@@ -64,104 +106,46 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
+        $budgets = Budget::where('lookup_department_id', 2)->get();
+        $subBudgets = SubBudget::where('lookup_budget_type_id', $project->lookup_budget_type_id)->get();
 
-        if (Status::isApprovedByKS($project->status) || Status::isApprovedByKJ($project->status)) {
-            return redirect()->back()
-                ->with('error', 'Project: ' . ucwords($project->name) . ' cannot be edited');
+        if (Status::isApprovedByKS($project->status) || Status::isApprovedBySUB($project->status)) {
+            return redirect()
+                ->back()
+                ->with('error', 'Projek: ' . ucwords($project->name) . ' tidak boleh dikemaskini.');
         }
 
         return view('modules.projects.edit', [
-            'project' => $project 
+            'project' => $project,
+            'budgets' => $budgets,
+            'subBudgets' => $subBudgets
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'project_name' => 'required',
-            'project_cost' => 'required|numeric|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/',
-            'project_description' => 'required'
-        ]);
-
         $project = Project::find($id);
 
-        try {
-            // Update total amount
-            $projectLast = Project::getLastRow()->first();
-            $projectLast->total_amount = $projectLast->total_amount - $project->cost + $request->project_cost;
-            $projectLast->save();
-        } catch (ValidationException $e) {
-            return redirect()
-                ->route('projects.index')
-                ->with('error', 'Cannot update total cost of projects');
-        }
+        $project->lookup_budget_type_id = $request->project_budget_type;
+        $project->lookup_sub_budget_type_id = $request->project_sub_budget_type;
+        $project->name = $request->project_name;
+        $project->file_reference_no = $request->project_file_reference;
+        $project->concept = $request->project_concept;
+        $project->estimate_cost = removeMaskMoney($request->project_estimate_cost);
+        $project->approval_date = Carbon::parse($request->project_approval_date);
+        $project->rmk = $request->project_rmk;
+        $project->market_research = $request->optradio;
+        $project->created_by = \Auth::user()->id;
+        $project->status = Status::isAppliedByKU();
+        $project->save();
 
-        try {
-            // Update Project
-            $project->name = $request->project_name;
-            $project->cost = $request->project_cost;
-            $project->description = $request->project_description;
-            $project->status = Status::isAppliedByKU();
-            $project->created_by = \Auth::user()->id;
-            $project->updated_by = \Auth::user()->id;
-            $project->save();
-        } catch (ValidationException $e) {
-            return redirect()
-                ->route('projects.index')
-                ->with('error', 'Project cannot be updated');
-        }
-
-        
         return redirect()
             ->route('projects.index')
-            ->with('success', 'Project has been updated');
+            ->with('success', 'Projek telah berjaya dikemaskini.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        $project = Project::find($id);
-        $last = Project::getLastRow()->first();
-
-        if (Status::isApprovedByKS($project->status) || Status::isApprovedByKJ($project->status)) {
-            return redirect()->back()
-                ->with('error', 'Project: ' . ucwords($project->name) . ' cannot be deleted');
-        }
-
-        if ($project->id !== $last->id) {
-            $last->total_amount = $last->total_amount - $project->cost;
-            $last->save();
-
-            $project->delete();
-
-            return redirect()
-                ->back()
-                ->with('success', 'Project has been deleted');
-        } else {
-            $cost = $project->cost;
-            $total_amount = $project->total_amount;
-
-            $project->delete();
-
-            $updatedLastRow = Project::getLastRow()->first();
-            $updatedLastRow->total_amount = $total_amount - $cost;
-            $updatedLastRow->save();
-
-            return redirect()
-                ->back()
-                ->with('success', 'Project has been deleted');
-        }
+        //
     }
 }

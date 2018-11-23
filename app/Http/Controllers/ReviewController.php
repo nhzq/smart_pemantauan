@@ -5,25 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Project;
-use App\Helpers\ProjectStatus as Status;
+use App\Helpers\Status;
 use App\Models\Review;
 
 class ReviewController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role:ketua-seksyen|ketua-jabatan-bahagian-teknologi-maklumat']);
-    }
-
-    public function index()
-    {
-        $projects = Project::paginate(20);
-        $projectsKS = Project::whereIn('status', [Status::isApprovedByKS(), Status::isApprovedByKJ(), Status::isRejectedByKJ()])->paginate(20);
-
-        return view('modules.reviews.index', [
-            'projects' => $projects,
-            'projectsKS' => $projectsKS
-        ]);
+        $this->middleware(['role:ks|sub']);
     }
 
     public function show($id)
@@ -52,8 +41,8 @@ class ReviewController extends Controller
         });
 
         return redirect()
-            ->route('reviews.index')
-            ->with('success', 'Project has been approved');
+            ->route('projects.index')
+            ->with('success', 'Projek telah diterima.');
     }
 
     public function rejectKS(Request $request, $id)
@@ -75,36 +64,36 @@ class ReviewController extends Controller
         });
 
         return redirect()
-            ->route('reviews.index')
-            ->with('success', 'Project has been rejected');
+            ->route('projects.index')
+            ->with('success', 'Projek telah ditolak.');
     }
 
-    public function approveKJ(Request $request, $id)
+    public function approveSUB(Request $request, $id)
     {
         DB::transaction(function () use ($request, $id) {
             $project = Project::find($id);
-            $project->status = Status::isApprovedByKJ();
+            $project->status = Status::isApprovedBySUB();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 
             $review = Review::create([
                 'project_id' => $id,
-                'status' => Status::isApprovedByKJ(),
+                'status' => Status::isApprovedBySUB(),
                 'content' => $request->review_content,
                 'created_by' => \Auth::user()->id
             ]);
         });
 
         return redirect()
-            ->route('reviews.index')
-            ->with('success', 'Project has been approved');
+            ->route('projects.index')
+            ->with('success', 'Projek telah diterima');
     }
 
-    public function rejectKJ(Request $request, $id)
+    public function rejectSUB(Request $request, $id)
     {
         DB::transaction(function () use ($request, $id) {
             $project = Project::find($id);
-            $project->status = Status::isRejectedByKJ();
+            $project->status = Status::isRejectedBySUB();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 
@@ -112,14 +101,23 @@ class ReviewController extends Controller
             
             $review = Review::create([
                 'project_id' => $id,
-                'status' => Status::isRejectedByKJ(),
+                'status' => Status::isRejectedBySUB(),
                 'content' => $request->review_content,
                 'created_by' => \Auth::user()->id
             ]);
         });
 
         return redirect()
-            ->route('reviews.index')
-            ->with('success', 'Project has been rejected');
+            ->route('projects.index')
+            ->with('success', 'Projek telah ditolak');
+    }
+
+    public function timeline($id)
+    {
+        $project = Project::find($id);
+
+        return view('modules.projects.timeline', [
+            'project' => $project
+        ]);
     }
 }

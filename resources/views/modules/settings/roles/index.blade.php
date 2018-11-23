@@ -19,7 +19,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::role('ku')->get()) }}</h3>
 
-                        <p>Total Users: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'ku')->pluck('displayed_name')->first() }}</b></p>
+                        <p>Jumlah Pengguna: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'ku')->pluck('displayed_name')->first() }}</b></p>
 
                     </div>
                     <div class="icon">
@@ -34,7 +34,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::role('ks')->get()) }}</h3>
 
-                        <p>Total Users: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'ks')->pluck('displayed_name')->first() }}</b></p>
+                        <p>Jumlah Pengguna: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'ks')->pluck('displayed_name')->first() }}</b></p>
 
                     </div>
                     <div class="icon">
@@ -49,7 +49,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::role('sub')->get()) }}</h3>
 
-                        <p>Total Users: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'sub')->pluck('displayed_name')->first() }}</b></p>
+                        <p>Jumlah Pengguna: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'sub')->pluck('displayed_name')->first() }}</b></p>
 
                     </div>
                     <div class="icon">
@@ -64,7 +64,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::role('kewangan')->get()) }}</h3>
 
-                        <p>Total Users: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'kewangan')->pluck('displayed_name')->first() }}</b></p>
+                        <p>Jumlah Pengguna: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'kewangan')->pluck('displayed_name')->first() }}</b></p>
 
                     </div>
                     <div class="icon">
@@ -79,7 +79,7 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">List of Roles</h3>
+                        <h3 class="box-title">Senarai Peranan</h3>
                     </div>
 
                     <div class="box-body">
@@ -88,9 +88,9 @@
                                 <thead>
                                     <tr class="tbl-row-init tbl-default">
                                         <th class="max20">#</th>
-                                        <th>Displayed Name</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
+                                        <th>Nama Paparan</th>
+                                        <th>Nama (kod)</th>
+                                        <th>Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>

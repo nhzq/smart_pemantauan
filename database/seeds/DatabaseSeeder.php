@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call(LookupSectionTableSeeder::class);
         $this->call(LookupUnitTableSeeder::class);
         $this->call(LookupBudgetTableSeeder::class);
-        // $this->call(ProjectTableSeeder::class);
+        $this->call(LookupCollectionTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+        $this->call(LookupProjectTeamTableSeeder::class);
+        $this->call(LookupTeamRoleTableSeeder::class);
     }
 }

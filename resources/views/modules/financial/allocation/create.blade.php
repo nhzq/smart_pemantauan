@@ -17,21 +17,19 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">{{ $budget->code . ': ' . $budget->description }}</h3>
+                        <h3 class="box-title">Butiran Baru</h3>
                     </div>
 
                     <div class="box-body">
-                        {{ Form::open(['url' => route('allocations.store', $budget->id), 'method' => 'POST']) }}
-                            <input type="hidden" name="budget_department_id" value="{{ $budget->lookup_department_id }}">
-
+                        {{ Form::open(['url' => route('allocations.store'), 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('budget_type') ? 'has-error' : '' }}">
-                                            <label>Budget Type</label>
-                                            <select class="form-control" name="budget_type">
-                                                <option>-- Please Choose --</option>
-                                                @foreach ($budget->subs as $data)
+                                            <label>Jenis Bajet</label>
+                                            <select id="budget_type" class="form-control" name="budget_type">
+                                                <option>-- Sila Pilih --</option>
+                                                @foreach ($budgets as $data)
                                                     <option value="{{ $data->id }}">{{ $data->code . ' : ' . $data->description }}</option>
                                                 @endforeach
                                             </select>
@@ -39,41 +37,20 @@
                                     </div>
 
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Butiran</label>
+                                            <select id="budget_sub" class="form-control" name="budget_sub">
+                                                <option>-- Sila Pilih --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('budget_allocation') ? 'has-error' : '' }}">
-                                            <label>Allocation (RM)</label>
-                                            <input class="form-control" type="text" name="budget_allocation" placeholder="Allocation">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_estimate') ? 'has-error' : '' }}">
-                                            <label>Estimate Cost (RM)</label>
-                                            <input class="form-control" type="text" name="budget_estimate" placeholder="Estimate Cost">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_project_cost') ? 'has-error' : '' }}">
-                                            <label>Project Cost (RM)</label>
-                                            <input class="form-control" type="text" name="budget_project_cost" placeholder="Project Cost">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_spending') ? 'has-error' : '' }}">
-                                            <label>Total Spending (RM)</label>
-                                            <input class="form-control" type="text" name="budget_spending" placeholder="Total Spending">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_balance') ? 'has-error' : '' }}">
-                                            <label>Balance (RM)</label>
-                                            <input class="form-control" type="text" name="budget_balance" placeholder="Baki Belanja">
+                                            <label>Peruntukan (RM)</label>
+                                            <input class="form-control money-convert" type="text" name="budget_allocation" placeholder="Peruntukan (RM)">
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +58,7 @@
 
                             <div class="col-md-2 mrg20B mrg20T pull-right">
                                 <button class="btn btn-block btn-primary" type="submit">
-                                    Save
+                                    Simpan
                                 </button>
                             </div>
                         {{ Form::close() }}
@@ -94,4 +71,37 @@
 @endsection
 
 @push ('script')
+    <script src="{{ asset('adminlte/plugin/maskMoney/jquery.maskMoney.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.money-convert').maskMoney();
+            
+            $('#budget_type').on('change', function () {
+                var selected_value = $(this).val();
+                var type = '';
+
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'json',
+                    url: '{{ route('allocations.create.type') }}',
+                    data: {
+                        'id': selected_value
+                    },
+                    success: function (data) {
+                        type += '<option>-- Sila Pilih --</option>';
+
+                        for (var i = 0; i < data.length; i++) {
+                            type += '<option value="' + data[i].id + '">' + data[i].code + ' : ' + data[i].description + '</option>';
+                        }
+
+                        $('#budget_sub').html(" ");
+                        $('#budget_sub').append(type);
+                    },
+                    error: function (xhr, desc, err) {
+                        console.log('error');
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

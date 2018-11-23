@@ -23,6 +23,9 @@ class CreateAllocationsTable extends Migration
             $table->decimal('project_cost', 19, 2)->nullable();
             $table->decimal('total_spending', 19, 2)->nullable();
             $table->decimal('balance', 19, 2)->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('active')->nullable();
             $table->timestamps();
         });
     }

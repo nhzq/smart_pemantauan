@@ -29,7 +29,7 @@ class RoleController extends Controller
         if ($role->name === 'superadmin') {
             return redirect()
                 ->back()
-                ->with('error', 'Superadmin cannot be edited');
+                ->with('error', 'Superadmin tidak boleh dikemaskini');
         }
 
         return view('modules.settings.roles.edit', [
@@ -49,7 +49,7 @@ class RoleController extends Controller
 
         return redirect()
             ->route('roles.index')
-            ->with('success', 'Role\'s displayed name has been updated');
+            ->with('success', 'Peranan telah berjaya dikemaskini.');
     }
 
     public function destroy($id)

@@ -101,7 +101,7 @@ class UserController extends Controller
         ]);
 
         $user = User::create([
-            'name' => strtoupper($request->user_name),
+            'name' => $request->user_name,
             'ic' => $request->user_ic,
             'lookup_department_id' => $request->user_department,
             'lookup_section_id' => $request->user_section ?? null,
@@ -113,7 +113,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'User has been created');
+            ->with('success', 'Pengguna telah berjaya disimpan.');
     }
 
     public function show($id)
@@ -130,7 +130,7 @@ class UserController extends Controller
         if ($user->hasRole('superadmin')) {
             return redirect()
                 ->back()
-                ->with('error', 'Superadmin cannot be edited');
+                ->with('error', 'Superadmin tidak boleh dikemaskini.');
         }
 
         return view('modules.settings.users.edit', [
@@ -151,7 +151,7 @@ class UserController extends Controller
             'user_department' => 'required|not_in:0'
         ]);
 
-        $user->name = strtoupper($request->user_name);
+        $user->name = $request->user_name;
         $user->ic = $request->user_ic;
         $user->lookup_department_id = $request->user_department;
         $user->lookup_section_id = $request->user_section ?? null;
@@ -162,7 +162,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('users.index')
-            ->with('success', 'User has been updated');
+            ->with('success', 'Pengguna telah berjaya dikemaskini');
     }
 
     public function destroy($id)
@@ -172,20 +172,20 @@ class UserController extends Controller
         if (is_null($user)) {
             return redirect()
                 ->back()
-                ->with('error', 'Inactive user cannot be deleted');
+                ->with('error', 'Pengguna tidak aktif tidak boleh dihapuskan.');
         }
 
         if ($user->hasRole('superadmin')) {
             return redirect()
                 ->back()
-                ->with('error', 'Superadmin cannot be deactivated');
+                ->with('error', 'Superadmin tidak boleh dinyahaktifkan');
         }
 
         $user->delete();
 
         return redirect()
             ->back()
-            ->with('success', 'User has been deactivated');
+            ->with('success', 'Pengguna telah berjaya dinyahaktifkan');
     }
 
     public function activate($id)
@@ -197,7 +197,7 @@ class UserController extends Controller
 
             return redirect()
                 ->route('users.index')
-                ->with('success', 'User has been activated');
+                ->with('success', 'Pengguna telah berjaya diaktifkan.');
         }
     }
 
@@ -211,7 +211,7 @@ class UserController extends Controller
 
             return redirect()
                 ->route('users.index')
-                ->with('success', 'User\'s password has been reset');
+                ->with('success', 'Kata laluan pengguna telah berjaya di set semula.');
         }
     }
 }

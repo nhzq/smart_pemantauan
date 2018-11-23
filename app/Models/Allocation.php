@@ -14,7 +14,10 @@ class Allocation extends Model
         'estimate_cost', 
         'project_cost', 
         'total_spending', 
-        'balance'
+        'balance',
+        'created_by',
+        'updated_by',
+        'active'
     ];
 
     /*

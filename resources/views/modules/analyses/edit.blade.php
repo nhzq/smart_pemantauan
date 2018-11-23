@@ -3,6 +3,7 @@
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -15,36 +16,34 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="mrg10B pull-right">
-                    <div class="btn-group">
-                        <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div id="search" class="box box-solid collapse">
+                <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Search</h3>
+                        <h3 class="box-title">Kemaskini Pasukan Pembekal/ Kontraktor</h3>
                     </div>
+                    
                     <div class="box-body">
-                        &nbsp;
-                        {{ Form::open(['url' => route('projects.index'), 'method' => 'GET']) }}
+                        {{ Form::open(['url' => route('analyses.update', [$project_id, $analysis->id]), 'method' => 'PUT']) }}
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Project's Name</label>
-                                            <input class="form-control" type="text" name="Search_name" placeholder="Name">
+                                            <label>Jawatan</label>
+                                            <input id="analyses_position" class="form-control" type="text" placeholder="Jawatan" name="analyses_position" value="{{ $analysis->position ?? '' }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Bilangan</label>
+                                            <input id="analyses_total" class="form-control" type="number" name="analyses_total" value="{{ $analysis->total ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2 mrg20B pull-right">
+
+                            <div class="col-md-2 mrg20B mrg20T pull-right">
                                 <button class="btn btn-block btn-primary" type="submit">
-                                    Search
+                                    Simpan
                                 </button>
                             </div>
                         {{ Form::close() }}
@@ -52,10 +51,9 @@
                 </div>
             </div>
         </div>
-        
-        <div class="row">
-            @include ('modules.reviews.shared._table')
-        </div>
     </section>
     <!-- /.content -->
 @endsection
+
+@push ('script')
+@endpush

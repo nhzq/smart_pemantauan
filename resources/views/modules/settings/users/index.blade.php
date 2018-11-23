@@ -17,7 +17,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::withTrashed()->get()) }}</h3>
 
-                        <p>Total Users</p>
+                        <p>Jumlah Pengguna</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -31,7 +31,7 @@
                     <div class="inner">
                         <h3>{{ count(\Spatie\Permission\Models\Role::whereNotIn('name', ['superadmin'])->get()) }}</h3>
 
-                        <p>Total Roles</p>
+                        <p>Jumlah Peranan</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -45,7 +45,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::whereNull('deleted_at')->get()) }}</h3>
 
-                        <p>Active Users</p>
+                        <p>Pengguna Aktif</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -59,7 +59,7 @@
                     <div class="inner">
                         <h3>{{ count(\App\Models\User::withTrashed()->whereNotNull('deleted_at')->get()) }}</h3>
 
-                        <p>Inactive Users</p>
+                        <p>Pengguna Tidak Aktif</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -88,7 +88,7 @@
             <div class="col-md-12">
                 <div id="search" class="box box-solid collapse">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Search</h3>
+                        <h3 class="box-title">Carian</h3>
                     </div>
 
                     <div class="box-body">
@@ -98,8 +98,8 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Name</label>
-                                            <input class="form-control" type="text" name="user_name" placeholder="Name">
+                                            <label>Nama</label>
+                                            <input class="form-control" type="text" name="user_name" placeholder="Nama">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -149,7 +149,7 @@
 
                             <div class="col-md-2 mrg20B pull-right">
                                 <button class="btn btn-block btn-primary" type="submit">
-                                    Search
+                                    Carian
                                 </button>
                             </div>
                         {{ Form::close() }}
@@ -162,7 +162,7 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">List of Users</h3>
+                        <h3 class="box-title">Senarai Pengguna</h3>
                     </div>
 
                     <div class="box-body">
@@ -171,12 +171,12 @@
                                 <thead>
                                     <tr class="tbl-row-init tbl-default">
                                         <th class="max20">#</th>
-                                        <th>Name</th>
-                                        <th>IC Number</th>
-                                        <th>Role</th>
-                                        <th>Unit/ Section</th>
+                                        <th>Nama</th>
+                                        <th>No K/P</th>
+                                        <th>Peranan</th>
+                                        <th>Unit/ Seksyen</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -200,7 +200,7 @@
                                                 ?>
                                                 <td>{{ $position }}</td>
                                                 <td>
-                                                    {!! empty($user->deleted_at) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>' !!}
+                                                    {!! empty($user->deleted_at) ? '<span class="label label-success">Aktif</span>' : '<span class="label label-warning">Tidak Aktif</span>' !!}
                                                 </td>
                                                 <td class="col-md-1">
                                                     <div class="min90">
@@ -219,7 +219,7 @@
                                             </tr>
                                         @endforeach
                                     @else
-                                        <tr>No records found</tr>
+                                        <tr>Tiada Rekod Dijumpai</tr>
                                     @endif
                                 </tbody>
                             </table>
