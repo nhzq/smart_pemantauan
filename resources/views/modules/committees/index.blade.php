@@ -57,23 +57,20 @@
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Jawatan</th>
-                                                <th>Tarikh Lantikan</th>
+                                                <th>Jabatan</th>
                                                 <th>Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 1)->get() as $data)
+                                            @if (isset($committee))
+                                                @foreach ($committee->where('project_id', $project->id)->where('committee_type_id', 1)->get() as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $data->name ?? '' }}</td>
-                                                        <td>{{ $data->position ?? '' }}</td>
-                                                        <td>{{ $data->group ?? '' }}</td>
-                                                        <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
+                                                        <td>{{ $data->committee_name ?? '' }}</td>
+                                                        <td>{{ $data->committee_position ?? '' }}</td>
+                                                        <td>{{ $data->committee_department ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
                                                                 <div class="btn-group">
-                                                                    <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
+                                                                    <a href="" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </a>
                                                                     <button class="btn btn-danger" type="submit">

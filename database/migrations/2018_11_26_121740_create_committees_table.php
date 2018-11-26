@@ -15,6 +15,11 @@ class CreateCommitteesTable extends Migration
     {
         Schema::create('committees', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('project_id')->unsigned()->nullable();
+            $table->integer('committee_type_id')->unsigned()->nullable();
+            $table->string('committee_name')->nullable();
+            $table->string('committee_position')->nullable();
+            $table->string('committee_department')->nullable();
             $table->timestamps();
         });
     }
