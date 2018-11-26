@@ -90,7 +90,7 @@
                                                 ?>
 
                                                 <tr>
-                                                    <td>{!! setBudgetTitle($data->budget->code, $data->sub->description) !!}</td>
+                                                    <td>{!! setBudgetTitle($data->sub->code, $data->sub->description) !!}</td>
                                                     <td>{{ currency($total_sub_budget) }}</td>
                                                     <td>{{ $projects->perPage() * ($projects->currentPage() - 1) + $loop->iteration }}</td>
                                                     <td>{{ $data->name }}</td>

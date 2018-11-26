@@ -11,8 +11,8 @@
                     <p class="list-group-item-heading">Perancangan</p>
                 </a>
             </li>
-            <li class="">
-                <a href="">
+            <li class="{{ request()->is('*collection*') ? 'active' : '' }}">
+                <a href="{{ route('collection.project.information', $project->id) }}">
                     <p class="list-group-item-heading">Perolehan</p>
                 </a>
             </li>

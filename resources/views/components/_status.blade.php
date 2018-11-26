@@ -1,5 +1,4 @@
-<!-- Project -->
-@if (Route::current()->getName() == 'projects.index' || Route::current()->getName() == 'projects.show' || Route::current()->getName() == 'reviews.show')
+@if (Route::current()->getName() == 'projects.index' || Route::current()->getName() == 'projects.show')
     <?php 
         isset($data) ? $data : '';
         isset($project) ? $data = $project : '';
@@ -49,4 +48,13 @@
         @endif
     @endif
 @endif
-<!-- End -->
+
+@if (Route::current()->getName() == 'planning.reviews.index')
+    @if (\App\Helpers\Status::planningApprovedByKS($project->status))
+        <span class="label label-success">Projek Diterima KS</span>
+    @endif
+
+    @if (\App\Helpers\Status::planningRejectedByKS($project->status))
+        <span class="label label-danger">Projek Ditolak KS</span>
+    @endif
+@endif

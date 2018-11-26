@@ -31,7 +31,7 @@
                                             <select id="team_type" class="form-control" name="team_type">
                                                 <option value="0">-- Sila Pilih --</option>
                                                 @foreach ($teams as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->team }}</option>
+                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -127,6 +127,7 @@
 @push ('script')
     <script type="text/javascript">
         $('.pickdate').datepicker({
+            todayHighlight: true,
             autoclose: true
         });
 
@@ -145,7 +146,7 @@
                     type += '<option>-- Sila Pilih --</option>';
 
                     for (var i = 0; i < data.length; i++) {
-                        type += '<option value="' + data[i].id + '">' + data[i].team + '</option>';
+                        type += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
                     }
 
                     $('#team_role').html(" ");
@@ -173,7 +174,9 @@
             }
 
             $('#team_meeting_list').html('');
-            $('#team_meeting_list').append(row).find('.pickdate').datepicker();
+            $('#team_meeting_list').append(row).find('.pickdate').datepicker({
+                todayHighlight: true
+            });
         });
     </script>
 @endpush

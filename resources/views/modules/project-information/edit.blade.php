@@ -117,6 +117,7 @@
     <script src="{{ asset('adminlte/plugin/maskMoney/jquery.maskMoney.min.js') }}" type="text/javascript"></script>
     <script>
         $('.pickdate').datepicker({
+            todayHighlight: true,
             autoclose: true
         });
     </script>

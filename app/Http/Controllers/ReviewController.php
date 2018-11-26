@@ -97,4 +97,47 @@ class ReviewController extends Controller
             ->route('projects.index')
             ->with('success', 'Projek telah ditolak');
     }
+
+    public function planningIndex($project_id)
+    {
+        $project = Project::find($project_id);
+
+        return view('modules.reviews.index', [
+            'project' => $project
+        ]);
+    }
+
+    public function planningApproveKS($project_id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        $project->status = Status::planningApprovedByKS();
+        $project->save();
+
+        $project->reviews()->create([
+            'project_id' => $project_id,
+            'status' => Status::planningApprovedByKS(),
+            'content' => $request->review_comment,
+            'created_by' => \Auth::user()->id
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function planningRejectKS($project_id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        $project->status = Status::planningRejectedByKS();
+        $project->save();
+
+        $project->reviews()->create([
+            'project_id' => $project_id,
+            'status' => Status::planningRejectedByKS(),
+            'content' => $request->review_comment,
+            'created_by' => \Auth::user()->id
+        ]);
+
+        return redirect()->back();
+    }
 }

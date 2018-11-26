@@ -59,6 +59,17 @@ Route::group(['middleware' => 'auth'], function () {
         /* Verification Section */
         Route::get('/{project_id}/verifications', 'VerificationController@index')->name('verifications.index');
         Route::post('/{project_id}/verifications/store', 'VerificationController@store')->name('verifications.store');
+
+        /* Review */
+        Route::get('/{project_id}/reviews', 'ReviewController@planningIndex')->name('planning.reviews.index');
+        Route::post('/{project_id}/reviews/approve-ks', 'ReviewController@planningApproveKS')->name('planning.reviews.approve.ks');
+        Route::post('/{project_id}/reviews/reject-ks', 'ReviewController@planningRejectKS')->name('planning.reviews.reject.ks');
+    });
+
+    /* Collection section */
+    Route::group(['prefix' => 'collection'], function () {
+        Route::get('/{project_id}/project-information', 'CommitteeController@project')->name('collection.project.information');
+        Route::resource('/{project_id}/committees', 'CommitteeController');
     });
 
     /* Financial section */

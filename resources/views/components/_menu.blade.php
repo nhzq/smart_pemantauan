@@ -23,19 +23,6 @@
                     </li>
                 @endif
 
-                @if (request()->is('*reviews*'))
-                    <li>
-                        <a href="{{ route('reviews.show', $project->id) }}">
-                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'reviews.show' ? 'text-red' : '' }}"></i> Maklumat Asas
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('projects.timeline', $project->id) }}">
-                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'reviews.timeline' ? 'text-red' : '' }}"></i> Timeline
-                        </a>
-                    </li>
-                @endif
-
                 @if (request()->is('planning*'))
                     <li>
                         <a href="{{ route('info.index', $project->id) }}">
@@ -67,6 +54,30 @@
                             <i class="fa fa-circle-o {{ Route::current()->getName() == 'verifications.index' ? 'text-red' : '' }}"></i> Pengesahan
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('planning.reviews.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'planning.reviews.index' ? 'text-red' : '' }}"></i> Semakan
+                        </a>
+                    </li>
+                @endif
+
+                @if (request()->is('*collection*'))
+                    <li>
+                        <a href="{{ route('collection.project.information', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'collection.project.information' ? 'text-red' : '' }}"></i> Maklumat Projek
+                        </a>
+                    </li>
+                    @if (!empty($project->lookup_collection_type_id))
+                        <?php $type = $project->lookup_collection_type_id; ?>
+                        
+                        @if ($type == 2 || $type == 3 || $type == 4)
+                            <li>
+                                <a href="{{ route('committees.index', $project->id) }}">
+                                    <i class="fa fa-circle-o {{ Route::current()->getName() == 'committees.index' ? 'text-red' : '' }}"></i> Jawatankuasa Perolehan
+                                </a>
+                            </li>
+                        @endif
+                    @endif
                 @endif
             </ul>
         </div>
