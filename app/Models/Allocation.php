@@ -37,4 +37,9 @@ class Allocation extends Model
     {
         return $this->belongsTo('App\Models\LookupSubBudgetType', 'lookup_sub_budget_type_id');
     }
+
+    public function transfers()
+    {
+        return $this->belongsToMany('App\Models\AllocationTransfer', 'transfer_allocation', 'allocation_id', 'transfer_id');
+    }
 }

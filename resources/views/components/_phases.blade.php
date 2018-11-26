@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-pills nav-justified thumbnail setup-panel">
-            <li class="active">
-                <a href="">
+            <li class="{{ request()->is('*initial*') ? 'active' : '' }}">
+                <a href="{{ route('projects.show', $project->id) }}">
                     <p class="list-group-item-heading">Permulaan</p>
                 </a>
             </li>
-            <li class="">
-                <a href="">
+            <li class="{{ request()->is('*planning*') ? 'active' : '' }}">
+                <a href="{{ route('info.index', $project->id) }}">
                     <p class="list-group-item-heading">Perancangan</p>
                 </a>
             </li>

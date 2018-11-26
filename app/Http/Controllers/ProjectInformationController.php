@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\LookupCollectionType as Collection;
 use Carbon\Carbon;
+use App\Helpers\Status;
 
 class ProjectInformationController extends Controller
 {
     public function index($project_id)
     {
         $project = Project::find($project_id);
+
+        if ($project->status < Status::toPlanningPhase()) {
+            return redirect()->back()->with('error', 'Maaf, projek ini masih di masa PERMULAAN.');
+        }
 
         return view('modules.project-information.index', [
             'project' => $project
@@ -36,6 +41,7 @@ class ProjectInformationController extends Controller
         $project->minute_approval_date = Carbon::parse($request->info_date_approval_minute);
         $project->approval_pwn_date = Carbon::parse($request->info_date_approval_pwn);
         $project->lookup_collection_type_id = $request->info_collection_types;
+        $project->status = Status::toPlanningPhase();
         $project->save();
 
         return redirect()

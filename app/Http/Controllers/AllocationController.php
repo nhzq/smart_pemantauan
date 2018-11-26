@@ -78,13 +78,12 @@ class AllocationController extends Controller
     {
         $allocation = Allocation::find($id);
         $min_total_cost = $allocation->amount - $allocation->balance;
-        $total_estimate_cost = $allocation->amount - $allocation->balance;
 
         if (removeMaskMoney($request->budget_allocation) > $min_total_cost) {
             $allocation->lookup_budget_type_id = $request->budget_type;
             $allocation->lookup_sub_budget_type_id = $request->budget_sub;
             $allocation->amount = removeMaskMoney($request->budget_allocation);
-            $allocation->balance = removeMaskMoney($request->budget_allocation) - $total_estimate_cost;
+            $allocation->balance = removeMaskMoney($request->budget_allocation) - $min_total_cost;
             $allocation->updated_by = \Auth::user()->id;
             $allocation->save();
 

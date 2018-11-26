@@ -20,12 +20,10 @@ class CreateProjectsTable extends Migration
             $table->string('concept')->nullable();
             $table->decimal('estimate_cost', 19, 2)->nullable();
             $table->date('approval_date')->nullable();
-            $table->string('proposal')->nullable();
             $table->integer('lookup_budget_type_id')->unsigned()->nullable();
             $table->integer('lookup_sub_budget_type_id')->unsigned()->nullable();
             $table->text('rmk')->nullable();
             $table->integer('market_research')->unsigned()->nullable();
-            $table->string('market_research_file')->nullable();
             $table->text('objective')->nullable();
             $table->date('minute_approval_date')->nullable();
             $table->string('minute_approval_file')->nullable();

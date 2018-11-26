@@ -35,7 +35,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('info_date_approval_minute') ? 'has-error' : '' }}">
                                             <label>Tarikh Kelulusan Minit Bebas</label>
-                                            <input type="text" class="form-control pickdate" name="info_date_approval_minute" value="{{ $project->minute_approval_date->format('m/d/Y') ?? '' }}">
+                                            <?php 
+                                                $approval_date = '';
+
+                                                if (!empty($project->minute_approval_date)) {
+                                                    $approval_date = $project->minute_approval_date->format('m/d/Y');
+                                                }
+                                            ?>
+                                            <input type="text" class="form-control pickdate" name="info_date_approval_minute" value="{{  $approval_date }}">
                                         </div>
                                     </div>
 
@@ -51,7 +58,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('info_date_approval_pwn') ? 'has-error' : '' }}">
                                             <label>Tarikh Kelulusan PWN</label>
-                                            <input type="text" class="form-control pickdate" name="info_date_approval_pwn" value="{{ $project->approval_pwn_date->format('m/d/Y') ?? '' }}">
+                                            <?php 
+                                                $pwn_date = '';
+
+                                                if (!empty($project->minute_approval_date)) {
+                                                    $pwn_date = $project->approval_pwn_date->format('m/d/Y');
+                                                }
+                                            ?>
+                                            <input type="text" class="form-control pickdate" name="info_date_approval_pwn" value="{{ $pwn_date }}">
                                         </div>
                                     </div>
 

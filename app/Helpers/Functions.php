@@ -26,10 +26,16 @@ if (!function_exists('removeMaskMoney')) {
 }
 
 if (!function_exists('setBudgetTitle')) {
-    function setBudgetTitle($code, $desc)
+    function setBudgetTitle($code, $desc, $style = '')
     {
-        if (!empty($code) && !empty($desc)) {
-            return '<b>' . $code . '</b>' . ' : ' . $desc;
+        if ($style == 'no-bold') {
+            if (!empty($code) && !empty($desc)) {
+                return $code . ' : ' . $desc;
+            }
+        } else {
+            if (!empty($code) && !empty($desc)) {
+                return '<b>' . $code . '</b>' . ' : ' . $desc;
+            }
         }
 
         return 'N/A';

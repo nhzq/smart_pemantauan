@@ -59,7 +59,7 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover table-bordered">
                                             <thead>
                                                 <tr class="tbl-row-init tbl-default">
                                                     <th></th>

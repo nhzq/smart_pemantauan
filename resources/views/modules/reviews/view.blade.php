@@ -26,7 +26,7 @@
                     <div class="box-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover table-bordered">
                                     <tr>
                                         <th class="col-md-3 min100">&nbsp;</th>
                                         <th>Maklumat</th>

@@ -21,7 +21,7 @@
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr class="tbl-row-init tbl-default">
                                         <th class="col-md-1">#</th>

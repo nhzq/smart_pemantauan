@@ -56,8 +56,8 @@
                             </li>
 
                             <!-- Role section -->
-                            <li class="{{ request()->is('*roles*') ? 'active' : '' }}">
-                                <a href="{{ route('roles.index') }}"><i class="fa fa-circle-o {{ request()->is('*roles*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
+                            <li class="{{ request()->is('*transfers*') ? 'active' : '' }}">
+                                <a href="{{ route('transfers.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfers*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
                             </li>
                         </ul>
                     </li>

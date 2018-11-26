@@ -20,17 +20,19 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mrg10B pull-right">
-                            <div class="btn-group">
-                                <a href="{{ route('analyses.create', $project->id) }}" class="btn bg-purple">
-                                    <i class="fa fa-fw fa-plus"></i>
-                                </a>
+                @hasanyrole ('ku')
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mrg10B pull-right">
+                                <div class="btn-group">
+                                    <a href="{{ route('analyses.create', $project->id) }}" class="btn bg-purple">
+                                        <i class="fa fa-fw fa-plus"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endhasanyrole
 
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
@@ -39,7 +41,7 @@
                     <div class="box-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover table-bordered">
                                     <tr class="tbl-row-init tbl-default">
                                         <th class="col-sm-1">#</th>
                                         <th class="col-sm-5">Jawatan</th>

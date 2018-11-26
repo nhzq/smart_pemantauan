@@ -27,7 +27,7 @@
                     <div class="box-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover table-bordered">
                                     <tr class="tbl-row-init tbl-default">
                                         <th colspan="2" class="text-center">Maklumat Asas</th>
                                     </tr>
@@ -53,12 +53,27 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Kertas Cadangan</th>
-                                        <td><a href="">{{ $project->proposal ?? 'N/A' }}</a></td>
+                                        <td>
+                                            @if (count($project->documents) > 0)
+                                                @foreach ($project->documents as $data)
+                                                        @if ($data->category == 'kertas-cadangan')
+                                                            <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                                <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                &nbsp; {{ $data->original_name }}
+                                                            </a>
+                                                            </br>
+                                                        @endif
+                                                @endforeach
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Jenis Bajet</th>
                                         <?php 
                                             $budgetType = '';
+
                                             if (!empty($project->budget->code) && !empty($project->budget->description)) {
                                                 $budgetType = $project->budget->code . ' : ' . $project->budget->description;
                                             }
@@ -69,6 +84,7 @@
                                         <th class="col-md-3 min100">Jenis Sub Bajet</th>
                                         <?php 
                                             $subType = '';
+                                            
                                             if (!empty($project->sub->code) && !empty($project->sub->description)) {
                                                 $subType = $project->sub->code . ' : ' . $project->sub->description;
                                             }
@@ -79,6 +95,7 @@
                                         <th class="col-md-3 min100">Kajian Pasaran</th>
                                         <?php
                                             $result = '';
+
                                             if (!empty($project->market_research)) {
                                                 if ($project->market_research == 1) {
                                                     $result = 'Ada';
@@ -98,7 +115,14 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Kelulusan Minit Bebas</th>
-                                        <td>{{ $project->minute_approval_date->format('m/d/Y') ?? '' }}</td>
+                                        <?php 
+                                            $approval_date = '';
+
+                                            if (!is_null($project->minute_approval_date)) {
+                                                $approval_date = $project->minute_approval_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $approval_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Minit Bebas</th>
@@ -106,7 +130,14 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Kelulusan PWN</th>
-                                        <td>{{ $project->approval_pwn_date->format('m/d/Y') ?? '' }}</td>
+                                        <?php 
+                                            $pwn_date = '';
+
+                                            if (!is_null($project->approval_pwn_date)) {
+                                                $pwn_date = $project->approval_pwn_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $pwn_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Surat Kelulusan PWN</th>
@@ -121,10 +152,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="pull-right">
-                    <a href="{{ route('info.edit', $project->id) }}" class="btn bg-purple">Kemaskini Projek</a>
-                </div>
+                
+                @hasrole('ku')
+                    <div class="pull-right">
+                        <a href="{{ route('info.edit', $project->id) }}" class="btn bg-purple">Kemaskini Projek</a>
+                    </div>
+                @endhasanyrole
             </div>
         </div>
     </section>

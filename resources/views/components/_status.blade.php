@@ -4,6 +4,7 @@
         isset($data) ? $data : '';
         isset($project) ? $data = $project : '';
     ?>
+
     @if (\App\Helpers\Status::isAppliedByKU($data->status))
         @if (\Auth::user()->hasRole('ks'))
             <span class="label label-warning">Perlu Semakan</span>
@@ -40,6 +41,12 @@
 
     @if (\App\Helpers\Status::isRejectedBySUB($data->status))
         <span class="label label-danger">Ditolak SUB</span>
+    @endif
+
+    @if (\App\Helpers\Status::planningByKU($data->status))
+        @if (\Auth::user()->hasRole('ks'))
+            <span class="label label-warning">Perlu Semakan</span>
+        @endif
     @endif
 @endif
 <!-- End -->

@@ -31,14 +31,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/projects', 'ProjectController');
         Route::get('/projects-ajax-create', 'ProjectController@ajaxSubType')->name('projects.create.sub');
         Route::get('/projects/{id}/timeline', 'ProjectController@timeline')->name('projects.timeline');
+        Route::get('/projects/{id}/planning-phase', 'ProjectController@planningPhase')->name('projects.phase');
+        Route::get('/projects/{id}/view-download-file/{filename}', 'ProjectController@downloadFile')->name('projects.file.download');
+
 
         /* Review section */
-        Route::resource('/reviews', 'ReviewController');
         Route::post('/reviews/{id}/approve-ks', 'ReviewController@approveKS')->name('reviews.approve.ks');
         Route::post('/reviews/{id}/reject-ks', 'ReviewController@rejectKS')->name('reviews.reject.ks');
         Route::post('/reviews/{id}/approve-sub', 'ReviewController@approveSUB')->name('reviews.approve.sub');
         Route::post('/reviews/{id}/reject-sub', 'ReviewController@rejectSUB')->name('reviews.reject.sub');
-        Route::get('/reviews/{id}/timeline', 'ReviewController@timeline')->name('reviews.timeline');
     });
 
     /* Planning section */
@@ -56,13 +57,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/project-team-ajax-create', 'ProjectTeamController@ajaxType')->name('project-team.create.type');
 
         /* Verification Section */
-        // Route::post('/{project_id}/verifications', 'VerificationController')->name('verifications.index');
+        Route::get('/{project_id}/verifications', 'VerificationController@index')->name('verifications.index');
+        Route::post('/{project_id}/verifications/store', 'VerificationController@store')->name('verifications.store');
     });
 
     /* Financial section */
     Route::group(['prefix' => 'financial'], function () {
+        /* Allocation section */
         Route::resource('/allocations', 'AllocationController');
         Route::get('/allocations-ajax-create', 'AllocationController@ajaxType')->name('allocations.create.type');
+
+        /* Allocation Transfer section */
+        Route::resource('/transfers', 'AllocationTransferController');
+        Route::get('/transfers-ajax-sub', 'AllocationTransferController@ajaxType')->name('transfers.create.type');
     });
 
     /* Setting section */

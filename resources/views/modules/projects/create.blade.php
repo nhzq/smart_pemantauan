@@ -24,7 +24,7 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('project_name') ? 'has-error' : '' }}">
+                                        <div class="form-group {{ $errors->has('project_budget_type') ? 'has-error' : '' }}">
                                             <label>Jenis Bajet</label>
                                             <select id="project_budget_type" class="form-control" name="project_budget_type">
                                                 <option value="0">-- Sila Pilih --</option>
@@ -36,7 +36,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('project_name') ? 'has-error' : '' }}">
+                                        <div class="form-group {{ $errors->has('project_sub_budget_type') ? 'has-error' : '' }}">
                                             <label>Butiran</label>
                                             <select id="project_sub_budget_type" class="form-control" name="project_sub_budget_type">
                                                 <option value="0">-- Sila Pilih --</option>
@@ -49,14 +49,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('project_name') ? 'has-error' : '' }}">
                                             <label>Nama Projek</label>
-                                            <input class="form-control" type="text" name="project_name" placeholder="Nama Projek">
+                                            <input class="form-control" type="text" name="project_name" placeholder="Nama Projek" value="{{ old('project_name') }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('project_file_reference') ? 'has-error' : '' }}">
                                             <label>No Rujukan Fail</label>
-                                            <input class="form-control" type="text" name="project_file_reference" placeholder="No Rujukan Fail">
+                                            <input class="form-control" type="text" name="project_file_reference" placeholder="No Rujukan Fail" value="{{ old('project_file_reference') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -65,23 +65,23 @@
                                     <div class="col-md-12">
                                         <div class="form-group {{ $errors->has('project_concept') ? 'has-error' : '' }}">
                                             <label>Skop/Konsep/Tujuan</label>
-                                            <textarea class="form-control" name="project_concept" cols="30" rows="5"></textarea>
+                                            <textarea class="form-control" name="project_concept" cols="30" rows="5">{{ old('project_concept') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
+                                        <div class="form-group {{ $errors->has('project_estimate_cost') ? 'has-error' : '' }}">
                                             <label>Anggaran Kos (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="project_estimate_cost" placeholder="Anggaran Kos (RM)">
+                                            <input class="form-control money-convert" type="text" name="project_estimate_cost" placeholder="Anggaran Kos (RM)" value="{{ old('project_estimate_cost') }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
+                                        <div class="form-group {{ $errors->has('project_approval_date') ? 'has-error' : '' }}">
                                             <label>Tarikh Kelulusan JPICT</label>
-                                            <input id="datepicker" class="form-control" type="text" name="project_approval_date" placeholder="Tarikh Kelulusan JPICT">
+                                            <input id="datepicker" class="form-control" type="text" name="project_approval_date" placeholder="Tarikh Kelulusan JPICT" value="{{ old('project_approval_date') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group {{ $errors->has('project_rmk') ? 'has-error' : '' }}">
                                                 <label>RMK</label>
-                                                <textarea class="form-control" name="project_rmk" cols="30" rows="5"></textarea>
+                                                <textarea class="form-control" name="project_rmk" cols="30" rows="5">{{ old('project_rmk') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group {{ $errors->has('project_proposal_files') ? 'has-error' : '' }}">
                                             <label>Kertas Cadangan</label>
-                                            <input type="file" name="project_proposal_files">
+                                            <input type="file" name="project_proposal_files[]" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
                                                 <label>Jika Ya</label>
-                                                <input type="file" name="project_market_research_files">
+                                                <input type="file" name="project_market_research_files[]" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -151,6 +151,7 @@
             $('#radio-research').hide();
 
             $('#datepicker').datepicker({
+                todayHighlight: true,
                 autoclose: true
             });
 

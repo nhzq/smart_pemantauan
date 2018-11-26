@@ -10,20 +10,6 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['role:ks|sub']);
-    }
-
-    public function show($id)
-    {
-        $project = Project::find($id);
-
-        return view('modules.reviews.view', [
-            'project' => $project
-        ]);
-    }
-
     public function approveKS(Request $request, $id)
     {
         DB::transaction(function () use ($request, $id) {
@@ -110,14 +96,5 @@ class ReviewController extends Controller
         return redirect()
             ->route('projects.index')
             ->with('success', 'Projek telah ditolak');
-    }
-
-    public function timeline($id)
-    {
-        $project = Project::find($id);
-
-        return view('modules.projects.timeline', [
-            'project' => $project
-        ]);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $dates = [
-        'approval_date', 'minute_approval_date', 'approval_pwn_date'
+        'approval_date', 'minute_approval_date', 'approval_pwn_date', 'verification_date'
     ];
     
     protected $fillable = [
@@ -19,9 +19,15 @@ class Project extends Model
         'estimate_cost', 
         'approval_date',
         'rmk',
-        'proposal',
         'market_research',
-        'market_research_file',
+        'objective',
+        'minute_approval_date',
+        'minute_approval_file',
+        'approval_pwn_date',
+        'approval_pwn_file',
+        'lookup_collection_type_id',
+        'verified_by',
+        'verification_date',
         'status',
         'active',
         'created_by',
@@ -49,6 +55,11 @@ class Project extends Model
     public function collection()
     {
         return $this->belongsTo('App\Models\LookupCollectionType', 'lookup_collection_type_id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany('App\Models\ProjectDocument');
     }
 
     /*

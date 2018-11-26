@@ -41,34 +41,6 @@
 @endif
 <!-- end -->
 
-<!-- Reviews -->
-@if (Route::current()->getName() == 'reviews.index')    
-    <section class="content-header">
-        <h1>
-            Semakan
-            <small>Projek Keseluruhan</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Semakan</a></li>
-            <li class="active">Projek Keseluruhan</li>
-        </ol>
-    </section>
-@endif
-
-@if (Route::current()->getName() == 'reviews.show')    
-    <section class="content-header">
-        <h1>
-            Semakan
-            <small>Projek</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{ route('reviews.index') }}"><i class="fa fa-dashboard"></i> Semakan</a></li>
-            <li class="active">Projek</li>
-        </ol>
-    </section>
-@endif
-<!-- end -->
-
 <!-- Allocation -->
 @if (Route::current()->getName() == 'allocations.index')
     <section class="content-header">
