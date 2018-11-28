@@ -70,6 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'collection'], function () {
         Route::get('/{project_id}/project-information', 'CommitteeController@project')->name('collection.project.information');
         Route::resource('/{project_id}/committees', 'CommitteeController');
+        Route::get('/{project_id}/committees/edit/information/{id}', 'CommitteeController@editInformation')->name('committees.edit.information');
+        Route::put('/{project_id}/committees/update/information/{id}', 'CommitteeController@updateInformation')->name('committees.update.information');
     });
 
     /* Financial section */

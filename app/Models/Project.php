@@ -22,9 +22,7 @@ class Project extends Model
         'market_research',
         'objective',
         'minute_approval_date',
-        'minute_approval_file',
         'approval_pwn_date',
-        'approval_pwn_file',
         'lookup_collection_type_id',
         'verified_by',
         'verification_date',
@@ -60,6 +58,11 @@ class Project extends Model
     public function documents()
     {
         return $this->hasMany('App\Models\ProjectDocument');
+    }
+
+    public function committees_info()
+    {
+        return $this->hasMany('App\Models\CommitteeInformation');
     }
 
     /*

@@ -57,7 +57,7 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Skop/Konsep/Tujuan</th>
-                                        <td>{{ $project->concept ?? 'N/A' }}</td>
+                                        <td>{!! $project->concept ?? 'N/A' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Anggaran Kos (RM)</th>

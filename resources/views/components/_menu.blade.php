@@ -76,6 +76,11 @@
                                     <i class="fa fa-circle-o {{ Route::current()->getName() == 'committees.index' ? 'text-red' : '' }}"></i> Jawatankuasa Perolehan
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('committees.index', $project->id) }}">
+                                    <i class="fa fa-circle-o {{ Route::current()->getName() == '' ? 'text-red' : '' }}"></i> Kaedah Perolehan
+                                </a>
+                            </li>
                         @endif
                     @endif
                 @endif

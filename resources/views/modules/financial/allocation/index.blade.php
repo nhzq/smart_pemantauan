@@ -35,7 +35,7 @@
 
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
+                            <table id="custom-row" class="table table-hover table-bordered">
                                 <thead>
                                     <tr class="tbl-row-init tbl-default">
                                         <th>Bajet</th>
@@ -83,4 +83,13 @@
 @endsection
 
 @push ('script')
+    <script src="{{ asset('adminlte/dist/js/rowspanizer.js') }}"></script>
+    <script>
+        $(function () {
+            $("#custom-row").rowspanizer({
+                vertical_align: 'middle',
+                columns: [0]
+            });
+        });
+    </script>
 @endpush

@@ -72,7 +72,7 @@
                                                         <td>{{ $data->position ?? '' }}</td>
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
+                                                        <td>{{ $data->role->name ?? '' }}</td>
                                                         <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
@@ -115,7 +115,7 @@
                                                         <td>{{ $data->position ?? '' }}</td>
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
+                                                        <td>{{ $data->role->name ?? '' }}</td>
                                                         <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
@@ -158,7 +158,7 @@
                                                         <td>{{ $data->position ?? '' }}</td>
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
+                                                        <td>{{ $data->role->name ?? '' }}</td>
                                                         <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
@@ -201,7 +201,7 @@
                                                         <td>{{ $data->position ?? '' }}</td>
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
+                                                        <td>{{ $data->role->name ?? '' }}</td>
                                                         <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">

@@ -3,6 +3,7 @@
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
 @section ('content')
@@ -26,7 +27,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group {{ $errors->has('info_objective_project') ? 'has-error' : '' }}">
                                             <label>Objektif Projek</label>
-                                            <textarea class="form-control" name="info_objective_project" cols="30" rows="5">{{ $project->objective ?? '' }}</textarea>
+                                            <textarea class="form-control texteditor" name="info_objective_project" cols="30" rows="5">{{ $project->objective ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +50,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Minit Bebas</label>
-                                            <input type="file" name="info_minute">
+                                            <input class="form-control" type="file" name="info_minute[]" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +73,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Surat Kelulusan PWN</label>
-                                            <input type="file" name="info_approval_pwn">
+                                            <input class="form-control" type="file" name="info_approval_pwn[]" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -115,11 +116,13 @@
 
 @push ('script')
     <script src="{{ asset('adminlte/plugin/maskMoney/jquery.maskMoney.min.js') }}" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
     <script>
+        $('.texteditor').summernote();
+
         $('.pickdate').datepicker({
             todayHighlight: true,
             autoclose: true
         });
     </script>
-
 @endpush

@@ -41,7 +41,7 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Skop/Konsep/Tujuan</th>
-                                        <td>{{ $project->concept ?? 'N/A' }}</td>
+                                        <td>{!! $project->concept ?? 'N/A' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Anggaran Kos (RM)</th>
@@ -93,25 +93,30 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Kajian Pasaran</th>
-                                        <?php
-                                            $result = '';
-
-                                            if (!empty($project->market_research)) {
-                                                if ($project->market_research == 1) {
-                                                    $result = 'Ada';
-                                                } else {
-                                                    $result = 'Tiada';
-                                                }
-                                            }
-                                        ?>
-                                        <td>{{ $result }}</td>
+                                        <td>
+                                            @if (!empty($project->market_research))
+                                                @if (count($project->documents) > 0)
+                                                    @foreach ($project->documents as $data)
+                                                        @if ($data->category == 'kajian-pasaran')
+                                                            <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                                <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                &nbsp; {{ $data->original_name }}
+                                                            </a>
+                                                            </br>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    Tiada
+                                                @endif
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr class="tbl-row-init tbl-row-end tbl-default">
                                         <th colspan="2" class="text-center">Maklumat Projek</th>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Objektif Projek</th>
-                                        <td>{{ $project->objective ?? '' }}</td>
+                                        <td>{!! $project->objective ?? '' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Kelulusan Minit Bebas</th>
@@ -126,7 +131,21 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Minit Bebas</th>
-                                        <td>{{ $project->minute_approval_file ?? '' }}</td>
+                                        <td>
+                                            @if (count($project->documents) > 0)
+                                                @foreach ($project->documents as $data)
+                                                    @if ($data->category == 'minit-bebas')
+                                                        <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                            <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                            &nbsp; {{ $data->original_name }}
+                                                        </a>
+                                                        </br>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Kelulusan PWN</th>
@@ -141,7 +160,21 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Surat Kelulusan PWN</th>
-                                        <td>{{ $project->approval_pwn_file ?? '' }}</td>
+                                        <td>
+                                            @if (count($project->documents) > 0)
+                                                @foreach ($project->documents as $data)
+                                                    @if ($data->category == 'surat-pwn')
+                                                        <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                            <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                            &nbsp; {{ $data->original_name }}
+                                                        </a>
+                                                        </br>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Jenis Perolehan</th>

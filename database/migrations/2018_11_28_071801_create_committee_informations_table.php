@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommitteesTable extends Migration
+class CreateCommitteeInformationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCommitteesTable extends Migration
      */
     public function up()
     {
-        Schema::create('committees', function (Blueprint $table) {
+        Schema::create('committee_informations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('project_id')->unsigned()->nullable();
             $table->integer('committee_type_id')->unsigned()->nullable();
-            $table->string('name')->nullable();
-            $table->string('position')->nullable();
-            $table->string('department')->nullable();
+            $table->date('appointment_date')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('active')->nullable();
@@ -34,6 +32,6 @@ class CreateCommitteesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('committees');
+        Schema::dropIfExists('committee_informations');
     }
 }

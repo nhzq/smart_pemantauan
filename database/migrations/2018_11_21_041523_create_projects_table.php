@@ -26,9 +26,7 @@ class CreateProjectsTable extends Migration
             $table->integer('market_research')->unsigned()->nullable();
             $table->text('objective')->nullable();
             $table->date('minute_approval_date')->nullable();
-            $table->string('minute_approval_file')->nullable();
             $table->date('approval_pwn_date')->nullable();
-            $table->string('approval_pwn_file')->nullable();
             $table->integer('lookup_collection_type_id')->nullable();
             $table->integer('verified_by')->unsigned()->nullable();
             $table->date('verification_date')->nullable();

@@ -60,13 +60,15 @@
                                                 <th>Jabatan</th>
                                                 <th>Tindakan</th>
                                             </tr>
-                                            @if (isset($committee))
-                                                @foreach ($committee->where('project_id', $project->id)->where('committee_type_id', 1)->get() as $data)
+
+                                            <?php $first = $committee->where('project_id', $project->id)->where('committee_type_id', 1)->get(); ?>
+                                            @if (count($first) > 0)
+                                                @foreach ($first as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $data->committee_name ?? '' }}</td>
-                                                        <td>{{ $data->committee_position ?? '' }}</td>
-                                                        <td>{{ $data->committee_department ?? '' }}</td>
+                                                        <td>{{ $data->name ?? '' }}</td>
+                                                        <td>{{ $data->position ?? '' }}</td>
+                                                        <td>{{ $data->department ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
                                                                 <div class="btn-group">
@@ -91,14 +93,39 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
-                                            <tr class="tbl-row-init tbl-default">
-                                                <th></th>
-                                                <th>Maklumat</th>
-                                            </tr>
-                                            
-                                        </table>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" style="background-color: transparent;">
+                                            Maklumat Jawatankuasa Spesifikasi Teknikal
+                                            <div class="pull-right">
+                                                <a href="{{ route('committees.edit.information', [$project->id, 1]) }}" class="btn-sm bg-purple">
+                                                    Kemaskini Maklumat
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <?php $info1 = $project->committees_info->where('committees_type_id', 1)->first(); ?>
+
+                                                <table class="table table-hover table-bordered">
+                                                    <tr class="tbl-row-init tbl-default">
+                                                        <th></th>
+                                                        <th>Maklumat</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Dokumen Spesifikasi Teknikal dan Harga</th>
+                                                        <td class="col-md-6 col-sm-6"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
+                                                        <td class="col-md-6 col-sm-6">{{ !empty($info1->appointment_date) ? $info1->appointment_date->format('m/d/Y') : ''  }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
+                                                        <td class="col-md-6 col-sm-6"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -111,26 +138,22 @@
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Jawatan</th>
-                                                <th>Bahagian</th>
-                                                <th>Unit</th>
-                                                <th>Peranan</th>
-                                                <th>Kekerapan Mesyuarat</th>
+                                                <th>Jabatan</th>
                                                 <th>Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 2)->get() as $data)
+
+                                            <?php $second = $committee->where('project_id', $project->id)->where('committee_type_id', 2)->get(); ?>
+                                            @if (count($second) > 0)
+                                                @foreach ($second as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
                                                         <td>{{ $data->position ?? '' }}</td>
-                                                        <td>{{ $data->group ?? '' }}</td>
-                                                        <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
+                                                        <td>{{ $data->department ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
                                                                 <div class="btn-group">
-                                                                    <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
+                                                                    <a href="" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </a>
                                                                     <button class="btn btn-danger" type="submit">
@@ -141,8 +164,49 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="5" class="text-center">Tiada maklumat dijumpai.</td>
+                                                </tr>
                                             @endif
                                         </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" style="background-color: transparent;">
+                                            Maklumat Jawatankuasa Penilaian Teknikal
+                                            <div class="pull-right">
+                                                <a href="{{ route('committees.edit.information', [$project->id, 2]) }}" class="btn-sm bg-purple">
+                                                    Kemaskini Maklumat
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <?php $info2 = $project->committees_info->where('committees_type_id', 2)->first(); ?>
+
+                                                <table class="table table-hover table-bordered">
+                                                    <tr class="tbl-row-init tbl-default">
+                                                        <th></th>
+                                                        <th>Maklumat</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Dokumen Spesifikasi Teknikal dan Harga</th>
+                                                        <td class="col-md-6 col-sm-6"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
+                                                        <td class="col-md-6 col-sm-6">{{ !empty($info2->appointment_date) ? $info2->appointment_date->format('m/d/Y') : '' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
+                                                        <td class="col-md-6 col-sm-6"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -155,26 +219,21 @@
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Jawatan</th>
-                                                <th>Bahagian</th>
-                                                <th>Unit</th>
-                                                <th>Peranan</th>
-                                                <th>Kekerapan Mesyuarat</th>
+                                                <th>Jabatan</th>
                                                 <th>Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 3)->get() as $data)
+                                            <?php $third = $committee->where('project_id', $project->id)->where('committee_type_id', 3)->get(); ?>
+                                            @if (count($third) > 0)
+                                                @foreach ($third as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
                                                         <td>{{ $data->position ?? '' }}</td>
-                                                        <td>{{ $data->group ?? '' }}</td>
-                                                        <td>{{ $data->unit ?? '' }}</td>
-                                                        <td>{{ $data->role->team ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
+                                                        <td>{{ $data->department ?? '' }}</td>
                                                         <td>
                                                             <div class="min130">
                                                                 <div class="btn-group">
-                                                                    <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
+                                                                    <a href="" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </a>
                                                                     <button class="btn btn-danger" type="submit">
@@ -185,8 +244,49 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="5" class="text-center">Tiada maklumat dijumpai.</td>
+                                                </tr>
                                             @endif
                                         </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" style="background-color: transparent;">
+                                            Maklumat Jawatankuasa Penilaian Harga
+                                            <div class="pull-right">
+                                                <a href="{{ route('committees.edit.information', [$project->id, 3]) }}" class="btn-sm bg-purple">
+                                                    Kemaskini Maklumat
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <?php $info3 = $project->committees_info->where('committees_type_id', 3)->first(); ?>
+
+                                                <table class="table table-hover table-bordered">
+                                                    <tr class="tbl-row-init tbl-default">
+                                                        <th></th>
+                                                        <th>Maklumat</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Dokumen Spesifikasi Teknikal dan Harga</th>
+                                                        <th class="col-md-6 col-sm-6"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
+                                                        <th class="col-md-6 col-sm-6">{{ !empty($info3->appointment_date) ? $info3->appointment_date->format('m/d/Y') : '' }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
+                                                        <th class="col-md-6 col-sm-6"></th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
