@@ -16,22 +16,11 @@ class CreateContractorsTable extends Migration
         Schema::create('contractors', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('project_id')->unsigned()->nullable();
-            $table->date('sst')->nullable();
-            $table->string('sst_reference_no')->nullable();
-            $table->string('contract_value')->nullable();
-            $table->string('ssm_no')->nullable();
-            $table->string('ssm_reference_no')->nullable();
-            $table->date('ssm_start_date')->nullable();
-            $table->date('ssm_end_date')->nullable();
-            $table->string('mof_no')->nullable();
-            $table->string('mof_reference_no')->nullable();
-            $table->date('mof_start_date')->nullable();
-            $table->date('mof_end_date')->nullable();
-            $table->string('company_name')->nullable();
-            $table->text('company_address')->nullable();
-            $table->string('company_tel')->nullable();
-            $table->string('company_fax')->nullable();
-            $table->integer('total_contractor')->nullable();
+            $table->string('name')->nullable();
+            $table->string('position')->nullable();
+            $table->string('ic')->nullable();
+            $table->string('email')->nullable();
+            $table->string('tel')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('active')->nullable();

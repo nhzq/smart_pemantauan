@@ -26,6 +26,31 @@ class Project extends Model
         'lookup_collection_type_id',
         'verified_by',
         'verification_date',
+        'collection_file_no',
+        'collection_open_date',
+        'collection_close_date',
+        'duration',
+        'collection_meeting_date',
+        'actual_approval_date',
+        'actual_project_cost',
+        'justification',
+        'sst',
+        'sst_reference_no',
+        'contract_value',
+        'ssm_no',
+        'ssm_reference_no',
+        'ssm_start_date',
+        'ssm_end_date',
+        'mof_no',
+        'mof_reference_no',
+        'mof_start_date',
+        'mof_end_date',
+        'company_name',
+        'company_address',
+        'company_tel',
+        'company_fax',
+        'contract_start_date',
+        'contract_end_date',
         'status',
         'active',
         'created_by',
@@ -63,6 +88,16 @@ class Project extends Model
     public function committees_info()
     {
         return $this->hasMany('App\Models\CommitteeInformation');
+    }
+
+    public function committees()
+    {
+        return $this->hasMany('App\Models\Committee');
+    }
+
+    public function contractors()
+    {
+        return $this->hasMany('App\Models\Contractor');
     }
 
     /*

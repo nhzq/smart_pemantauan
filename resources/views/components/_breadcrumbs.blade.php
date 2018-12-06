@@ -82,6 +82,62 @@
 @endif
 <!-- End -->
 
+<!-- Allocation Transfer-->
+@if (Route::current()->getName() == 'transfers.index')
+    <section class="content-header">
+        <h1>
+            Pindah Peruntukan
+            <small>Jenis Bajet</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('transfers.index') }}"><i class="fa fa-dashboard"></i> Pindah Peruntukan</a></li>
+            <li class="active">Jenis Bajet</li>
+        </ol>
+    </section>
+@endif
+
+@if (Route::current()->getName() == 'transfers.create')
+    <section class="content-header">
+        <h1>
+            Pindah Peruntukan
+            <small>Pindah Peruntukan Baru</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('transfers.index') }}"><i class="fa fa-dashboard"></i> Pindah Peruntukan</a></li>
+            <li class="active">Pindah Peruntukan Baru</li>
+        </ol>
+    </section>
+@endif
+
+@if (Route::current()->getName() == 'transfers.update')
+    <section class="content-header">
+        <h1>
+            Pindah Peruntukan
+            <small>Kemaskini Pindah Peruntukan</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('transfers.index') }}"><i class="fa fa-dashboard"></i> Pindah Peruntukan</a></li>
+            <li class="active">Kemaskini Pindah Peruntukan</li>
+        </ol>
+    </section>
+@endif
+<!-- End -->
+
+<!-- Analyses -->
+@if (Route::current()->getName() == 'analyses.create')
+    <section class="content-header">
+        <h1>
+            Analisis Sumber
+            <small>Tambah Pasukan Pembekal/ Kontraktor</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ route('analyses.index', $project->id) }}"><i class="fa fa-dashboard"></i> Analisis Sumber</a></li>
+            <li class="active">Tambah Pasukan Pembekal/ Kontraktor</li>
+        </ol>
+    </section>
+@endif
+<!-- End -->
+
 <!-- User -->
 @if (Route::current()->getName() == 'users.index')
     <section class="content-header">

@@ -16,28 +16,17 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <?php 
-                            $details = '';
-
-                            if ($id == 1) {
-                                $details = 'Jawatankuasa Spesifikasi Teknikal';
-                            } else if ($id == 2) {
-                                $details = 'Jawatankuasa Penilaian Teknikal';
-                            } else {
-                                $details = 'Jawatankuasa Penilaian Harga';
-                            }
-                        ?>
-                        <h3 class="box-title">Maklumat {{ $details }}</h3>
+                        <h3 class="box-title">Maklumat Jawatankuasa Rundingan Harga</h3>
                     </div>
                     
                     <div class="box-body">
-                        {{ Form::open(['url' => route('committees.update.information', [$project_id, $id]), 'method' => 'PUT', ' enctype' => 'multipart/form-data']) }}
+                        {{ Form::open(['url' => route('committees.update.information.direct', $project_id), 'method' => 'PUT', ' enctype' => 'multipart/form-data']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tarikh Lantikan Jawatan</label>
-                                            <input class="form-control pickdate" type="text" name="committee_appointment_date" value="{{ isset($info) ? $info->appointment_date->format('m/d/Y') : '' }}">
+                                            <input class="form-control pickdate" type="text" name="committee_appointment_date" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -47,16 +36,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                @if ($id == 1)
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Muatnaik Spesifikasi Teknikal dan Harga</label>
-                                            <input class="form-control" type="file" name="committee_spec_document">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tarikh Mesyuarat</label>
+                                            <input class="form-control pickdate" type="text" name="committee_meeting" value="">
                                         </div>
                                     </div>
-                                @endif
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Muatnaik Minit Mesyuarat</label>
+                                            <input class="form-control" type="file" name="committee_minute_meeting">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="col-md-2 pull-right mrg20T">
                                 <button class="btn btn-block btn-primary" type="submit">
                                     Simpan

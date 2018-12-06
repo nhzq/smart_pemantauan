@@ -68,10 +68,42 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Collection section */
     Route::group(['prefix' => 'collection'], function () {
+        /* Committee section */
         Route::get('/{project_id}/project-information', 'CommitteeController@project')->name('collection.project.information');
         Route::resource('/{project_id}/committees', 'CommitteeController');
         Route::get('/{project_id}/committees/edit/information/{id}', 'CommitteeController@editInformation')->name('committees.edit.information');
         Route::put('/{project_id}/committees/update/information/{id}', 'CommitteeController@updateInformation')->name('committees.update.information');
+        Route::get('/{project_id}/committees/edit/direct-negotiation/information', 'CommitteeController@editInformationDirect')->name('committees.edit.information.direct');
+        Route::put('/{project_id}/committees/update/direct-negotiation/information', 'CommitteeController@updateInformationDirect')->name('committees.update.information.direct');
+
+        /* Methods section */
+        Route::resource('/{project_id}/methods', 'CollectionMethodController');
+
+        /* Results section */
+        Route::resource('/{project_id}/results', 'ResultController');
+
+        /* Contractors section */
+        Route::resource('/{project_id}/contractors', 'ContractorController');
+        Route::post('/{project_id}/contractors/contractor-appointment/store', 'ContractorController@storeAppointment')->name('contractors.appointment.store');
+        Route::post('/{project_id}/contractors/contractor-details/store', 'ContractorController@storeDetails')->name('contractors.details.store');
+        Route::post('/{project_id}/contractors/contractor-lists/store', 'ContractorController@storeLists')->name('contractors.lists.store');
+        Route::post('/{project_id}/contractors/contractor-duration/store', 'ContractorController@storeDuration')->name('contractors.duration.store');
+    });
+
+    /* Development Status */
+    Route::group(['prefix' => 'development'], function () {
+        /* Contract section */
+        Route::get('/{project_id}/project-information', 'ContractController@project')->name('development.project.information');
+        Route::resource('/{project_id}/contracts', 'ContractController');
+
+        /* Customer section */
+        Route::resource('/{project_id}/customers', 'CustomerController');
+
+        /* Scope section */
+        Route::resource('/{project_id}/scopes', 'ScopeController');
+
+        /* Org Chart section */
+        Route::resource('/{project_id}/chart', 'OrganizationChartController');
     });
 
     /* Financial section */

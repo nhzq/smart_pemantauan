@@ -41,3 +41,24 @@ if (!function_exists('setBudgetTitle')) {
         return 'N/A';
     }
 }
+
+if (!function_exists('getList')) {
+    function getList() {
+        $types = [
+            'Jawatankuasa Spesifikasi Teknikal',
+            'Jawatankuasa Penilaian Teknikal',
+            'Jawatankuasa Penilaian Harga'
+        ];
+
+        $output = '';
+
+        $i = 1;
+        foreach ($types as $type) {
+            $output .= '<option value="' .  $i . '" listname="' . $type . '">' . $type . '</option>';
+
+            $i++;
+        }
+
+        return $output;
+    }
+}

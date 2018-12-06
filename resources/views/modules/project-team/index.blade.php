@@ -22,13 +22,17 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mrg10B pull-right">
-                                <div class="btn-group">
-                                    <a href="{{ route('project-team.create', $project->id) }}" class="btn bg-purple">
-                                        <i class="fa fa-fw fa-plus"></i>
-                                    </a>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <a href="{{ route('project-team.create', $project->id) }}" class="btn btn-default">
+                                                <i class="fa fa-fw fa-plus"></i> Tambah Pasukan
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

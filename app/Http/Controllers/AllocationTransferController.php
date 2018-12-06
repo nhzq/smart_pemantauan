@@ -101,10 +101,10 @@ class AllocationTransferController extends Controller
                     }
                 }
             }
-
-            return redirect()
-                ->route('transfers.index')
-                ->with('success', 'Pindah peruntukan telah berjaya dilakukan.');
         });
+
+        return redirect()
+            ->route('transfers.index')
+            ->with('success', 'Pindah peruntukan telah berjaya dilakukan.');
     }
 }

@@ -1,71 +1,57 @@
 <?php 
-    $approvedBySUB = \App\Helpers\Status::isApprovedBySUB();
+    $approvedByKS = \App\Helpers\Status::isApprovedByKS();
     $rejectedByKS = \App\Helpers\Status::isRejectedByKS();
+    $approvedBySUB = \App\Helpers\Status::isApprovedBySUB();
     $rejectedBySUB = \App\Helpers\Status::isRejectedBySUB();
 ?>
 
-@if ($project->status == $approvedBySUB || $project->status == $rejectedByKS || $project->status == $rejectedBySUB)
-    <ul class="timeline">
-        @foreach ($project->reviews()->orderBy('id', 'desc')->get() as $review)
-            <?php $user = \App\Models\User::where('id', $review->created_by)->first(); ?>
+@if (!empty($project))
+    @if ($project->status == $approvedByKS)
+        <?php $data = $project->reviews()->where('status', $approvedByKS)->first(); ?>
 
-            @if ($review->status == $approvedBySUB)
-                <li>
-                    <i class="fa fa-check bg-green"></i>
-                    <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($review->created_at)->toFormattedDateString() ?? '' }}</span>
-                        <h3 class="timeline-header"><a href="#">Projek diterima oleh {{ $user->name ?? '' }}</a></h3>
-                        
-                        @if (!empty($review->content))
-                            <div class="timeline-body">
-                                <strong>Komen: </strong> <br/>
-                                {{ $review->content }}
-                            </div>
-                        @endif
-                    </div>
-                </li>
-            @endif
+        <div class="alert alert-success">
+            <p><i class="icon fa fa-ban"></i>&nbsp; Projek ini diterima oleh {{ $data->createdByUser->name }} dan sedang di nilai oleh SUB</p>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: transparent"><strong>Komen</strong></div>
+            <div class="panel-body">{!! $data->content !!}</div>
+        </div>
+    @endif
 
-            @if ($review->status == $rejectedByKS)
-                <li>
-                    <i class="fa fa-close bg-red"></i>
-                    <div class="timeline-item">
-                        <span class="time">
-                            <i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($review->created_at)->toFormattedDateString() }}
-                        </span>  
-                        <h3 class="timeline-header">
-                            Projek telah ditolak oleh <a href="#">{{ $user->name ?? '' }}</a>
-                        </h3>
-                        
-                        @if (!empty($review->content))
-                            <div class="timeline-body">
-                                <strong>Komen: </strong> <br/>
-                                {{ $review->content }}
-                            </div>
-                        @endif
-                    </div>
-                </li>
-            @endif
+    @if ($project->status == $rejectedByKS)
+        <?php $data = $project->reviews()->where('status', $rejectedByKS)->first(); ?>
+        
+        <div class="alert alert-danger">
+            <p><i class="icon fa fa-ban"></i>&nbsp; Projek ini ditolak oleh {{ $data->createdByUser->name }}</p>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: transparent"><strong>Komen</strong></div>
+            <div class="panel-body">{!! $data->content !!}</div>
+        </div>
+    @endif
 
-            @if ($review->status == $rejectedBySUB)
-                <li>
-                    <i class="fa fa-close bg-red"></i>
-                    <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($review->created_at)->toFormattedDateString() }}</span> 
-                        <h3 class="timeline-header">Projek telah ditolak oleh <a href="#">{{ $user->name ?? '' }}</a></h3>
-                        
-                        @if (!empty($review->content))
-                            <div class="timeline-body">
-                                <strong>Komen: </strong> <br/>
-                                {{ $review->content }}
-                            </div>
-                        @endif
-                    </div>
-                </li>
-            @endif
-        @endforeach
-        <li>
-            <i class="fa fa-clock-o bg-gray"></i>
-        </li>
-    </ul>
+    @if ($project->status == $approvedBySUB)
+        <?php $data = $project->reviews()->where('status', $approvedBySUB)->first(); ?>
+
+        <div class="alert alert-success">
+            <p><i class="icon fa fa-ban"></i>&nbsp; Projek ini diterima oleh {{ $data->createdByUser->name }}</p>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: transparent"><strong>Komen</strong></div>
+            <div class="panel-body">{!! $data->content !!}</div>
+        </div>
+    @endif
+
+    @if ($project->status == $rejectedBySUB)
+        <?php $data = $project->reviews()->where('status', $rejectedBySUB)->first(); ?>
+        
+        <div class="alert alert-danger">
+            <p><i class="icon fa fa-ban"></i>&nbsp; Projek ini ditolak oleh {{ $data->createdByUser->name }}</p>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: transparent"><strong>Komen</strong></div>
+            <div class="panel-body">{!! $data->content !!}</div>
+        </div>
+    @endif
 @endif
+

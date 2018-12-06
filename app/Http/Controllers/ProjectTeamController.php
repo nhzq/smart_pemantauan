@@ -43,7 +43,7 @@ class ProjectTeamController extends Controller
 
     public function store($project_id, Request $request)
     {
-        $project_team = Team::where('id', $request->team_type)->first()->team;
+        $project_team = Team::where('id', $request->team_type)->first()->name;
 
         $arrayDate = [];
         $arrayDateToString = null;
@@ -72,8 +72,8 @@ class ProjectTeamController extends Controller
             'active' => 1
         ]);
 
-        return redirect()
-            ->route('project-team.index', $project_id)
+        return redirect('/planning/' . $project_id . '/project-team/#tab_tab' . $request->team_type)
+            // ->route('project-team.index', $project_id)
             ->with('success', $project_team . ' telah berjaya disimpan');
     }
 

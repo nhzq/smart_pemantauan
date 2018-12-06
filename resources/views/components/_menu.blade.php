@@ -18,7 +18,7 @@
                     </li>
                     <li>
                         <a href="{{ route('projects.timeline', $project->id) }}">
-                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'projects.timeline' ? 'text-red' : '' }}"></i> Timeline
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'projects.timeline' ? 'text-red' : '' }}"></i> Semakan
                         </a>
                     </li>
                 @endif
@@ -69,6 +69,13 @@
                     </li>
                     @if (!empty($project->lookup_collection_type_id))
                         <?php $type = $project->lookup_collection_type_id; ?>
+                        @if ($type == 5)
+                            <li>
+                                <a href="{{ route('committees.index', $project->id) }}">
+                                    <i class="fa fa-circle-o {{ Route::current()->getName() == 'committees.index' ? 'text-red' : '' }}"></i> Jawatankuasa Rundingan Harga
+                                </a>
+                            </li>
+                        @endif
                         
                         @if ($type == 2 || $type == 3 || $type == 4)
                             <li>
@@ -77,12 +84,91 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('committees.index', $project->id) }}">
-                                    <i class="fa fa-circle-o {{ Route::current()->getName() == '' ? 'text-red' : '' }}"></i> Kaedah Perolehan
+                                <a href="{{ route('methods.index', $project->id) }}">
+                                    <i class="fa fa-circle-o {{ Route::current()->getName() == 'methods.index' ? 'text-red' : '' }}"></i> Kaedah Perolehan
                                 </a>
                             </li>
                         @endif
                     @endif
+
+                    <li>
+                        <a href="{{ route('results.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'results.index' ? 'text-red' : '' }}"></i> Keputusan Perolehan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Jadual Perancangan Projek
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('contractors.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'contractors.index' ? 'text-red' : '' }}"></i> Perlantikan Kontraktor
+                        </a>
+                    </li>
+                @endif
+
+                @if (request()->is('*development*'))
+                    <li>
+                        <a href="{{ route('development.project.information', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'development.project.information' ? 'text-red' : '' }}"></i> Maklumat Projek
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('contracts.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'contracts.index' ? 'text-red' : '' }}"></i> Butiran Kontrak
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('customers.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'customers.index' ? 'text-red' : '' }}"></i> Butiran Pelanggan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('scopes.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'scopes.index' ? 'text-red' : '' }}"></i> Skop Kontrak
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('chart.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'chart.index' ? 'text-red' : '' }}"></i> Carta Organisasi Pasukan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Mesyuarat
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Rekod-rekod disenggara
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Pembayaran Kontrak
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Interim
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Bond Perlaksanaan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Lanjutan Masa (EOT)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> Bayaran Ganti Rugi (LAD)
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>

@@ -15,12 +15,29 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="mrg10B pull-right">
-                    <div class="btn-group">
-                        <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
-                        <a href="{{ route('allocations.create') }}" class="btn bg-purple">
-                            <i class="fa fa-fw fa-plus"></i>
-                        </a>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-sm-2" style="padding-left: 0;">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <select class="form-control">
+                                            <option>2018</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button class="btn btn-default" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
+                                        <a href="{{ route('allocations.create') }}" class="btn btn-default">
+                                            <i class="fa fa-fw fa-plus"></i> Tambah Peruntukan
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

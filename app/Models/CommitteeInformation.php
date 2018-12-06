@@ -9,6 +9,7 @@ class CommitteeInformation extends Model
     protected $dates = [
         'appointment_date'
     ];
+    
     protected $fillable = [
         'project_id', 'committee_type_id', 'appointment_date'
     ];

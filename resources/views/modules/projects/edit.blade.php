@@ -119,7 +119,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group {{ $errors->has('project_proposal_files') ? 'has-error' : '' }}">
                                             <label>Kertas Cadangan</label>
-                                            <input type="file" name="project_proposal_files">
+                                            <input class="form-control" type="file" name="project_proposal_files">
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
                                                 <label>Jika Ya</label>
-                                                <input type="file" name="project_market_research_files">
+                                                <input class="form-control" type="file" name="project_market_research_files">
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +165,9 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
     <script type="text/javascript">
         $(function () {
-            $('.texteditor').summernote();
+            $('.texteditor').summernote({
+                toolbar: []
+            });
             $('.money-convert').maskMoney();
             
             $('#rmk').hide();

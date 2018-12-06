@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
 @section ('content')
@@ -77,7 +78,7 @@
                                     <tr>
                                         <th class="col-md-3 min100">Kertas Cadangan</th>
                                         <td>
-                                            @if (!empty($project->documents))
+                                            @if (count($project->documents) > 0)
                                                 @foreach ($project->documents as $data)
                                                         @if ($data->category == 'kertas-cadangan')
                                                             <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
@@ -154,20 +155,20 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Komen</label>
-                                                    <textarea class="form-control" rows="5" name="review_content"></textarea>
+                                                    <textarea class="form-control texteditor" name="review_content" cols="30" rows="5"></textarea>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mrg10B mrg10T pull-right">
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" type="submit" formaction="{{ route('reviews.approve.ks', $project->id) }}">Terima</button>
-                                            <button class="btn btn-danger" type="submit" formaction="{{ route('reviews.reject.ks', $project->id) }}">Tolak</button>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mrg10B mrg10T pull-right">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-primary" type="submit" formaction="{{ route('reviews.approve.ks', $project->id) }}">Terima</button>
+                                                        <button class="btn btn-danger" type="submit" formaction="{{ route('reviews.reject.ks', $project->id) }}">Tolak</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +187,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Komen</label>
-                                                    <textarea class="form-control" rows="5" name="review_content"></textarea>
+                                                    <textarea class="form-control texteditor" name="review_content" cols="30" rows="5"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,3 +212,15 @@
         </div>
     </section>
 @endsection
+
+@push ('script')
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <script>
+        $(function () {
+            $('.texteditor').summernote({
+                toolbar: [],
+                height: 100
+            });
+        });
+    </script>
+@endpush

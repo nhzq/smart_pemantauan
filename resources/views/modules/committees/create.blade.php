@@ -18,102 +18,54 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Jawatankuasa Perolehan</h3>
+                        @if ($project->lookup_collection_type_id != 5)
+                            <h3 class="box-title">Jawatankuasa Perolehan</h3>
+                        @endif
+                        @if ($project->lookup_collection_type_id == 5)
+                            <h3 class="box-title">Jawatankuasa Rundingan Harga</h3>
+                        @endif
                     </div>
                     
                     <div class="box-body">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Jenis Jawatankuasa</label>
-                                        <?php 
-                                            $types = [
-                                                'Jawatankuasa Spesifikasi Teknikal',
-                                                'Jawatankuasa Penilaian Teknikal',
-                                                'Jawatankuasa Penilaian Harga'
-                                            ];
-                                        ?>
-                                        <select id="committee_type" class="form-control" name="committee_type">
-                                            <option value="0">-- Sila Pilih --</option>
-                                            @foreach ($types as $key => $type)
-                                                <option value="{{ $key + 1 }}" listname="{{ $type }}">{{ $type }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                        {{ Form::open(['url' => route('committees.store', $project->id), 'method' => 'POST']) }}
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered" id="item_table">
+                                        <tr class="tbl-row-init tbl-default">
+                                            @if ($project->lookup_collection_type_id != 5)
+                                                <th class="col-sm-3">Jenis Jawatankuasa</th>
+                                                <th class="col-sm-3">Nama</th>
+                                                <th class="col-sm-2">Jawatan</th>
+                                                <th class="col-sm-3">Jabatan</th>
+                                                <th class="col-sm-1">
+                                                    <button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                </th>
+                                                <input class="collection_type" type="hidden" value="{{ $project->lookup_collection_type_id ?? '' }}">
+                                            @endif
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input id="committee_name" class="form-control" type="text">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Jawatan</label>
-                                        <input id="committee_position" class="form-control" type="text">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Jabatan</label>
-                                        <input id="committee_department" class="form-control" type="text">
-                                    </div>
+                                            @if ($project->lookup_collection_type_id == 5)
+                                                <th class="col-sm-4">Nama</th>
+                                                <th class="col-sm-4">Jawatan</th>
+                                                <th class="col-sm-3">Jabatan</th>
+                                                <th class="col-sm-1">
+                                                    <button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                </th>
+                                                <input class="collection_type" type="hidden" value="{{ $project->lookup_collection_type_id ?? '' }}">
+                                            @endif
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
 
-                            <div class="pull-right mrg10B">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary add-row">Tambah</button>
-                                    <button type="button" class="btn btn-danger delete-row">Hapus</button>
-                                </div> 
+                            <div class="col-md-2 pull-right mrg10T">
+                                <button class="btn btn-block btn-primary" type="submit">
+                                    Simpan
+                                </button>
                             </div>
-                        </div>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            {{ Form::open(['url' => route('committees.store', $project_id), 'method' => 'POST']) }}
-                <div class="col-md-12">
-                    <div class="box box-solid">
-                        <div class="box-body">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
-                                            <thead>
-                                                <tr class="tbl-row-init tbl-default">
-                                                    <th></th>
-                                                    <th>Jenis Jawatankuasa</th>
-                                                    <th>Nama</th>
-                                                    <th>Jawatan</th>
-                                                    <th>Jabatan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-2 pull-right">
-                    <button class="btn btn-block btn-primary" type="submit">
-                        Simpan
-                    </button>
-                </div>
-            {{ Form::close() }}
         </div>
     </section>
     <!-- /.content -->
@@ -122,42 +74,37 @@
 @push ('script')
     <script>
         $(function () {
-            $(".add-row").click(function () {
-                var type_id = $("#committee_type").find('option:selected').val();
-                var type_name = $("#committee_type").find('option:selected').attr('listname');
-                var name = $("#committee_name").val();
-                var position = $("#committee_position").val();
-                var department = $("#committee_department").val();
-                var markup = "";
+            if ($('.collection_type').val() != 5) {
+                $(document).on('click', '.add', function () {
+                    var html = '';
 
-                markup += "<tr>";
-                markup += "<td><input type='checkbox' name='record'></td>";
-                markup += "<td>";
-                markup += type_name + "<input type='hidden' name='committee_type[]' value=" + type_id + ">";
-                markup += "</td>";
-                markup += "<td>";
-                markup += name + "<input type='hidden' name='committee_name[]' value=" + name + ">";
-                markup += "</td>";
-                markup += "<td>";
-                markup += position + "<input type='hidden' name='committee_position[]' value=" + position + ">";
-                markup += "</td>";
-                markup += "<td>";
-                markup += department + "<input type='hidden' name='committee_department[]' value=" + department + ">";
-                markup += "</td>";
-                markup += "</tr>";
+                    html += '<tr>';
+                    html += '<td><select name="committee_type[]" class="form-control"><option value="0">-- Sila Pilih --</option><?php echo getList(); ?></select></td>';
+                    html += '<td><input type="text" name="committee_name[]" class="form-control committee_name" /></td>';
+                    html += '<td><input type="text" name="committee_position[]" class="form-control committee_position" /></td>';
+                    html += '<td><input type="text" name="committee_department[]" class="form-control committee_department" /></td>';
+                    html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
 
-                $("table tbody").append(markup);
-                $("#committee_name").val('');
-                $("#committee_position").val('');
-                $("#committee_department").val('');
-            });
-
-            $(".delete-row").click(function () {
-                $("table tbody").find('input[name="record"]').each(function () {
-                    if ($(this).is(":checked")) {
-                        $(this).parents("tr").remove();
-                    }
+                    $('#item_table').append(html);
                 });
+            }
+
+            if ($('.collection_type').val() == 5) {
+                $(document).on('click', '.add', function () {
+                    var html = '';
+
+                    html += '<tr>';
+                    html += '<td><input type="text" name="committee_name[]" class="form-control committee_name" /></td>';
+                    html += '<td><input type="text" name="committee_position[]" class="form-control committee_position" /></td>';
+                    html += '<td><input type="text" name="committee_department[]" class="form-control committee_department" /></td>';
+                    html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+
+                    $('#item_table').append(html);
+                });
+            }
+
+            $(document).on('click', '.remove', function() {
+                $(this).closest('tr').remove();
             });
         });
     </script>

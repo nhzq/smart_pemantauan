@@ -16,8 +16,8 @@
                     <p class="list-group-item-heading">Perolehan</p>
                 </a>
             </li>
-            <li class="">
-                <a href="">
+            <li class="{{ request()->is('*development*') ? 'active' : '' }}">
+                <a href="{{ route('development.project.information', $project->id) }}">
                     <p class="list-group-item-heading">Pembangunan</p>
                 </a>
             </li>

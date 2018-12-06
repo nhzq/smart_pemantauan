@@ -109,7 +109,7 @@ class ProjectController extends Controller
 
                 return redirect()
                     ->route('projects.index')
-                    ->with('success', 'Project telah berjaya disimpan.');
+                    ->with('success', 'Projek telah berjaya disimpan.');
             }
 
             return redirect()

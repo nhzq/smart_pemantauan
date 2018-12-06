@@ -18,6 +18,7 @@ class CreateCommitteeInformationsTable extends Migration
             $table->integer('project_id')->unsigned()->nullable();
             $table->integer('committee_type_id')->unsigned()->nullable();
             $table->date('appointment_date')->nullable();
+            $table->date('meeting_date')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('active')->nullable();

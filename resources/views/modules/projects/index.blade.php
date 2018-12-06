@@ -16,45 +16,56 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="mrg10B pull-right">
-                    <div class="btn-group">
-                        <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
-
-                        @hasrole('ku')
-                            <a href="{{ route('projects.create') }}" class="btn bg-purple">
-                                <i class="fa fa-fw fa-plus"></i>
-                            </a>
-                        @endhasrole
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div id="search" class="box box-solid collapse">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Carian</h3>
-                    </div>
-                    <div class="box-body">
-                        &nbsp;
-                        {{ Form::open(['url' => route('projects.index'), 'method' => 'GET']) }}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
                             <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Nama Projek</label>
-                                            <input class="form-control" type="text" name="Search_name" placeholder="Nama Projek">
-                                        </div>
+                                <div class="col-sm-2" style="padding-left: 0;">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <select class="form-control">
+                                            <option>2018</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button class="btn btn-default" data-toggle="collapse" data-target="#search" type="button"><i class="fa fa-fw fa-search"></i> Carian</button>
+
+                                        @hasrole('ku')
+                                            <a href="{{ route('projects.create') }}" class="btn btn-default">
+                                                <i class="fa fa-fw fa-plus"></i> Tambah Projek
+                                            </a>
+                                        @endhasrole
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2 mrg20B pull-right">
-                                <button class="btn btn-block btn-primary" type="submit">
-                                    Carian
-                                </button>
+                        </div>
+
+                        <div class="row">
+                            <div id="search" class="collapse">
+                                <hr>
+
+                                {{ Form::open(['url' => route('projects.index'), 'method' => 'GET']) }}
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Nama Projek</label>
+                                                    <input class="form-control" type="text" name="Search_name" placeholder="Nama Projek">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 mrg20B pull-right">
+                                        <button class="btn btn-block btn-primary" type="submit">
+                                            Carian
+                                        </button>
+                                    </div>
+                                {{ Form::close() }}
                             </div>
-                        {{ Form::close() }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,9 +86,9 @@
                                         <th>Jumlah (RM)</th>
                                         <th>#</th>
                                         <th>Nama Projek</th>
-                                        <th>Anggaran Kos (RM)</th>
-                                        <th>Status</th>
-                                        <th>Tindakan</th>
+                                        <th class="col-sm-2">Anggaran Kos (RM)</th>
+                                        <th class="col-sm-1">Status</th>
+                                        <th class="col-sm-1">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
