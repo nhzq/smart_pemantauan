@@ -29,7 +29,7 @@
                                     <div class="pull-right">
                                         <div class="btn-group">
                                             <a href="{{ route('scopes.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Skop Kontrak
+                                                <i class="fa fa-fw fa-plus"></i> Kemaskini LAD
                                             </a>
                                         </div>
                                     </div>
@@ -43,22 +43,40 @@
                     <div class="col-md-12">
                         <div class="box box-solid">
                             <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Skop Kontrak</h3>
+                                <h3 class="box-title">Bayaran Ganti Rugi (LAD)</h3>
                             </div>
                             <div class="box-body">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <tr class="tbl-row-init tbl-default">
-                                                <th class="col-md-3">&nbsp;</th>
-                                                <th>Maklumat</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-5">Skop Kontrak</th>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <tr class="tbl-row-init tbl-default">
+                                            <th class="col-md-3">&nbsp;</th>
+                                            <th>Maklumat</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Tarikh Denda Mula</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Denda Sehari</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Jumlah Hari Denda</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Kos LAD</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Tindakan</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Upload</th>
+                                            <td></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

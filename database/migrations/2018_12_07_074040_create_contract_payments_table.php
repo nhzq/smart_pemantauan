@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAllocationsTable extends Migration
+class CreateContractPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,15 @@ class CreateAllocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('allocations', function (Blueprint $table) {
+        Schema::create('contract_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('lookup_department_id')->unsigned()->nullable();
-            $table->integer('lookup_budget_type_id')->unsigned()->nullable();
-            $table->integer('lookup_sub_budget_type_id')->unsigned()->nullable();
-            $table->decimal('amount', 19, 2)->nullable();
-            $table->decimal('estimate_cost', 19, 2)->nullable();
-            $table->decimal('project_cost', 19, 2)->nullable();
+            $table->integer('project_id')->unsigned()->nullable();
             $table->decimal('total_spending', 19, 2)->nullable();
             $table->decimal('balance', 19, 2)->nullable();
-            $table->string('year')->nullable();
+            $table->string('status')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
-            $table->integer('active')->nullable();
+            $table->integer('active')->unsigned()->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +33,6 @@ class CreateAllocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('allocations');
+        Schema::dropIfExists('contract_payments');
     }
 }

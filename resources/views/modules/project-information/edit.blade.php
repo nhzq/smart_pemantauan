@@ -118,7 +118,10 @@
     <script src="{{ asset('adminlte/plugin/maskMoney/jquery.maskMoney.min.js') }}" type="text/javascript"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
     <script>
-        $('.texteditor').summernote();
+        $('.texteditor').summernote({
+            toolbar: [],
+            height: 100
+        });
 
         $('.pickdate').datepicker({
             todayHighlight: true,

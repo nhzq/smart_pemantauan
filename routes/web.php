@@ -104,6 +104,27 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* Org Chart section */
         Route::resource('/{project_id}/chart', 'OrganizationChartController');
+
+        /* Meeting section */
+        Route::resource('/{project_id}/meetings', 'MeetingController');
+
+        /* Record section */
+        Route::resource('/{project_id}/records', 'RecordController');
+
+        /* Payment section */
+        Route::resource('/{project_id}/payments', 'ContractPaymentController');
+
+        /* Interim section */
+        Route::resource('/{project_id}/interim', 'InterimController');
+
+        /* Bond section */
+        Route::resource('/{project_id}/bond', 'BondController');
+
+        /* EOT section */
+        Route::resource('/{project_id}/eot', 'EotController');
+
+        /* LAD section */
+        Route::resource('/{project_id}/lad', 'LadController');
     });
 
     /* Financial section */

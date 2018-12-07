@@ -55,23 +55,23 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tarikh Surat Setuju Terima (SST)</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->sst ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Rujukan SST</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->sst_reference_no ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Harga Kontrak (RM)</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->contract_value ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Sijil SSM </th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->ssm_no ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Rujukan Pendaftaran SSM</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->ssm_reference_no ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tempoh Sah Laku</th>
@@ -79,11 +79,11 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Sijil MOF</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->mof_no ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Rujukan Pendaftaran MOF</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->mof_reference_no ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tempoh Sah Laku</th>
@@ -91,19 +91,19 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Nama Syarikat</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->company_name ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Alamat Syarikat</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->company_address ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Telefon</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->company_tel ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No. Fax</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->company_fax ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Bilangan Kontraktor</th>
@@ -131,11 +131,11 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tarikh Mula</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->contract_start_date ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tarikh Akhir</th>
-                                                <td></td>
+                                                <td>{{ $project->contractorAppointment->contract_end_date ?? '' }}</td>
                                             </tr>
                                         </table>
                                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Contractor;
+use App\Models\Appointment;
 use Carbon\Carbon;
 
 class ContractorController extends Controller
@@ -30,36 +31,82 @@ class ContractorController extends Controller
     public function storeAppointment($project_id, Request $request)
     {
         $project = Project::find($project_id);
-        $project->sst = Carbon::parse($request->contractor_sst);
-        $project->sst_reference_no = $request->contractor_sst_reference;
-        $project->contract_value = removeMaskMoney($request->contractor_value);
-        $project->save();
 
-        return redirect()
-            ->route('contractors.index', $project->id)
-            ->with('success', 'Maklumat perlantikan kontraktor telah berjaya dikemaskini.');
+        if (!empty($project->contractorAppointment)) {
+            $project->contractorAppointment->sst = Carbon::parse($request->contractor_sst);
+            $project->contractorAppointment->sst_reference_no = $request->contractor_sst_reference;
+            $project->contractorAppointment->contract_value = removeMaskMoney($request->contractor_value);
+            $project->contractorAppointment->updated_by = \Auth::user()->id;
+            $project->contractorAppointment->active = 1;
+            $project->contractorAppointment->save();
+
+            return redirect()
+                ->route('contractors.index', $project->id)
+                ->with('success', 'Maklumat perlantikan kontraktor telah berjaya dikemaskini.');
+        } else {
+            $appointment = new Appointment;
+
+            $appointment->project_id = $project->id;
+            $appointment->sst = Carbon::parse($request->contractor_sst);
+            $appointment->sst_reference_no = $request->contractor_sst_reference;
+            $appointment->contract_value = removeMaskMoney($request->contractor_value);
+            $appointment->created_by = \Auth::user()->id;
+            $appointment->active = 1;
+            $appointment->save();
+
+            return redirect()
+                ->route('contractors.index', $project->id)
+                ->with('success', 'Maklumat perlantikan kontraktor telah berjaya dikemaskini.');
+        }
     }
 
     public function storeDetails($project_id, Request $request)
     {
         $project = Project::find($project_id);
-        $project->ssm_no = $request->contractor_ssm;
-        $project->ssm_reference_no = $request->contractor_ssm_reference;
-        $project->ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
-        $project->ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
-        $project->mof_no = $request->contractor_mof;
-        $project->mof_reference_no = $request->contractor_mof_reference;
-        $project->mof_start_date = Carbon::parse($request->contractor_mof_start_date);
-        $project->mof_end_date = Carbon::parse($request->contractor_mof_end_date);
-        $project->company_name = $request->contractor_company_name;
-        $project->company_address = $request->contractor_company_address;
-        $project->company_tel = $request->contractor_company_tel;
-        $project->company_fax = $request->contractor_company_fax;
-        $project->save();
 
-        return redirect()
-            ->route('contractors.index', $project->id)
-            ->with('success', 'Maklumat syarikat untuk kontraktor telah berjaya dikemaskini.');
+        if (!empty($project->contractorAppointment)) {
+            $project->contractorAppointment->ssm_no = $request->contractor_ssm;
+            $project->contractorAppointment->ssm_reference_no = $request->contractor_ssm_reference;
+            $project->contractorAppointment->ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
+            $project->contractorAppointment->ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+            $project->contractorAppointment->mof_no = $request->contractor_mof;
+            $project->contractorAppointment->mof_reference_no = $request->contractor_mof_reference;
+            $project->contractorAppointment->mof_start_date = Carbon::parse($request->contractor_mof_start_date);
+            $project->contractorAppointment->mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+            $project->contractorAppointment->company_name = $request->contractor_company_name;
+            $project->contractorAppointment->company_address = $request->contractor_company_address;
+            $project->contractorAppointment->company_tel = $request->contractor_company_tel;
+            $project->contractorAppointment->company_fax = $request->contractor_company_fax;
+            $project->contractorAppointment->updated_by = \Auth::user()->id;
+            $project->contractorAppointment->active = 1;
+            $project->contractorAppointment->save();
+
+            return redirect()
+                ->route('contractors.index', $project->id)
+                ->with('success', 'Maklumat syarikat untuk kontraktor telah berjaya dikemaskini.');
+        } else {
+            $appointment = new Appointment;
+
+            $appointment->ssm_no = $request->contractor_ssm;
+            $appointment->ssm_reference_no = $request->contractor_ssm_reference;
+            $appointment->ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
+            $appointment->ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+            $appointment->mof_no = $request->contractor_mof;
+            $appointment->mof_reference_no = $request->contractor_mof_reference;
+            $appointment->mof_start_date = Carbon::parse($request->contractor_mof_start_date);
+            $appointment->mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+            $appointment->company_name = $request->contractor_company_name;
+            $appointment->company_address = $request->contractor_company_address;
+            $appointment->company_tel = $request->contractor_company_tel;
+            $appointment->company_fax = $request->contractor_company_fax;
+            $appointment->created_by = \Auth::user()->id;
+            $appointment->active = 1;
+            $appointment->save();
+
+            return redirect()
+                ->route('contractors.index', $project->id)
+                ->with('success', 'Maklumat syarikat untuk kontraktor telah berjaya dikemaskini.');
+        }
     }
 
     public function storeLists($project_id, Request $request)
@@ -89,12 +136,25 @@ class ContractorController extends Controller
     public function storeDuration($project_id, Request $request)
     {
         $project = Project::find($project_id);
-        $project->contract_start_date = Carbon::parse($request->contractor_duration_start_date);
-        $project->contract_end_date = Carbon::parse($request->contractor_duration_end_date);
-        $project->save();
 
-        return redirect()
-            ->route('contractors.index', $project->id)
-            ->with('success', 'Tempoh kontrak telah berjaya dikemaskini.');
+        if (!empty($project->contractorAppointment)) {
+            $project->contractorAppointment->contract_start_date = Carbon::parse($request->contractor_duration_start_date);
+            $project->contractorAppointment->contract_end_date = Carbon::parse($request->contractor_duration_end_date);
+            $project->contractorAppointment->save();
+
+            return redirect()
+                ->route('contractors.index', $project->id)
+                ->with('success', 'Tempoh kontrak telah berjaya dikemaskini.');
+        } else {
+            $appointment = new Appointment;
+
+            $appointment->contract_start_date = Carbon::parse($request->contractor_duration_start_date);
+            $appointment->contract_end_date = Carbon::parse($request->contractor_duration_end_date);
+            $appointment->save();
+
+            return redirect()
+                ->route('contractors.index', $project->id)
+                ->with('success', 'Tempoh kontrak telah berjaya dikemaskini.');
+        }
     }
 }

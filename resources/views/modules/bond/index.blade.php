@@ -29,7 +29,7 @@
                                     <div class="pull-right">
                                         <div class="btn-group">
                                             <a href="{{ route('scopes.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Skop Kontrak
+                                                <i class="fa fa-fw fa-plus"></i> Kemaskini Bon Perlaksanaan
                                             </a>
                                         </div>
                                     </div>
@@ -43,22 +43,24 @@
                     <div class="col-md-12">
                         <div class="box box-solid">
                             <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Skop Kontrak</h3>
+                                <h3 class="box-title">Bon Perlaksanaan</h3>
                             </div>
                             <div class="box-body">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <tr class="tbl-row-init tbl-default">
-                                                <th class="col-md-3">&nbsp;</th>
-                                                <th>Maklumat</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-5">Skop Kontrak</th>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <tr class="tbl-row-init tbl-default">
+                                            <th class="col-md-3">&nbsp;</th>
+                                            <th>Maklumat</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Wang Jaminan Perlaksanaan</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Jumlah Pembayaran (RM)</th>
+                                            <td></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

@@ -52,6 +52,12 @@ class ProjectController extends Controller
         if (!empty($allocation)) {
             if ($estimate_cost <= $allocation->balance) {
                 DB::transaction(function () use ($request, $allocation) {
+                    $approval_date = null;
+
+                    if (!empty($request->project_approval_date)) {
+                        $approval_date = Carbon::parse($request->project_approval_date);
+                    }
+
                     $project = Project::create([
                         'lookup_budget_type_id' => $request->project_budget_type,
                         'lookup_sub_budget_type_id' => $request->project_sub_budget_type,
@@ -59,10 +65,11 @@ class ProjectController extends Controller
                         'file_reference_no' => $request->project_file_reference,
                         'concept' => $request->project_concept,
                         'estimate_cost' => !is_null($request->project_estimate_cost) ? removeMaskMoney($request->project_estimate_cost) : 0,
-                        'approval_date' => Carbon::parse($request->project_approval_date),
+                        'approval_date' => $approval_date,
                         'rmk' => $request->project_rmk,
                         'market_research' => $request->optradio,
                         'status' => Status::isAppliedByKU(),
+                        'year' => Carbon::now()->year,
                         'created_by' => \Auth::user()->id,
                         'active' => 1
                     ]);
@@ -166,13 +173,19 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
 
+        $approval_date = null;
+
+        if (!empty($request->project_approval_date)) {
+            $approval_date = Carbon::parse($request->project_approval_date);
+        }
+
         $project->lookup_budget_type_id = $request->project_budget_type;
         $project->lookup_sub_budget_type_id = $request->project_sub_budget_type;
         $project->name = $request->project_name;
         $project->file_reference_no = $request->project_file_reference;
         $project->concept = $request->project_concept;
         $project->estimate_cost = removeMaskMoney($request->project_estimate_cost);
-        $project->approval_date = Carbon::parse($request->project_approval_date);
+        $project->approval_date = $approval_date;
         $project->rmk = $request->project_rmk;
         $project->market_research = $request->optradio;
         $project->created_by = \Auth::user()->id;

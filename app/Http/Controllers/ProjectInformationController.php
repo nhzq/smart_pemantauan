@@ -40,11 +40,23 @@ class ProjectInformationController extends Controller
         $project = Project::find($project_id);
 
         DB::transaction(function () use ($request, $project) {
+            $approval_minute = null;
+            $approval_pwn = null;
+
+            if (!empty($request->info_date_approval_minute)) {
+                $approval_minute = Carbon::parse($request->info_date_approval_minute);
+            }
+
+            if (!empty($request->info_date_approval_pwn)) {
+                $approval_pwn = Carbon::parse($request->info_date_approval_pwn);
+            }
+
             $project->objective = $request->info_objective_project;
-            $project->minute_approval_date = Carbon::parse($request->info_date_approval_minute);
-            $project->approval_pwn_date = Carbon::parse($request->info_date_approval_pwn);
+            $project->minute_approval_date = $approval_minute;
+            $project->approval_pwn_date = $approval_pwn;
             $project->lookup_collection_type_id = $request->info_collection_types;
             $project->status = Status::toPlanningPhase();
+            $project->updated_by = \Auth::user()->id;
             $project->save();
 
             if ($request->hasFile('info_minute')) {

@@ -28,8 +28,8 @@
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('scopes.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Skop Kontrak
+                                            <a href="{{ route('records.create', $project->id) }}" class="btn btn-default">
+                                                <i class="fa fa-fw fa-plus"></i> Kemaskini Rekod
                                             </a>
                                         </div>
                                     </div>
@@ -43,22 +43,28 @@
                     <div class="col-md-12">
                         <div class="box box-solid">
                             <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Skop Kontrak</h3>
+                                <h3 class="box-title">Rekod-rekod disenggara</h3>
                             </div>
                             <div class="box-body">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <tr class="tbl-row-init tbl-default">
-                                                <th class="col-md-3">&nbsp;</th>
-                                                <th>Maklumat</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-5">Skop Kontrak</th>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <tr class="tbl-row-init tbl-default">
+                                            <th class="col-md-3">&nbsp;</th>
+                                            <th>Maklumat</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Jenis Rekod</th>
+                                            <td>{{ $project->record->record_type ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Pegawai Bertanggungjawab</th>
+                                            <td>{{ $project->record->authorized_officer ?? '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Lokasi Simpanan Rekod</th>
+                                            <td>{{ $project->record->records_location ?? '' }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

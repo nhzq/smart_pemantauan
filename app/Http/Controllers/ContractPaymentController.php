@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 
-class ScopeController extends Controller
+class ContractPaymentController extends Controller
 {
     public function index($project_id)
     {
         $project = Project::find($project_id);
 
-        return view('modules.scopes.index', [
+        return view('modules.contract-payment.index', [
             'project' => $project
         ]);
     }
@@ -20,7 +20,7 @@ class ScopeController extends Controller
     {
         $project = Project::find($project_id);
 
-        return view('modules.scopes.create', [
+        return view('modules.contract-payment.create', [
             'project' => $project
         ]);
     }

@@ -135,38 +135,38 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Mesyuarat
+                        <a href="{{ route('meetings.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'meetings.index' ? 'text-red' : '' }}"></i> Mesyuarat
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Rekod-rekod disenggara
+                        <a href="{{ route('records.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'records.index' ? 'text-red' : '' }}"></i> Rekod-rekod disenggara
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Pembayaran Kontrak
+                        <a href="{{ route('payments.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'payments.index' ? 'text-red' : '' }}"></i> Pembayaran Kontrak
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Interim
+                        <a href="{{ route('interim.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'interim.index' ? 'text-red' : '' }}"></i> Interim
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Bond Perlaksanaan
+                        <a href="{{ route('bond.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'bond.index' ? 'text-red' : '' }}"></i> Bond Perlaksanaan
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Lanjutan Masa (EOT)
+                        <a href="{{ route('eot.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'eot.index' ? 'text-red' : '' }}"></i> Lanjutan Masa (EOT)
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Bayaran Ganti Rugi (LAD)
+                        <a href="{{ route('lad.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'lad.index' ? 'text-red' : '' }}"></i> Bayaran Ganti Rugi (LAD)
                         </a>
                     </li>
                 @endif

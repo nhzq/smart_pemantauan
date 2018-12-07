@@ -51,15 +51,15 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Surat Setuju Terima (SST)</th>
-                                        <td>{{ $project->sst ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->sst ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No. Rujukan SST</th>
-                                        <td>{{ $project->sst_reference_no ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->sst_reference_no ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Harga Kontrak</th>
-                                        <td>{{ currency($project->contract_value) ?? '' }}</td>
+                                        <td>{{ currency($project->contractorAppointment->contract_value) ?? '' }}</td>
                                     </tr>
 
                                     <!-- new row -->
@@ -68,43 +68,43 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Sijil SSM</th>
-                                        <td>{{ $project->ssm_no ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->ssm_no ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Rujukan Pendaftaran SSM</th>
-                                        <td>{{ $project->ssm_reference_no ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->ssm_reference_no ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tempoh Sah Laku</th>
-                                        <td>{{ $project->ssm_start_date ?? '' }} sehingga {{ $project->ssm_end_date ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->ssm_start_date ?? '' }} sehingga {{ $project->ssm_end_date ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Sijil MOF</th>
-                                        <td>{{ $project->mof_no ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->mof_no ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Rujukan Pendaftaran MOF</th>
-                                        <td>{{ $project->mof_reference_no ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->mof_reference_no ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tempoh Sah Laku</th>
-                                        <td>{{ $project->mof_start_date ?? '' }} sehingga {{ $project->mof_end_date ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->mof_start_date ?? '' }} sehingga {{ $project->mof_end_date ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Nama Syarikat</th>
-                                        <td>{{ $project->company_name ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->company_name ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Alamat Syarikat</th>
-                                        <td>{!! $project->company_address ?? '' !!}</td>
+                                        <td>{!! $project->contractorAppointment->company_address ?? '' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Telefon</th>
-                                        <td>{{ $project->company_tel ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->company_tel ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Fax</th>
-                                        <td>{{ $project->company_fax ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->company_fax ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Bilangan Kontraktor</th>
@@ -151,11 +151,11 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Mula</th>
-                                        <td>{{ $project->contract_start_date ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->contract_start_date ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Akhir</th>
-                                        <td>{{ $project->contract_end_date ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->contract_end_date ?? '' }}</td>
                                     </tr>
                                 </table>
                             </div>

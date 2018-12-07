@@ -21,27 +21,27 @@
                     </div>
 
                     <div class="box-body">
-                        {{ Form::open() }}
+                        {{ Form::open(['url' => route('contracts.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tajuk Kontrak</label>
-                                            <input class="form-control" type="text" name="budget_allocation">
+                                            <input class="form-control" type="text" name="contract_title">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Kos Kontrak (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="budget_allocation">
+                                            <input class="form-control money-convert" type="text" name="contract_cost">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>No Kontrak</label>
-                                            <input class="form-control" type="text" name="budget_allocation">
+                                            <input class="form-control" type="text" name="contract_no">
                                         </div>
                                     </div>
                                 </div>
@@ -50,21 +50,21 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tarikh Perjanjian Kontrak</label>
-                                            <input class="form-control pickdate" type="text" name="budget_allocation">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Tarikh Siap Projek</label>
-                                            <input class="form-control pickdate" type="text" name="budget_allocation">
+                                            <input class="form-control pickdate" type="text" name="contract_agreement_date">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tarikh Mula Projek</label>
-                                            <input class="form-control pickdate" type="text" name="budget_allocation">
+                                            <input class="form-control pickdate" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Tarikh Siap Projek</label>
+                                            <input class="form-control pickdate" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -73,21 +73,21 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tarikh Semakan Kontrak Kepada PUU</label>
-                                            <input class="form-control pickdate" type="text" name="budget_allocation">
+                                            <input  id="start_date" class="form-control pickdate" type="text" name="contract_review_date">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tarikh Terima Semakan Kontrak Kepada PUU</label>
-                                            <input class="form-control pickdate" type="text" name="budget_allocation">
+                                            <input  id="end_date" class="form-control pickdate" type="text" name="contract_receive_date">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tempoh Semakan PUU</label>
-                                            <input class="form-control" type="text" name="budget_allocation" readonly>
+                                            <input id="total_days" class="form-control" type="text" name="duration" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -116,6 +116,28 @@
             $('.pickdate').datepicker({
                 todayHighlight: true,
                 autoclose: true
+            });
+
+            $('#start_date').datepicker({
+                todayHighlight: true,
+                autoclose: true
+            }).on('changeDate', function (e) {
+                $('#end_date').datepicker('setStartDate', $('#start_date').val());
+            });
+
+            $('#end_date').datepicker({
+                todayHighlight: true,
+                autoclose: true
+            }).on('changeDate', function (e) {
+                var start = $('#start_date').val();
+                var startD = new Date(start);
+
+                var end = $('#end_date').val();
+                var endD = new Date(end);
+
+                var diff = parseInt(((endD.getTime() - startD.getTime()) / (24*3600*1000)) + 1);
+
+                $('#total_days').val(diff);
             });
         });
     </script>
