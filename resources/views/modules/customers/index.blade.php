@@ -21,24 +21,6 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="pull-right">
-                                        <div class="btn-group">
-                                            <a href="{{ route('contracts.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Butiran Pelanggan
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endhasanyrole
-                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box box-solid">
@@ -130,12 +112,26 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $contract_start_date = '';
+
+                                                    if (!empty($project->contractorAppointment->contract_start_date)) {
+                                                        $contract_start_date = $project->contractorAppointment->contract_start_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Mula</th>
-                                                <td>{{ $project->contractorAppointment->contract_start_date ?? '' }}</td>
+                                                <td>{{ $contract_start_date }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $contract_end_date = '';
+
+                                                    if (!empty($project->contractorAppointment->contract_end_date)) {
+                                                        $contract_end_date = $project->contractorAppointment->contract_end_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Akhir</th>
-                                                <td>{{ $project->contractorAppointment->contract_end_date ?? '' }}</td>
+                                                <td>{{ $contract_end_date }}</td>
                                             </tr>
                                         </table>
                                     </div>

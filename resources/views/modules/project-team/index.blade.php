@@ -65,11 +65,10 @@
                                                 <th>Bahagian</th>
                                                 <th>Unit</th>
                                                 <th>Peranan</th>
-                                                <th>Kekerapan Mesyuarat</th>
-                                                <th>Tindakan</th>
+                                                <th class="col-sm-1">Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 1)->get() as $data)
+                                            @if (!empty($project->teams))
+                                                @foreach ($project->teams->where('lookup_project_team_id', 1) as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
@@ -77,9 +76,8 @@
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
                                                         <td>{{ $data->role->name ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
-                                                            <div class="min130">
+                                                            <div class="min100">
                                                                 <div class="btn-group">
                                                                     <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
@@ -92,6 +90,19 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @endif
+                                            @if (count($project->teams->where('lookup_project_team_id', 1)))
+                                                <tr>
+                                                    <th colspan="4">Kekerapan Mesyuarat (Jumlah)</th>
+                                                    <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 1)) }}</strong></td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 1]) }}" class="btn bg-purple">
+                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endif
                                         </table>
                                     </div>
@@ -108,11 +119,10 @@
                                                 <th>Bahagian</th>
                                                 <th>Unit</th>
                                                 <th>Peranan</th>
-                                                <th>Kekerapan Mesyuarat</th>
-                                                <th>Tindakan</th>
+                                                <th class="col-sm-1">Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 2)->get() as $data)
+                                            @if (!empty($project->teams))
+                                                @foreach ($project->teams->where('lookup_project_team_id', 2) as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
@@ -120,9 +130,8 @@
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
                                                         <td>{{ $data->role->name ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
-                                                            <div class="min130">
+                                                            <div class="min100">
                                                                 <div class="btn-group">
                                                                     <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
@@ -135,6 +144,19 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @endif
+                                            @if (count($project->teams->where('lookup_project_team_id', 2)) > 0)
+                                                <tr>
+                                                    <th colspan="4">Kekerapan Mesyuarat (Jumlah)</th>
+                                                    <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 2)) }}</strong></td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 2]) }}" class="btn bg-purple">
+                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endif
                                         </table>
                                     </div>
@@ -151,11 +173,10 @@
                                                 <th>Bahagian</th>
                                                 <th>Unit</th>
                                                 <th>Peranan</th>
-                                                <th>Kekerapan Mesyuarat</th>
-                                                <th>Tindakan</th>
+                                                <th class="col-sm-1">Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 3)->get() as $data)
+                                            @if (!empty($project->teams))
+                                                @foreach ($project->teams->where('lookup_project_team_id', 3) as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
@@ -163,9 +184,8 @@
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
                                                         <td>{{ $data->role->name ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
-                                                            <div class="min130">
+                                                            <div class="min100">
                                                                 <div class="btn-group">
                                                                     <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
@@ -178,6 +198,19 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @endif
+                                            @if (count($project->teams->where('lookup_project_team_id', 3)))
+                                                <tr>
+                                                    <th colspan="4">Kekerapan Mesyuarat (Jumlah)</th>
+                                                    <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 3)) }}</strong></td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 3]) }}" class="btn bg-purple">
+                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endif
                                         </table>
                                     </div>
@@ -194,11 +227,10 @@
                                                 <th>Bahagian</th>
                                                 <th>Unit</th>
                                                 <th>Peranan</th>
-                                                <th>Kekerapan Mesyuarat</th>
-                                                <th>Tindakan</th>
+                                                <th class="col-sm-1">Tindakan</th>
                                             </tr>
-                                            @if (isset($team))
-                                                @foreach ($team->where('lookup_project_team_id', 4)->get() as $data)
+                                            @if (!empty($project->teams))
+                                                @foreach ($project->teams->where('lookup_project_team_id', 4) as $data)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
@@ -206,9 +238,8 @@
                                                         <td>{{ $data->group ?? '' }}</td>
                                                         <td>{{ $data->unit ?? '' }}</td>
                                                         <td>{{ $data->role->name ?? '' }}</td>
-                                                        <td>{{ $data->total_meeting ?? '' }}</td>
                                                         <td>
-                                                            <div class="min130">
+                                                            <div class="min100">
                                                                 <div class="btn-group">
                                                                     <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
@@ -221,6 +252,19 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @endif
+                                            @if (count($project->teams->where('lookup_project_team_id', 4)))
+                                                <tr>
+                                                    <th colspan="4">Kekerapan Mesyuarat (Jumlah)</th>
+                                                    <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 4)) }}</strong></td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 4]) }}" class="btn bg-purple">
+                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endif
                                         </table>
                                     </div>

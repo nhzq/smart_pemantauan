@@ -106,9 +106,39 @@ class Project extends Model
         return $this->hasOne('App\Models\Record');
     }
 
-    public function payment()
+    public function meetings()
     {
-        return $this->hasOne('App\Models\ContractPayment');
+        return $this->hasMany('App\Models\Meeting');
+    }
+
+    public function committee_documents()
+    {
+        return $this->hasMany('App\Models\CommitteeDocument');
+    }
+
+    public function chart()
+    {
+        return $this->hasMany('App\Models\OrganizationChart');
+    }
+
+    public function interims()
+    {
+        return $this->hasMany('App\Models\Interim');
+    }
+
+    public function bond()
+    {
+        return $this->hasOne('App\Models\Bond');
+    }
+
+    public function eots()
+    {
+        return $this->hasMany('App\Models\Eot');
+    }
+
+    public function lad()
+    {
+        return $this->hasMany('App\Models\Lad');
     }
 
     /*

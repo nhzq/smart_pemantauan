@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
         /* Project Team section */
         Route::resource('/{project_id}/project-team', 'ProjectTeamController');
         Route::get('/project-team-ajax-create', 'ProjectTeamController@ajaxType')->name('project-team.create.type');
+        Route::get('/{project_id}/project-team/create-meeting/{id}', 'ProjectTeamController@createMeeting')->name('project-team.create.meeting');
+        Route::post('/{project_id}/project-team/store-meeting/{id}', 'ProjectTeamController@storeMeeting')->name('project-team.store.meeting');
 
         /* Verification Section */
         Route::get('/{project_id}/verifications', 'VerificationController@index')->name('verifications.index');
@@ -75,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{project_id}/committees/update/information/{id}', 'CommitteeController@updateInformation')->name('committees.update.information');
         Route::get('/{project_id}/committees/edit/direct-negotiation/information', 'CommitteeController@editInformationDirect')->name('committees.edit.information.direct');
         Route::put('/{project_id}/committees/update/direct-negotiation/information', 'CommitteeController@updateInformationDirect')->name('committees.update.information.direct');
+        Route::get('/{project_id}/committees/view-download-file/{filename}', 'ProjectController@downloadFile')->name('committees.file.download');
 
         /* Methods section */
         Route::resource('/{project_id}/methods', 'CollectionMethodController');
@@ -107,15 +110,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* Meeting section */
         Route::resource('/{project_id}/meetings', 'MeetingController');
+        Route::put('/{project_id}/meetings/{id}/update-meeting', 'MeetingController@updateMeeting')->name('meetings.update.actual');
 
         /* Record section */
         Route::resource('/{project_id}/records', 'RecordController');
 
-        /* Payment section */
-        Route::resource('/{project_id}/payments', 'ContractPaymentController');
-
         /* Interim section */
-        Route::resource('/{project_id}/interim', 'InterimController');
+        Route::resource('/{project_id}/interims', 'InterimController');
 
         /* Bond section */
         Route::resource('/{project_id}/bond', 'BondController');

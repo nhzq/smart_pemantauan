@@ -34,7 +34,7 @@ class RecordController extends Controller
             $project->record->project_id = $project_id;
             $project->record->record_type = $request->record_type;
             $project->record->authorized_officer = $request->record_officer;
-            $project->record->records_location = $request->record_location;
+            $project->record->record_location = $request->record_location;
             $project->record->updated_by = \Auth::user()->id;
             $project->record->active = 1;
             $project->record->save();
@@ -47,7 +47,7 @@ class RecordController extends Controller
             $record->project_id = $project_id;
             $record->record_type = $request->record_type;
             $record->authorized_officer = $request->record_officer;
-            $record->records_location = $request->record_location;
+            $record->record_location = $request->record_location;
             $record->created_by = \Auth::user()->id;
             $record->active = 1;
             $record->save();

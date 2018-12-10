@@ -18,17 +18,42 @@
             <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Skop Kontrak</h3>
+                        <h3 class="box-title">Lanjutan Masa (EOT)</h3>
                     </div>
 
                     <div class="box-body">
-                        {{ Form::open(['url' => route('scopes.index', $project->id), 'method' => 'POST']) }}
+                        {{ Form::open(['url' => route('eot.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tarikh dari SST Mula</label>
+                                            <input class="form-control" type="text" value="{{ $project->contractorAppointment->sst->format('m/d/Y') }}" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tarikh Lanjutan Tempoh Akhir</label>
+                                            <input class="form-control pickdate" type="text" name="extend_date">
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Skop Kontrak</label>
-                                            <textarea class="form-control texteditor" name="scope_contract"></textarea>
+                                            <label>Sebab-sebab</label>
+                                            <textarea class="form-control texteditor" name="reasons" cols="30" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Tindakan Diambil</label>
+                                            <textarea class="form-control texteditor" name="action_taken" cols="30" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -50,11 +75,16 @@
 
 @push ('script')
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
-    <script type="text/javascript">
+    <script>
         $(function () {
             $('.texteditor').summernote({
                 toolbar: [],
                 height: 100
+            });
+
+            $('.pickdate').datepicker({
+                todayHighlight: true,
+                autoclose: true
             });
         });
     </script>

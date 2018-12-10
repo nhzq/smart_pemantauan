@@ -145,13 +145,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('payments.index', $project->id) }}">
-                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'payments.index' ? 'text-red' : '' }}"></i> Pembayaran Kontrak
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('interim.index', $project->id) }}">
-                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'interim.index' ? 'text-red' : '' }}"></i> Interim
+                        <a href="{{ route('interims.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'interims.index' ? 'text-red' : '' }}"></i> Pembayaran Kontrak
                         </a>
                     </li>
                     <li>

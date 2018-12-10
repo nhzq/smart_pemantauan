@@ -7,7 +7,7 @@ use App\Models\Project;
 use App\Models\Committee;
 use App\Models\CommitteeInformation as Information;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
 
 class CommitteeController extends Controller
 {
@@ -124,9 +124,15 @@ class CommitteeController extends Controller
 
         if (isset($info)) {
             DB::transaction(function () use ($project_id, $id, $request, $info) {
+                $appointment_date = null;
+
+                if (!empty($request->committee_appointment_date)) {
+                    $appointment_date = \Carbon\Carbon::parse($request->committee_appointment_date);
+                }
+
                 $info->project_id = $project_id;
                 $info->committee_type_id = $id;
-                $info->appointment_date = \Carbon\Carbon::parse($request->committee_appointment_date);
+                $info->appointment_date = $appointment_date;
                 $info->save();
 
                 if ($id == 1) {
@@ -146,7 +152,7 @@ class CommitteeController extends Controller
 
                         $obj = $info->with('project.documents')->where('id', $info->id)->first();
                         $obj->project->documents()->create([
-                            'category' => $category_title,
+                            'category' => $category_title . '-surat-lantikan',
                             'file_name' => $doc_new_name,
                             'original_name' => $data->getClientOriginalName(),
                             'mime_type' => $data->getMimeType(),
@@ -175,7 +181,6 @@ class CommitteeController extends Controller
             });
 
             return redirect('collection/' . $project_id . '/committees#tab_tab' . $id)
-                // ->route('committees.index', $project_id)
                 ->with('success', 'Maklumat Jawatankuasa telah berjaya dikemaskini.');
         }
     }
@@ -188,5 +193,12 @@ class CommitteeController extends Controller
             'info' => $info,
             'project_id' => $project_id
         ]);
+    }
+
+    public function downloadFile($committee_id, $filename)
+    {
+        $project = Project::find($id);
+
+        return Storage::download('/committees/' . $project->id . '/' . $filename);
     }
 }

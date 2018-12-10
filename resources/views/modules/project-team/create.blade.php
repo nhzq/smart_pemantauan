@@ -78,34 +78,20 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Bahagian</label>
                                             <input type="text" class="form-control" name="team_part">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Unit</label>
                                             <input type="text" class="form-control" name="team_unit">
                                         </div>
                                     </div>
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Kekerapan Mesyuarat</label>
-                                            <select id="team_meeting" class="form-control" name="team_meeting">
-                                                <?php $options = [0, 1, 2, 3, 4, 5]; ?>
-                                                @foreach ($options as $data)
-                                                    <option value="{{ $data }}">{{ $data }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
-
-                                <div id="team_meeting_list"></div>
 
                                 <div class="row">
                                     <div class="col-md-2 mrg10T mrg10B pull-right">
@@ -155,27 +141,6 @@
                 error: function (xhr, desc, err) {
                     console.log('error');
                 }
-            });
-        });
-
-        $('#team_meeting').on('change', function () {
-            total_meeting = $(this).val();
-            row = '';
-
-            for ($i = 0; $i < total_meeting; $i++) {
-                row += '<div class="row">';
-                row += '<div class="col-md-4">';
-                row += '<div class="form-group">';
-                row += '<label>Tarikh Rancangan Mesyuarat</label>';
-                row += '<input class="form-control pickdate" type="text" name="team_meeting_date[]">';
-                row += '</div>';
-                row += '</div>';
-                row += '</div>';
-            }
-
-            $('#team_meeting_list').html('');
-            $('#team_meeting_list').append(row).find('.pickdate').datepicker({
-                todayHighlight: true
             });
         });
     </script>

@@ -62,7 +62,7 @@
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Lokasi Simpanan Rekod</th>
-                                            <td>{{ $project->record->records_location ?? '' }}</td>
+                                            <td>{{ $project->record->record_location ?? '' }}</td>
                                         </tr>
                                     </table>
                                 </div>

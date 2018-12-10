@@ -28,7 +28,7 @@
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('scopes.create', $project->id) }}" class="btn btn-default">
+                                            <a href="{{ route('eot.create', $project->id) }}" class="btn btn-default">
                                                 <i class="fa fa-fw fa-plus"></i> Kemaskini EOT
                                             </a>
                                         </div>
@@ -49,28 +49,36 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered">
                                         <tr class="tbl-row-init tbl-default">
-                                            <th class="col-md-3">&nbsp;</th>
-                                            <th>Maklumat</th>
+                                            <th class="col-md-1">#</th>
+                                            <th class="col-md-1">Tarikh dari SST mula</th>
+                                            <th class="col-md-1">Tarikh Lanjutan Tempoh Akhir</th>
+                                            <th class="col-md-4">Sebab-sebab</th>
+                                            <th class="col-md-5">Tindakan Diambil</th>
                                         </tr>
                                         <tr>
-                                            <th class="col-md-5">Tarikh dari SST mula</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-5">Tarikh Lanjutan Tempoh Akhir</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-5">Sebab-sebab</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-5">Tindakan</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-5">Upload</th>
-                                            <td></td>
+                                            @if(!empty($project->eots))
+                                                @foreach ($project->eots as $data)
+                                                    <?php 
+                                                        $sst_start = '';
+                                                        $extend_date = '';
+
+                                                        if (!empty($project->contractorAppointment->sst)) {
+                                                            $sst_start = $project->contractorAppointment->sst->format('m/d/Y');
+                                                        }
+
+                                                        if (!empty($data->extend_date)) {
+                                                            $extend_date = $data->extend_date->format('m/d/Y');
+                                                        }
+                                                    ?>
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $sst_start }}</td>
+                                                        <td>{{ $extend_date }}</td>
+                                                        <td>{!! $data->reason ?? '' !!}</td>
+                                                        <td>{!! $data->action ?? '' !!}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tr>
                                     </table>
                                 </div>

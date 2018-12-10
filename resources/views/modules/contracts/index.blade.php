@@ -55,39 +55,84 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tajuk Kontrak</th>
-                                                <td>Projek Pembangunan Server Cloud</td>
+                                                <td>{{ $project->contract->title ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Kos Kontrak (RM)</th>
-                                                <td>2,000,000</td>
+                                                <td>{{ $project->contract->cost ?? '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No Kontrak</th>
-                                                <td>123</td>
+                                                <td>{{ $project->contract->contract_no ?? '' }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $agreement_date = '';
+
+                                                    if (!empty($project->contract->agreement_date)) {
+                                                        $agreement_date = $project->contract->agreement_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Perjanjian Kontrak</th>
-                                                <td>11/11/2019</td>
+                                                <td>{{ $agreement_date }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $contract_start_date = '';
+
+                                                    if (!empty($project->contractorAppointment->contract_start_date)) {
+                                                        $contract_start_date = $project->contractorAppointment->contract_start_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Mula Projek</th>
-                                                <td>11/12/2020</td>
+                                                <td>{{ $contract_start_date }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $contract_end_date = '';
+
+                                                    if (!empty($project->contractorAppointment->contract_end_date)) {
+                                                        $contract_end_date = $project->contractorAppointment->contract_end_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Siap Projek</th>
-                                                <td>12/11/2022</td>
+                                                <td>{{ $contract_end_date }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $puu_review_date = '';
+
+                                                    if (!empty($project->contract->puu_review_date)) {
+                                                        $puu_review_date = $project->contract->puu_review_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Semakan Kontrak Kepada PUU</th>
-                                                <td>12/12/2019</td>
+                                                <td>{{ $puu_review_date }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $puu_receive_date = '';
+
+                                                    if (!empty($project->contract->puu_receive_date)) {
+                                                        $puu_receive_date = $project->contract->puu_receive_date->format('m/d/Y');
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tarikh Terimaan Kontrak Kepada PUU</th>
-                                                <td>12/12/2019</td>
+                                                <td>{{ $puu_receive_date }}</td>
                                             </tr>
                                             <tr>
+                                                <?php 
+                                                    $review = $project->contract->puu_review_date;
+                                                    $receive = $project->contract->puu_receive_date;
+
+                                                    $duration = '';
+
+                                                    if (!empty($review) && !empty($receive)) {
+                                                        $duration = $review->diffInDays($receive);
+                                                    }
+                                                ?>
                                                 <th class="col-md-5">Tempoh Semakan PUU</th>
-                                                <td>2 Tahun</td>
+                                                <td>{{ $duration }} hari</td>
                                             </tr>
                                         </table>
                                     </div>

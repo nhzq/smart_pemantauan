@@ -59,7 +59,7 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Harga Kontrak</th>
-                                        <td>{{ currency($project->contractorAppointment->contract_value) ?? '' }}</td>
+                                        <td>{{ !empty($project->contractorAppointment->contract_value) ? currency($project->contractorAppointment->contract_value) : '' }}</td>
                                     </tr>
 
                                     <!-- new row -->
@@ -76,7 +76,7 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tempoh Sah Laku</th>
-                                        <td>{{ $project->contractorAppointment->ssm_start_date ?? '' }} sehingga {{ $project->ssm_end_date ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->ssm_start_date ?? '' }} - {{ $project->ssm_end_date ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Sijil MOF</th>
@@ -88,7 +88,7 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tempoh Sah Laku</th>
-                                        <td>{{ $project->contractorAppointment->mof_start_date ?? '' }} sehingga {{ $project->mof_end_date ?? '' }}</td>
+                                        <td>{{ $project->contractorAppointment->mof_start_date ?? '' }} - {{ $project->mof_end_date ?? '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Nama Syarikat</th>

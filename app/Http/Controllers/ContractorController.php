@@ -31,11 +31,17 @@ class ContractorController extends Controller
     public function storeAppointment($project_id, Request $request)
     {
         $project = Project::find($project_id);
+        $contractor_sst = null;
 
         if (!empty($project->contractorAppointment)) {
-            $project->contractorAppointment->sst = Carbon::parse($request->contractor_sst);
+            
+            if (!empty($request->contractor_sst)) {
+                $contractor_sst = Carbon::parse($request->contractor_sst);
+            }
+
+            $project->contractorAppointment->sst = $contractor_sst;
             $project->contractorAppointment->sst_reference_no = $request->contractor_sst_reference;
-            $project->contractorAppointment->contract_value = removeMaskMoney($request->contractor_value);
+            $project->contractorAppointment->contract_value = !empty($request->contractor_value) ? removeMaskMoney($request->contractor_value) : null;
             $project->contractorAppointment->updated_by = \Auth::user()->id;
             $project->contractorAppointment->active = 1;
             $project->contractorAppointment->save();
@@ -44,12 +50,15 @@ class ContractorController extends Controller
                 ->route('contractors.index', $project->id)
                 ->with('success', 'Maklumat perlantikan kontraktor telah berjaya dikemaskini.');
         } else {
-            $appointment = new Appointment;
+            if (!empty($request->contractor_sst)) {
+                $contractor_sst = Carbon::parse($request->contractor_sst);
+            }
 
+            $appointment = new Appointment;
             $appointment->project_id = $project->id;
-            $appointment->sst = Carbon::parse($request->contractor_sst);
+            $appointment->sst = $contractor_sst;
             $appointment->sst_reference_no = $request->contractor_sst_reference;
-            $appointment->contract_value = removeMaskMoney($request->contractor_value);
+            $appointment->contract_value = !empty($request->contractor_value) ? removeMaskMoney($request->contractor_value) : null;
             $appointment->created_by = \Auth::user()->id;
             $appointment->active = 1;
             $appointment->save();
@@ -63,16 +72,35 @@ class ContractorController extends Controller
     public function storeDetails($project_id, Request $request)
     {
         $project = Project::find($project_id);
+        $contractor_ssm_start_date = null;
+        $contractor_ssm_end_date = null;
+        $contractor_mof_start_date = null;
+        $contractor_mof_end_date = null;
 
         if (!empty($project->contractorAppointment)) {
+            if (!empty($request->contractor_ssm_start_date)) {
+                $contractor_ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
+            }
+
+            if (!empty($request->contractor_ssm_end_date)) {
+                $contractor_ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+            }
+
+            if (!empty($request->contractor_mof_start_date)) {
+                $contractor_mof_start_date = Carbon::parse($request->contractor_mof_start_date);
+            }
+
+            if (!empty($request->contractor_mof_end_date)) {
+                $contractor_mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+            }
             $project->contractorAppointment->ssm_no = $request->contractor_ssm;
             $project->contractorAppointment->ssm_reference_no = $request->contractor_ssm_reference;
-            $project->contractorAppointment->ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
-            $project->contractorAppointment->ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+            $project->contractorAppointment->ssm_start_date = $contractor_ssm_start_date;
+            $project->contractorAppointment->ssm_end_date = $contractor_ssm_end_date;
             $project->contractorAppointment->mof_no = $request->contractor_mof;
             $project->contractorAppointment->mof_reference_no = $request->contractor_mof_reference;
-            $project->contractorAppointment->mof_start_date = Carbon::parse($request->contractor_mof_start_date);
-            $project->contractorAppointment->mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+            $project->contractorAppointment->mof_start_date = $contractor_mof_start_date;
+            $project->contractorAppointment->mof_end_date = $contractor_mof_end_date;
             $project->contractorAppointment->company_name = $request->contractor_company_name;
             $project->contractorAppointment->company_address = $request->contractor_company_address;
             $project->contractorAppointment->company_tel = $request->contractor_company_tel;
@@ -85,16 +113,31 @@ class ContractorController extends Controller
                 ->route('contractors.index', $project->id)
                 ->with('success', 'Maklumat syarikat untuk kontraktor telah berjaya dikemaskini.');
         } else {
-            $appointment = new Appointment;
+            if (!empty($request->contractor_ssm_start_date)) {
+                $contractor_ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
+            }
 
+            if (!empty($request->contractor_ssm_end_date)) {
+                $contractor_ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+            }
+
+            if (!empty($request->contractor_mof_start_date)) {
+                $contractor_mof_start_date = Carbon::parse($request->contractor_mof_start_date);
+            }
+
+            if (!empty($request->contractor_mof_end_date)) {
+                $contractor_mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+            }
+
+            $appointment = new Appointment;
             $appointment->ssm_no = $request->contractor_ssm;
             $appointment->ssm_reference_no = $request->contractor_ssm_reference;
-            $appointment->ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
-            $appointment->ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+            $appointment->ssm_start_date = $contractor_ssm_start_date;
+            $appointment->ssm_end_date = $contractor_ssm_end_date;
             $appointment->mof_no = $request->contractor_mof;
             $appointment->mof_reference_no = $request->contractor_mof_reference;
-            $appointment->mof_start_date = Carbon::parse($request->contractor_mof_start_date);
-            $appointment->mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+            $appointment->mof_start_date = $contractor_mof_start_date;
+            $appointment->mof_end_date = $contractor_mof_end_date;
             $appointment->company_name = $request->contractor_company_name;
             $appointment->company_address = $request->contractor_company_address;
             $appointment->company_tel = $request->contractor_company_tel;
@@ -136,18 +179,35 @@ class ContractorController extends Controller
     public function storeDuration($project_id, Request $request)
     {
         $project = Project::find($project_id);
+        $contractor_duration_start_date = null;
+        $contractor_duration_end_date = null;
 
         if (!empty($project->contractorAppointment)) {
-            $project->contractorAppointment->contract_start_date = Carbon::parse($request->contractor_duration_start_date);
-            $project->contractorAppointment->contract_end_date = Carbon::parse($request->contractor_duration_end_date);
+            if (!empty($request->contractor_duration_start_date)) {
+                $contractor_duration_start_date = Carbon::parse($request->contractor_duration_start_date);
+            }
+
+            if (!empty($request->contractor_duration_end_date)) {
+                $contractor_duration_end_date = Carbon::parse($request->contractor_duration_end_date);
+            }
+
+            $project->contractorAppointment->contract_start_date = $contractor_duration_start_date;
+            $project->contractorAppointment->contract_end_date = $contractor_duration_end_date;
             $project->contractorAppointment->save();
 
             return redirect()
                 ->route('contractors.index', $project->id)
                 ->with('success', 'Tempoh kontrak telah berjaya dikemaskini.');
         } else {
-            $appointment = new Appointment;
+            if (!empty($$request->contractor_duration_start_date)) {
+                $contractor_duration_start_date = Carbon::parse($request->contractor_duration_start_date);
+            }
 
+            if (!empty($request->contractor_duration_end_date)) {
+                $contractor_duration_end_date = Carbon::parse($request->contractor_duration_end_date);
+            }
+
+            $appointment = new Appointment;
             $appointment->contract_start_date = Carbon::parse($request->contractor_duration_start_date);
             $appointment->contract_end_date = Carbon::parse($request->contractor_duration_end_date);
             $appointment->save();

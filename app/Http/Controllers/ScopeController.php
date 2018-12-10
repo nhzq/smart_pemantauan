@@ -24,4 +24,15 @@ class ScopeController extends Controller
             'project' => $project
         ]);
     }
+
+    public function store($project_id, Request $request)
+    {
+        $project = Project::find($project_id);
+        $project->scope = $request->scope_contract;
+        $project->save();
+
+        return redirect()
+            ->route('scopes.index', $project->id)
+            ->with('success', 'Skop Kontrak telah berjaya dikemaskini.');
+    }
 }

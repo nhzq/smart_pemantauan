@@ -15,4 +15,13 @@ class LadController extends Controller
             'project' => $project
         ]);
     }
+
+    public function create($project_id)
+    {
+        $project = Project::find($project_id);
+
+        return view('modules.lad.create', [
+            'project' => $project
+        ]);
+    }
 }

@@ -49,7 +49,14 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Kelulusan JPICT</th>
-                                        <td>{{ $project->approval_date->format('m/d/Y') ?? 'N/A' }}</td>
+                                        <?php 
+                                            $approval_date = '-';
+
+                                            if (!empty($project->approval_date)) {
+                                                $approval_date = $project->approval_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $approval_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Kertas Cadangan</th>

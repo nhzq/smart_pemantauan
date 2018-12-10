@@ -54,8 +54,8 @@
                                                 <th>Maklumat</th>
                                             </tr>
                                             <tr>
-                                                <th class="col-md-5">Skop Kontrak</th>
-                                                <td></td>
+                                                <th class="col-md-3">Skop Kontrak</th>
+                                                <td class="col-md-9">{!! $project->scope ?? '' !!}</td>
                                             </tr>
                                         </table>
                                     </div>

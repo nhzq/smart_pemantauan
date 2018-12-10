@@ -28,7 +28,7 @@
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('scopes.create', $project->id) }}" class="btn btn-default">
+                                            <a href="{{ route('lad.create', $project->id) }}" class="btn btn-default">
                                                 <i class="fa fa-fw fa-plus"></i> Kemaskini LAD
                                             </a>
                                         </div>

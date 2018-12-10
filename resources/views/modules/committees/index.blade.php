@@ -67,9 +67,9 @@
                                                     <th>Tindakan</th>
                                                 </tr>
 
-                                                <?php $first = $committee->where('project_id', $project->id)->where('committee_type_id', 1)->get(); ?>
-                                                @if (count($first) > 0)
-                                                    @foreach ($first as $data)
+                                                <?php $spesifikasiTeknikal = $project->committees()->where('committee_type_id', 1)->get(); ?>
+                                                @if (count($spesifikasiTeknikal) > 0)
+                                                    @foreach ($spesifikasiTeknikal as $data)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $data->name ?? '' }}</td>
@@ -110,8 +110,8 @@
                                             </div>
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <?php $info1 = $project->committees_info->where('committee_type_id', 1)->first(); ?>
 
+                                                    <?php $info1 = $project->committees_info->where('committee_type_id', 1)->first(); ?>
                                                     <table class="table table-hover table-bordered">
                                                         <tr class="tbl-row-init tbl-default">
                                                             <th></th>
@@ -120,12 +120,16 @@
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Spesifikasi Teknikal dan Harga</th>
                                                             <td class="col-md-6 col-sm-6">
-                                                                <?php 
-                                                                    !empty($info1) ? $doc1 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal')->get() : $doc1 = ''; 
+
+                                                                <?php
+                                                                    $doc1 = '';
+
+                                                                    if (!empty($info1)) {
+                                                                        $doc1 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal')->get();
+                                                                    } 
                                                                 ?>
-                                                                
                                                                 @if (!empty($doc1))
-                                                                    <a href="">
+                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc1->last()->file_name]) }}">
                                                                         <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                         &nbsp; {{ $doc1->last()->original_name ?? '' }}
                                                                     </a>
@@ -141,7 +145,25 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
-                                                            <td class="col-md-6 col-sm-6"></td>
+                                                            <td class="col-md-6 col-sm-6">
+
+                                                                <?php 
+                                                                    $doc2 = '';
+
+                                                                    if (!empty($info1)) {
+                                                                        $doc2 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal-surat-lantikan')->get();
+                                                                    }
+                                                                ?>
+                                                                @if (!empty($doc2))
+                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc2->last()->file_name]) }}">
+                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                        &nbsp; {{ $doc2->last()->original_name ?? '' }}
+                                                                    </a>
+                                                                    </br>
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -162,9 +184,9 @@
                                                     <th>Tindakan</th>
                                                 </tr>
 
-                                                <?php $second = $committee->where('project_id', $project->id)->where('committee_type_id', 2)->get(); ?>
-                                                @if (count($second) > 0)
-                                                    @foreach ($second as $data)
+                                                <?php $penilaianTeknikal = $project->committees()->where('committee_type_id', 2)->get(); ?>
+                                                @if (count($penilaianTeknikal) > 0)
+                                                    @foreach ($penilaianTeknikal as $data)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $data->name ?? '' }}</td>
@@ -205,16 +227,12 @@
                                             </div>
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <?php $info2 = $project->committees_info->where('committee_type_id', 2)->first(); ?>
 
+                                                    <?php $info2 = $project->committees_info->where('committee_type_id', 2)->first(); ?>
                                                     <table class="table table-hover table-bordered">
                                                         <tr class="tbl-row-init tbl-default">
                                                             <th></th>
                                                             <th>Maklumat</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="col-md-6 col-sm-6">Dokumen Spesifikasi Teknikal dan Harga</th>
-                                                            <td class="col-md-6 col-sm-6"></td>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
@@ -222,7 +240,25 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
-                                                            <td class="col-md-6 col-sm-6"></td>
+                                                            <td class="col-md-6 col-sm-6">
+
+                                                                <?php 
+                                                                    $doc = '';
+
+                                                                    if (!empty($info2)) {
+                                                                        $doc = $info2->project->documents()->where('category', 'jawatankuasa-penilaian-teknikal-surat-lantikan')->get();
+                                                                    }
+                                                                ?>
+                                                                @if (!empty($doc))
+                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
+                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                        &nbsp; {{ $doc->last()->original_name ?? '' }}
+                                                                    </a>
+                                                                    </br>
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -242,9 +278,10 @@
                                                     <th>Jabatan</th>
                                                     <th>Tindakan</th>
                                                 </tr>
-                                                <?php $third = $committee->where('project_id', $project->id)->where('committee_type_id', 3)->get(); ?>
-                                                @if (count($third) > 0)
-                                                    @foreach ($third as $data)
+                                                
+                                                <?php $penilaianHarga = $project->committees()->where('committee_type_id', 3)->get(); ?>
+                                                @if (count($penilaianHarga) > 0)
+                                                    @foreach ($penilaianHarga as $data)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $data->name ?? '' }}</td>
@@ -285,16 +322,12 @@
                                             </div>
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <?php $info3 = $project->committees_info->where('committee_type_id', 3)->first(); ?>
 
+                                                    <?php $info3 = $project->committees_info->where('committee_type_id', 3)->first(); ?>
                                                     <table class="table table-hover table-bordered">
                                                         <tr class="tbl-row-init tbl-default">
                                                             <th></th>
                                                             <th>Maklumat</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="col-md-6 col-sm-6">Dokumen Spesifikasi Teknikal dan Harga</th>
-                                                            <th class="col-md-6 col-sm-6"></th>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
@@ -302,7 +335,25 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
-                                                            <th class="col-md-6 col-sm-6"></th>
+                                                            <td class="col-md-6 col-sm-6">
+
+                                                                <?php 
+                                                                    $doc = '';
+
+                                                                    if (!empty($info3)) {
+                                                                        $doc = $info3->project->documents()->where('category', 'jawatankuasa-penilaian-harga-surat-lantikan')->get();
+                                                                    }
+                                                                ?>
+                                                                @if (!empty($doc))
+                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
+                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                        &nbsp; {{ $doc->last()->original_name ?? '' }}
+                                                                    </a>
+                                                                    </br>
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>

@@ -28,14 +28,30 @@ class CollectionMethodController extends Controller
 
     public function store($project_id, Request $request)
     {
+        $open_date = null;
+        $close_date = null;
+        $meeting_date = null;
+
+        if ($request->method_open_date) {
+            $open_date = Carbon::parse($request->method_open_date);
+        }
+
+        if ($request->method_close_date) {
+            $close_date = Carbon::parse($request->method_close_date);
+        }
+
+        if ($request->method_meeting_date) {
+            $meeting_date = Carbon::parse($request->method_meeting_date);
+        }
+
         $project = Project::find($project_id);
         $project->collection_file_no = $request->method_file_no;
-        $project->collection_open_date = Carbon::parse($request->method_open_date);
-        $project->collection_close_date = Carbon::parse($request->method_close_date);
+        $project->collection_open_date = $open_date;
+        $project->collection_close_date = $close_date;
         $project->duration = $request->method_duration;
-        $project->collection_meeting_date = Carbon::parse($request->method_meeting_date);
+        $project->collection_meeting_date = $meeting_date;
+        $project->updated_by = \Auth::user()->id;
         $project->save();
-
 
         return redirect()
             ->route('methods.index', $project_id)

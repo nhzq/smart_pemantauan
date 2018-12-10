@@ -10,10 +10,39 @@ class MeetingController extends Controller
 {
     public function index($project_id)
     {
-        $project = PRoject::find($project_id);
+        $project = Project::find($project_id);
 
         return view('modules.meetings.index', [
             'project' => $project
         ]);
+    }
+
+    public function updateMeeting($project_id, $id, Request $request)
+    {
+        $project = Project::find($project_id);
+        $meeting = $project->meetings->where('id', $id)->first();
+        $actual_date = null;
+
+        if (!empty($request->actual_date)) {
+            $actual_date = \Carbon\Carbon::parse($request->actual_date);
+        }
+
+        if ($request->file('minute_meeting')) {
+            $doc_new_name = time() . str_replace(' ', '-', $request->minute_meeting->getClientOriginalName());
+            $request->minute_meeting->storeAs('/public/projects/' . $project->id . '/minute-meetings/', $doc_new_name);
+
+            $meeting->file_name = $doc_new_name;
+            $meeting->original_name = $request->minute_meeting->getClientOriginalName();
+            $meeting->mime_type = $request->minute_meeting->getMimeType();
+            $meeting->size = $request->minute_meeting->getSize();
+        }
+
+        $meeting->actual_meeting_dates = $actual_date;
+        $meeting->updated_by = \Auth::user()->id;
+        $meeting->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Maklumat Mesyuarat telah berjaya dikemaskini.');
     }
 }

@@ -28,8 +28,8 @@
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('scopes.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Kemaskini Bon Perlaksanaan
+                                            <a href="{{ route('bond.create', $project->id) }}" class="btn btn-default">
+                                                <i class="fa fa-fw fa-plus"></i> Kemaskini Bon
                                             </a>
                                         </div>
                                     </div>
@@ -54,11 +54,18 @@
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Wang Jaminan Perlaksanaan</th>
-                                            <td></td>
+                                            <td>{{ $project->bond->guarantee_money ?? '' }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Jumlah Pembayaran (RM)</th>
-                                            <td></td>
+                                            <?php 
+                                                $total_payment = '';
+
+                                                if (!empty($project->bond->total_payment)) {
+                                                    $total_payment = currency($project->bond->total_payment);
+                                                }
+                                            ?>
+                                            <td>{{ $total_payment }}</td>
                                         </tr>
                                     </table>
                                 </div>

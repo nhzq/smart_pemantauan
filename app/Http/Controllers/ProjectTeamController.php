@@ -7,17 +7,16 @@ use App\Models\Project;
 use App\Models\ProjectTeam as PT;
 use App\Models\LookupProjectTeam as Team;
 use App\Models\LookupDepartment as Department;
+use Carbon\Carbon;
 
 class ProjectTeamController extends Controller
 {
     public function index($project_id)
     {
         $project = Project::find($project_id);
-        $team = new PT;
 
         return view('modules.project-team.index', [
             'project' => $project,
-            'team' => $team
         ]);
     }
 
@@ -43,20 +42,9 @@ class ProjectTeamController extends Controller
 
     public function store($project_id, Request $request)
     {
-        $project_team = Team::where('id', $request->team_type)->first()->name;
+        $project = Project::find($project_id);
 
-        $arrayDate = [];
-        $arrayDateToString = null;
-
-        if (!empty($request->team_meeting_date)) {
-            foreach ($request->team_meeting_date as $date) {
-                $arrayDate[] = \Carbon\Carbon::parse($date)->format('Y-m-d');
-            }
-
-            $arrayDateToString = implode('|', $arrayDate);
-        }
-
-        PT::create([
+        $project->teams()->create([
             'project_id' => $project_id,
             'lookup_project_team_id' => $request->team_type,
             'lookup_project_role_id' => $request->team_role,
@@ -65,16 +53,13 @@ class ProjectTeamController extends Controller
             'department_id' => $request->team_department,
             'group' => $request->team_part,
             'unit' => $request->team_unit,
-            'total_meeting' => $request->team_meeting,
-            'meeting_dates' => $arrayDateToString,
             'created_by' => \Auth::user()->id,
             'updated_by' => null,
             'active' => 1
         ]);
 
         return redirect('/planning/' . $project_id . '/project-team/#tab_tab' . $request->team_type)
-            // ->route('project-team.index', $project_id)
-            ->with('success', $project_team . ' telah berjaya disimpan');
+            ->with('success', 'Maklumat pasukan projek telah berjaya disimpan');
     }
 
     public function edit($project_id, $id)
@@ -123,5 +108,35 @@ class ProjectTeamController extends Controller
         return redirect()
             ->route('project-team.index', $project_id)
             ->with('success', $project_team . ' telah berjaya dikemaskini.');
+    }
+
+    public function createMeeting($project_id, $id)
+    {
+        $project = Project::find($project_id);
+
+        return view('modules.project-team.create-meeting', [
+            'project' => $project,
+            'id' => $id
+        ]);
+    }
+
+    public function storeMeeting($project_id, $id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        if (!empty($request->team_meeting_date)) {
+            foreach ($request->team_meeting_date as $data) {
+                $project->meetings()->create([
+                    'project_id' => $project->id,
+                    'lookup_project_team_id' => $id,
+                    'plan_meeting_dates' => Carbon::parse($data),
+                    'created_by' => \Auth::user()->id,
+                    'active' => 1
+                ]);
+            }
+        }
+
+        return redirect('/planning/' . $project_id . '/project-team/#tab_tab' . $id)
+            ->with('success', 'Maklumat mesyuarat telah berjaya dikemaskini.');
     }
 }
