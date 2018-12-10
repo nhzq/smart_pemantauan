@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
 @section ('content')
@@ -74,7 +74,7 @@
 @endsection
 
 @push ('script')
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
     <script>
         $(function () {
             $('.texteditor').summernote({
