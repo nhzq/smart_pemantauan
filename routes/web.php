@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{project_id}/contractors/contractor-duration/store', 'ContractorController@storeDuration')->name('contractors.duration.store');
     });
 
-    /* Development Status */
+    /* Development Section */
     Route::group(['prefix' => 'development'], function () {
         /* Contract section */
         Route::get('/{project_id}/project-information', 'ContractController@project')->name('development.project.information');
@@ -126,6 +126,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* LAD section */
         Route::resource('/{project_id}/lad', 'LadController');
+    });
+
+    /* Termination Section */
+    Route::group(['prefix' => 'termination'], function () {
+        /* Project deliverables Section */
+        Route::resource('/{project_id}/deliverables', 'DeliverController');
+
+        /* Certificate Section */
+        Route::resource('/{project_id}/certificates', 'CertificateController');
     });
 
     /* Financial section */

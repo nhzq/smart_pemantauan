@@ -165,6 +165,19 @@
                         </a>
                     </li>
                 @endif
+
+                @if (request()->is('*termination*'))
+                    <li>
+                        <a href="{{ route('deliverables.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'deliverables.index' ? 'text-red' : '' }}"></i> Serahan Projek
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'certificates.index' ? 'text-red' : '' }}"></i> Perakuan Akaun Muktamad
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- /.box-body -->

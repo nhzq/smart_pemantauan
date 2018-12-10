@@ -100,6 +100,7 @@
 
 @push ('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <script src="{{ asset('adminlte/plugin/maskMoney/jquery.maskMoney.min.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
             $('.texteditor').summernote({
@@ -111,17 +112,25 @@
                 todayHighlight: true,
                 autoclose: true
             });
+
+            $('.money-convert').maskMoney();
         });
     </script>
     <script>
         $(function () {
             $('#count-days').on('keyup', function () {
-                $fine = $('#fine-day').attr('orgValue');
-                $days = $('#count-days').val();
+                v = $('#fine-day').attr('orgValue');
+                d = $('#count-days').val();
+                t = {{ $diff }};
+                total = 0;
 
-                $total = parseInt($fine) * parseInt($days);
+                if (d !== '') {
+                    td = parseInt(t) + parseInt(d);
+                    vtd = parseInt(v) * td;
+                    total += vtd/parseInt(t);
+                }
 
-                $('#lad-cost').val($total);
+                $('#lad-cost').val((total * 0.05).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
             });
         });
     </script>

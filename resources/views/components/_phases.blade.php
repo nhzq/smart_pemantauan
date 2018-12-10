@@ -21,8 +21,8 @@
                     <p class="list-group-item-heading">Pembangunan</p>
                 </a>
             </li>
-            <li class="">
-                <a href="">
+            <li class="{{ request()->is('*termination*') ? 'active' : '' }}">
+                <a href="{{ route('deliverables.index', $project->id) }}">
                     <p class="list-group-item-heading">Penamatan</p>
                 </a>
             </li>

@@ -19,9 +19,20 @@ class LadController extends Controller
     public function create($project_id)
     {
         $project = Project::find($project_id);
+        $start_date = $project->contractorAppointment->contract_start_date;
+        $end_date = $project->contractorAppointment->contract_end_date;
+        $eot = $project->eots->last()->extend_date;
+        $diff = 0;
+
+        if (!empty($eot)) {
+            $diff = $start_date->diffInDays($eot);
+        } else if (!empty($end_date)) {
+            $diff = $start_date->diffInDays($end_date);
+        }
 
         return view('modules.lad.create', [
-            'project' => $project
+            'project' => $project,
+            'diff' => $diff
         ]);
     }
 }
