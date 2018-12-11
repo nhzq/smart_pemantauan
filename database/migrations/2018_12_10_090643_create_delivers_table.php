@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLadsTable extends Migration
+class CreateDeliversTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateLadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lads', function (Blueprint $table) {
+        Schema::create('delivers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('project_id')->unsigned()->nullable();
-            $table->string('total_days')->nullable();
-            $table->decimal('total_fine', 19, 2)->nullable();
-            $table->text('action')->nullable();
+            $table->string('officer_name')->nullable();
+            $table->string('position')->nullable();
+            $table->date('deliverable_date')->nullable();
+            $table->date('official_deliverable_date')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('active')->unsigned()->nullable();
@@ -33,6 +34,6 @@ class CreateLadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lads');
+        Schema::dropIfExists('delivers');
     }
 }

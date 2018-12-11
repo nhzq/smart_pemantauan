@@ -20,6 +20,24 @@
             @include ('components._menu')
 
             <div class="col-md-9">
+                @hasanyrole ('ku')
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <a href="{{ route('certificates.create', $project->id) }}" class="btn btn-default">
+                                                <i class="fa fa-fw fa-plus"></i> Perakuan Akaun Muktamad
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endhasanyrole
+
                 <div class="box box-solid">
                     <div class="box-header with-border panel-header-border-blue">
                         <h3 class="box-title">Perakuan Akaun Muktamad</h3>

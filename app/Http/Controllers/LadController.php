@@ -19,6 +19,7 @@ class LadController extends Controller
     public function create($project_id)
     {
         $project = Project::find($project_id);
+
         $start_date = $project->contractorAppointment->contract_start_date;
         $end_date = $project->contractorAppointment->contract_end_date;
         $eot = $project->eots->last()->extend_date;
@@ -34,5 +35,27 @@ class LadController extends Controller
             'project' => $project,
             'diff' => $diff
         ]);
+    }
+
+    public function store($project_id, Request $request)
+    {
+        $project = Project::find($project_id);
+        $payment_amount = null;
+
+        if (!empty($request->payment_amount)) {
+            $payment_amount = removeMaskMoney($request->payment_amount);
+        }
+
+        $project->lad()->create([
+            'total_days' => $request->total_fine_days,
+            'total_fine' => $payment_amount,
+            'action' => $request->action_taken,
+            'created_by' => \Auth::user()->id,
+            'active' => 1
+        ]);
+
+        return redirect()
+            ->route('lad.index', $project->id)
+            ->with('success', 'Bayaran Ganti Rugi (LAD) telah berjaya dikemaskini.');
     }
 }

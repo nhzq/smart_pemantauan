@@ -141,6 +141,16 @@ class Project extends Model
         return $this->hasMany('App\Models\Lad');
     }
 
+    public function deliver()
+    {
+        return $this->hasOne('App\Models\Deliver');
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Gantt');
+    }
+
     /*
      * Reusable method
      */

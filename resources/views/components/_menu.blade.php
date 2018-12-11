@@ -40,13 +40,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Jadual Perancangan Projek
+                        <a href="{{ route('schedules.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'schedules.index' ? 'text-red' : '' }}"></i> Jadual Perancangan Projek
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Gantt Chart
+                        <a href="{{ route('gantt.index', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'gantt.index' ? 'text-red' : '' }}"></i> Gantt Chart
                         </a>
                     </li>
                     <li>

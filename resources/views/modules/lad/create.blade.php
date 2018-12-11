@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="box-body">
-                        {{ Form::open(['url' => '' , 'method' => 'POST']) }}
+                        {{ Form::open(['url' => route('lad.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">

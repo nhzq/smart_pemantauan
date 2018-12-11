@@ -58,6 +58,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{project_id}/project-team/create-meeting/{id}', 'ProjectTeamController@createMeeting')->name('project-team.create.meeting');
         Route::post('/{project_id}/project-team/store-meeting/{id}', 'ProjectTeamController@storeMeeting')->name('project-team.store.meeting');
 
+        /* Schedule section */
+        Route::resource('/{project_id}/schedules', 'ScheduleController');
+
+        /* Gantt section */
+        Route::resource('/{project_id}/gantt', 'GanttController');
+
         /* Verification Section */
         Route::get('/{project_id}/verifications', 'VerificationController@index')->name('verifications.index');
         Route::post('/{project_id}/verifications/store', 'VerificationController@store')->name('verifications.store');
