@@ -71,10 +71,6 @@
 
             var data = [];
 
-            Date.prototype.getUnixTime = function() { return this.getTime()/1000|0 };
-            if(!Date.now) Date.now = function() { return new Date(); }
-            Date.time = function() { return Date.now().getUnixTime(); }
-
             for (var i = 0; i < Object.keys(activity).length; i++) {
                 var parent = '';
                 var child = ''
@@ -84,8 +80,6 @@
                 } else {
                     child = activity[i].activity;
                 }
-
-                var startDate = new Date(activity[i].start_date).getUnixTime();
 
                 data.push({
                     name: parent,

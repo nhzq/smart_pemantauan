@@ -50,12 +50,19 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <!-- User section -->
-                            <li class="{{ request()->is('*allocations*') ? 'active' : '' }}">
-                                <a href="{{ route('allocations.index') }}"><i class="fa fa-circle-o {{ request()->is('*allocations*') ? 'text-aqua' : '' }}"></i> Peruntukan</a>
+                            <?php 
+                                $active = '';
+                                $textAqua = '';
+
+                                if (request()->is('*allocations*')) {
+                                    $active = 'active';
+                                    $textAqua = 'text-aqua';
+                                }
+                            ?>
+                            <li class="{{ $active }}">
+                                <a href="{{ route('allocations.overview') }}"><i class="fa fa-circle-o {{ $textAqua }}"></i> Peruntukan</a>
                             </li>
 
-                            <!-- Role section -->
                             <li class="{{ request()->is('*transfers*') ? 'active' : '' }}">
                                 <a href="{{ route('transfers.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfers*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
                             </li>
