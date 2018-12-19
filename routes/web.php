@@ -145,9 +145,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Financial section */
     Route::group(['prefix' => 'financial'], function () {
+        /* Provision section */
+        Route::resource('/provisions', 'ProvisionController');
+
         /* Allocation section */
-        Route::resource('/allocations', 'AllocationController');
-        Route::get('/allocations-ajax-create', 'AllocationController@ajaxType')->name('allocations.create.type');
+        Route::resource('/{provision_id}/allocations', 'AllocationController');
 
         /* Allocation Transfer section */
         Route::resource('/transfers', 'AllocationTransferController');

@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -21,14 +19,14 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('analyses.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Tambah Pasukan
+                                            <a href="{{ route('analyses.create', $project->id) }}" class="btn btn-diamond">
+                                                <i class="fa fa-fw fa-plus"></i> Pasukan
                                             </a>
                                         </div>
                                     </div>
@@ -38,15 +36,15 @@
                     </div>
                 @endhasanyrole
 
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Pasukan Pembekal/ Kontraktor</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Pasukan Pembekal/ Kontraktor
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
-                                    <tr class="tbl-row-init tbl-default">
+                                    <tr class="info">
                                         <th class="col-sm-1">#</th>
                                         <th class="col-sm-5">Jawatan</th>
                                         <th class="col-sm-4">Bilangan Kakitangan</th>

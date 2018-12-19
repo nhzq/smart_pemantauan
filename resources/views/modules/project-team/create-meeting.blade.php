@@ -16,12 +16,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Kekerapan Mesyuarat: {{ \App\Models\LookupProjectTeam::where('id', $id)->pluck('name')->first() }}</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Kekerapan Mesyuarat: {{ \App\Models\LookupProjectTeam::where('id', $id)->pluck('name')->first() }}
                     </div>
                     
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('project-team.store.meeting', [$project->id, $id]), 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">

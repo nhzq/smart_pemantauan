@@ -2,9 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
 @section ('content')
@@ -22,13 +19,13 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('lad.create', $project->id) }}" class="btn btn-default">
+                                            <a href="{{ route('lad.create', $project->id) }}" class="btn btn-diamond">
                                                 <i class="fa fa-fw fa-plus"></i> Kemaskini LAD
                                             </a>
                                         </div>
@@ -41,36 +38,54 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="box box-solid">
-                            <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Bayaran Ganti Rugi (LAD)</h3>
+                        <div class="panel panel-borderless">
+                            <div class="panel-heading panel-dark">
+                                Bayaran Ganti Rugi (LAD)
                             </div>
-                            <div class="box-body">
+                            <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered">
-                                        <tr class="tbl-row-init tbl-default">
+                                        <tr class="info">
                                             <th class="col-md-3">&nbsp;</th>
                                             <th>Maklumat</th>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Tarikh Denda Mula</th>
-                                            <td></td>
+
+                                            <?php 
+                                                $fine_start = '';
+
+                                                if (!empty($eot = $project->eots->last()->extend_date)) {
+                                                    $fine_start = $eot->format('m/d/Y');
+                                                } else if (!empty($sst = $project->contractorAppointment->contract_end_date)) {
+                                                    $fine_start = $sst->format('m/d/Y');
+                                                }
+                                            ?>
+                                            <td>{{ $fine_start }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Denda Sehari</th>
-                                            <td></td>
+
+                                            <?php 
+                                                $finePerDay = 0;
+
+                                                if (!empty($project_cost = $project->contract->cost)) {
+                                                    $finePerDay = $project_cost * 0.001;
+                                                }
+                                            ?>
+                                            <td>{{ currency($finePerDay) }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Jumlah Hari Denda</th>
-                                            <td></td>
+                                            <td>{{ !empty($project->lads) ? $project->lads->last()->total_days : '' }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Kos LAD</th>
-                                            <td></td>
+                                            <td>{{ !empty($project->lads) ? $project->lads->last()->total_fine : '' }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Tindakan</th>
-                                            <td></td>
+                                            <td>{!! !empty($project->lads) ? $project->lads->last()->action : '' !!}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Upload</th>

@@ -36,15 +36,15 @@
                     @endif
                 @endif
 
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Maklumat Asas</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Maklumat Asas
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
-                                    <tr class="tbl-row-init tbl-default">
+                                    <tr class="info">
                                         <th class="col-md-3 min100">&nbsp;</th>
                                         <th>Maklumat</th>
                                     </tr>

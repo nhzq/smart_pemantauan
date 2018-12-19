@@ -49,5 +49,9 @@ class InterimController extends Controller
             'created_by' => \Auth::user()->id,
             'active' => 1
         ]);
+
+        return redirect()
+            ->route('interims.index', $project_id)
+            ->with('success', 'Maklumat Pembayaran Kontrak telah dikemaskini.');
     }
 }

@@ -3,97 +3,124 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LookupDepartment as Department;
+use App\Models\Provision;
 use App\Models\LookupBudgetType as Budget;
-use App\Models\LookupSubBudgetType as SubBudget;
-use App\Models\Allocation;
-use App\Models\Project;
 
 class AllocationController extends Controller
 {
-    public function index()
+    public function index($provision_id)
     {
-        $allocations = Allocation::where('lookup_department_id', 2)->where('active', 1)->orderBy('lookup_budget_type_id', 'ASC')->get();
+        $provision = Provision::find($provision_id);
+        $total_estimate = [];
+
+        foreach ($provision->allocations as $data) {
+            $total_estimate[] = $data->projects()
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('estimate_cost');
+        }
+        // $allocations = $budget->allocations()->where('lookup_department_id', 2)
+        //     ->where('active', 1)
+        //     ->orderBy('lookup_budget_type_id', 'ASC')
+        //     ->get();
 
         return view('modules.financial.allocation.index', [
-            'allocations' => $allocations
+            'provision' => $provision,
+            'total_estimate' => $total_estimate
+            // 'budget' => $budget
         ]);
     }
 
-    public function create()
+    public function create($provision_id)
     {
-        $budgets = Budget::where('lookup_department_id', 2)->get();
+        $provision = Provision::find($provision_id);
+        $budget = Budget::where('lookup_department_id', 2)
+            ->where('id', $provision->lookup_budget_type_id)
+            ->first();
 
         return view('modules.financial.allocation.create', [
-            'budgets' => $budgets
+            'provision' => $provision,
+            'budget' => $budget
         ]);
     }
 
-    public function ajaxType(Request $request)
+    public function store($provision_id, Request $request)
     {
-        $data = SubBudget::where('lookup_budget_type_id', $request->id)->get();
+        $provision = Provision::find($provision_id);
 
-        return response()->json($data);
-    }
+        $request->validate([
+            'budget_sub' => 'required|not_in:0'
+        ]);
 
-    public function store(Request $request)
-    {
-        $value = Allocation::where('lookup_sub_budget_type_id', $request->budget_sub)->where('active', 1)->first();
+        $allocation_existed = $provision->allocations()
+            ->where('lookup_sub_budget_type_id', $request->budget_sub)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->first();
 
-        if (count($value) > 0) {
+        if (count($allocation_existed) > 0) {
             return redirect()
                 ->back()
-                ->with('error', $value->sub->code . ' : ' . $value->sub->description . ' ada di dalam pangkalan data. Sila kemaskini sekiranya perlu.');
+                ->with('error', $allocation_existed->sub->code . ' : ' . $allocation_existed->sub->description . ' ada di dalam pangkalan data. Sila kemaskini sekiranya perlu.');
         }
 
-        Allocation::create([
+        $provision_limit = $provision->amount;
+        $allocation_total = $provision->allocations()->sum('amount');
+
+        if (!empty($request->budget_allocation)) {
+            if ($allocation_total + removeMaskMoney($request->budget_allocation) > $provision_limit) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Jumlah peruntukan telah melebihi had. Sila semak semula nilai peruntukan.');
+            }
+        }
+
+        $provision->allocations()->create([
             'lookup_department_id' => 2,
-            'lookup_budget_type_id' => $request->budget_type,
             'lookup_sub_budget_type_id' => $request->budget_sub,
             'amount' => removeMaskMoney($request->budget_allocation),
-            'balance' => removeMaskMoney($request->budget_allocation),
             'created_by' => \Auth::user()->id,
             'active' => 1
         ]);
 
         return redirect()
-            ->route('allocations.index')
+            ->route('allocations.index', $provision_id)
             ->with('success', 'Peruntukan telah berjaya disimpan.');
     }
 
-    public function edit($id)
-    {
-        $allocation = Allocation::find($id);
-        $budgets = Budget::where('lookup_department_id', 2)->get();
-        $subBudgets = \App\Models\LookupSubBudgetType::where('lookup_budget_type_id', $allocation->lookup_budget_type_id)->get();
+    // public function edit($id)
+    // {
+    //     $allocation = Allocation::find($id);
+    //     $budgets = Budget::where('lookup_department_id', 2)->get();
+    //     $subBudgets = \App\Models\LookupSubBudgetType::where('lookup_budget_type_id', $allocation->lookup_budget_type_id)->get();
 
-        return view('modules.financial.allocation.edit', [
-            'allocation' => $allocation,
-            'budgets' => $budgets,
-            'subBudgets' => $subBudgets
-        ]);
-    }
+    //     return view('modules.financial.allocation.edit', [
+    //         'allocation' => $allocation,
+    //         'budgets' => $budgets,
+    //         'subBudgets' => $subBudgets
+    //     ]);
+    // }
 
-    public function update(Request $request, $id)
-    {
-        $allocation = Allocation::find($id);
-        $min_total_cost = $allocation->amount - $allocation->balance;
+    // public function update(Request $request, $id)
+    // {
+    //     $allocation = Allocation::find($id);
+    //     $min_total_cost = $allocation->amount - $allocation->balance;
 
-        if (removeMaskMoney($request->budget_allocation) > $min_total_cost) {
-            $allocation->lookup_budget_type_id = $request->budget_type;
-            $allocation->lookup_sub_budget_type_id = $request->budget_sub;
-            $allocation->amount = removeMaskMoney($request->budget_allocation);
-            $allocation->balance = removeMaskMoney($request->budget_allocation) - $min_total_cost;
-            $allocation->updated_by = \Auth::user()->id;
-            $allocation->save();
+    //     if (removeMaskMoney($request->budget_allocation) > $min_total_cost) {
+    //         $allocation->lookup_budget_type_id = $request->budget_type;
+    //         $allocation->lookup_sub_budget_type_id = $request->budget_sub;
+    //         $allocation->amount = removeMaskMoney($request->budget_allocation);
+    //         $allocation->balance = removeMaskMoney($request->budget_allocation) - $min_total_cost;
+    //         $allocation->updated_by = \Auth::user()->id;
+    //         $allocation->save();
 
-            return redirect()
-                ->route('allocations.index')
-                ->with('success', 'Peruntukan telah berjaya dikemaskini.');
-        }
+    //         return redirect()
+    //             ->route('allocations.index')
+    //             ->with('success', 'Peruntukan telah berjaya dikemaskini.');
+    //     }
 
-        return redirect()
-            ->back()
-            ->with('error', 'Peruntukan baru tidak boleh lagi rendah dari anggaran kos.');
-    }
+    //     return redirect()
+    //         ->back()
+    //         ->with('error', 'Peruntukan baru tidak boleh lagi rendah dari anggaran kos.');
+    // }
 }

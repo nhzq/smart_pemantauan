@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -20,15 +18,15 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Maklumat Projek</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Maklumat Projek
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
-                                    <tr class="tbl-row-init tbl-default">
+                                    <tr class="info">
                                         <th colspan="2" class="text-center">Maklumat Asas</th>
                                     </tr>
                                     <tr>
@@ -119,7 +117,7 @@
                                             @endif
                                         </td>
                                     </tr>
-                                    <tr class="tbl-row-init tbl-row-end tbl-default">
+                                    <tr class="info">
                                         <th colspan="2" class="text-center">Maklumat Projek</th>
                                     </tr>
                                     <tr>

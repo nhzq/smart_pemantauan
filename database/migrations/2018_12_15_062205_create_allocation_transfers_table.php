@@ -23,7 +23,7 @@ class CreateAllocationTransfersTable extends Migration
             $table->integer('from_sub_type_id')->unsigned()->nullable();
             $table->integer('to_sub_type_id')->unsigned()->nullable();
             $table->decimal('transfer_amount', 19, 2)->nullable();
-            $table->decimal('verify_transfer_amount', 19, 2)->nullable();
+            // $table->decimal('verify_transfer_amount', 19, 2)->nullable();
             $table->text('purpose')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

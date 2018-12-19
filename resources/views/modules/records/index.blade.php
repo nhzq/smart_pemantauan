@@ -2,9 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
 @section ('content')
@@ -22,13 +19,13 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('records.create', $project->id) }}" class="btn btn-default">
+                                            <a href="{{ route('records.create', $project->id) }}" class="btn btn-diamond">
                                                 <i class="fa fa-fw fa-plus"></i> Kemaskini Rekod
                                             </a>
                                         </div>
@@ -41,14 +38,14 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="box box-solid">
-                            <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Rekod-rekod disenggara</h3>
+                        <div class="panel panel-borderless">
+                            <div class="panel-heading panel-dark">
+                                Rekod-rekod disenggara
                             </div>
-                            <div class="box-body">
+                            <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered">
-                                        <tr class="tbl-row-init tbl-default">
+                                        <tr class="info">
                                             <th class="col-md-3">&nbsp;</th>
                                             <th>Maklumat</th>
                                         </tr>

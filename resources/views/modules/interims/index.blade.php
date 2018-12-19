@@ -2,9 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
 @section ('content')
@@ -22,13 +19,13 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('interims.create', $project->id) }}" class="btn btn-default">
+                                            <a href="{{ route('interims.create', $project->id) }}" class="btn btn-diamond">
                                                 <i class="fa fa-fw fa-plus"></i> Pembayaran Kontrak
                                             </a>
                                         </div>
@@ -41,21 +38,21 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="box box-solid">
-                            <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Pembayaran Kontrak</h3>
+                        <div class="panel panel-borderless">
+                            <div class="panel-heading panel-dark">
+                                Pembayaran Kontrak
                             </div>
-                            <div class="box-body">
+                            <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
-                                        <tr class="tbl-row-init tbl-default">
+                                    <table class="table table-hover table-bordered font-p">
+                                        <tr class="info">
                                             <th colspan="2">Nama Projek</th>
                                             <th>Anggaran Kos (RM)</th>
                                             <th>Kos Sebenar (RM)</th>
                                             <th>Jumlah Belanja (RM)</th>
                                             <th>Baki Belanja (RM)</th>
                                             <th>Status Projek</th>
-                                            <th>Tindakan</th>
+                                            <th></th>
                                         </tr>
                                         <tr>
                                             <td colspan="2">{{ $project->name }}</td>
@@ -79,7 +76,7 @@
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        <tr class="tbl-row-init tbl-default">
+                                        <tr class="info">
                                             <th>#</th>
                                             <th>Jenis Bayaran</th>
                                             <th>No. Waran/Voucher/EFT/CEK</th>
@@ -87,7 +84,7 @@
                                             <th>Jumlah Bayaran (RM)</th>
                                             <th>Tujuan Bayaran</th>
                                             <th>Peratus Bayaran</th>
-                                            <th>Tindakan</th>
+                                            <th></th>
                                         </tr>
                                         @if (!empty($project->interims))
                                             @foreach ($project->interims as $data)

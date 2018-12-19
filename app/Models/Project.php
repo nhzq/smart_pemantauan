@@ -11,6 +11,7 @@ class Project extends Model
     ];
     
     protected $fillable = [
+        'allocation_id',
         'lookup_budget_type_id', 
         'lookup_sub_budget_type_id', 
         'name', 
@@ -59,6 +60,11 @@ class Project extends Model
     public function sub()
     {
         return $this->belongsTo('App\Models\LookupSubBudgetType', 'lookup_sub_budget_type_id');
+    }
+
+    public function allocation()
+    {
+        return $this->belongsTo('App\Models\Allocation', 'allocation_id');
     }
 
     public function collection()
@@ -136,7 +142,7 @@ class Project extends Model
         return $this->hasMany('App\Models\Eot');
     }
 
-    public function lad()
+    public function lads()
     {
         return $this->hasMany('App\Models\Lad');
     }

@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -16,20 +14,18 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-borderless">
-                    <div class="panel-heading panel-dark">
-                        {!! setBudgetTitle($provision->budgetType->code, $provision->budgetType->description) !!}
-                    </div>
+                    <div class="panel-heading panel-dark">Peruntukan mengikut Kategori Bajet</div>
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('allocations.store', $provision->id), 'method' => 'POST']) }}
+                        {{ Form::open(['url' => route('provisions.store'), 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Butiran</label>
-                                            <select class="form-control" name="budget_sub">
-                                                <option value="0">-- Sila Pilih --</option>
-                                                @foreach ($budget->subs as $data)
-                                                    <option value="{{ $data->id }}">{!! setBudgetTitle($data->code, $data->description, 'no-bold') !!}</option>
+                                        <div class="form-group {{ $errors->has('budget_type') ? 'has-error' : '' }}">
+                                            <label>Jenis Bajet</label>
+                                            <select id="budget_type" class="form-control" name="budget_type">
+                                                <option>-- Sila Pilih --</option>
+                                                @foreach ($budgets as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->code . ' : ' . $data->description }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

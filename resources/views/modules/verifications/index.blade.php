@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -20,11 +18,11 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Pengesahan</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Pengesahan
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="row">
                                 @hasanyrole ('ku')

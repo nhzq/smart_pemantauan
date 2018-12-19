@@ -20,11 +20,11 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Sokongan Projek</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Sokongan Projek
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="col-md-12">
                             @if (\App\Helpers\Status::planningByKU($project->status))
                                 @hasanyrole ('ks')
@@ -59,7 +59,7 @@
                                             <div class="table-responsive">
                                                 <table class="table table-hover table-bordered">
                                                     <thead>
-                                                        <tr>
+                                                        <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
                                                         </tr>

@@ -10,7 +10,11 @@ if (!function_exists('getRoleName')) {
 if (!function_exists('currency')) {
     function currency($value)
     {
-        return number_format($value, 2);
+        if (!empty($value)) {
+            return number_format($value, 2);
+        }
+        
+        return '0.00';
     }
 }
 
@@ -21,7 +25,7 @@ if (!function_exists('removeMaskMoney')) {
             return str_replace(',', '', $value);
         }
 
-        return null;
+        return 0.00;
     }
 }
 
@@ -60,5 +64,25 @@ if (!function_exists('getList')) {
         }
 
         return $output;
+    }
+}
+
+if (!function_exists('getEstimateCostBalance')) {
+    function getEstimateCostBalance($estimation, $allocation) {
+        if (!empty($estimation)) {
+            return $allocation - $estimation;
+        }
+
+        return $allocation;
+    }
+}
+
+if (!function_exists('setDateValue')) {
+    function setDateValue($request, $date) {
+        if (!empty($request)) {
+            return $date;
+        }
+
+        return null;
     }
 }

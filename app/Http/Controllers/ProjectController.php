@@ -16,9 +16,14 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::where('active', 1)->paginate(20);
-        // $projectsForSUB = Project::where('active', 1)->whereIn('status', [2, 4, 5])->paginate(20);
-        $projectsForSUB = Project::where('active', 1)->whereNotIn('status', [1, 3])->paginate(20);
+        $projects = Project::where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->paginate(20);
+
+        $projectsForSUB = Project::where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->whereNotIn('status', [1, 3])
+            ->paginate(20);
 
         return view('modules.projects.index', [
             'projects' => $projects,
@@ -44,28 +49,32 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $get_budget_limit_id = $request->project_sub_budget_type;
         $estimate_cost = removeMaskMoney($request->project_estimate_cost);
 
-        $allocation = Allocation::where('lookup_sub_budget_type_id', $get_budget_limit_id)->first();
+        $allocation = Allocation::where('lookup_sub_budget_type_id', $request->project_sub_budget_type)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->first();
+
+        $total_estimate_cost = Project::where('lookup_sub_budget_type_id', $request->project_sub_budget_type)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->sum('estimate_cost');
+
+        $balance = getEstimateCostBalance($total_estimate_cost, $allocation->amount);
 
         if (!empty($allocation)) {
-            if ($estimate_cost <= $allocation->balance) {
+            if ($estimate_cost <= $balance) {
                 DB::transaction(function () use ($request, $allocation) {
-                    $approval_date = null;
-
-                    if (!empty($request->project_approval_date)) {
-                        $approval_date = Carbon::parse($request->project_approval_date);
-                    }
-
                     $project = Project::create([
+                        'allocation_id' => $allocation->id,
                         'lookup_budget_type_id' => $request->project_budget_type,
                         'lookup_sub_budget_type_id' => $request->project_sub_budget_type,
                         'name' => $request->project_name,
                         'file_reference_no' => $request->project_file_reference,
                         'concept' => $request->project_concept,
-                        'estimate_cost' => !is_null($request->project_estimate_cost) ? removeMaskMoney($request->project_estimate_cost) : 0,
-                        'approval_date' => $approval_date,
+                        'estimate_cost' => removeMaskMoney($request->project_estimate_cost),
+                        'approval_date' => setDateValue($request->project_approval_date, Carbon::parse($request->project_approval_date)),
                         'rmk' => $request->project_rmk,
                         'market_research' => $request->optradio,
                         'status' => Status::isAppliedByKU(),
@@ -107,11 +116,6 @@ class ProjectController extends Controller
                             }
                         }
                     }
-
-                    $total_estimate_cost = Project::where('lookup_sub_budget_type_id', $request->project_sub_budget_type)
-                                                ->sum('estimate_cost');
-                    $allocation->balance = $allocation->amount - $total_estimate_cost;
-                    $allocation->save();
                 });
 
                 return redirect()

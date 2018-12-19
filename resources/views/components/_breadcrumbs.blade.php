@@ -49,7 +49,7 @@
             <small>Jenis Bajet</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Peruntukan</a></li>
+            <li><a href=""><i class="fa fa-dashboard"></i> Peruntukan</a></li>
             <li class="active">Jenis Bajet</li>
         </ol>
     </section>
@@ -62,7 +62,7 @@
             <small>Peruntukan Baru</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Peruntukan</a></li>
+            <li><a href=""><i class="fa fa-dashboard"></i> Peruntukan</a></li>
             <li class="active">Peruntukan Baru</li>
         </ol>
     </section>
@@ -75,7 +75,7 @@
             <small>Kemaskini Peruntukan</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('allocations.index') }}"><i class="fa fa-dashboard"></i> Peruntukan</a></li>
+            <li><a href=""><i class="fa fa-dashboard"></i> Peruntukan</a></li>
             <li class="active">Kemaskini Peruntukan</li>
         </ol>
     </section>

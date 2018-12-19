@@ -15,12 +15,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Maklumat Keputusan Perolehan</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Maklumat Keputusan Perolehan
                     </div>
                     
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('results.store', $project->id), 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
                             <div class="col-md-12">
                                 <hr>
@@ -70,7 +70,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Peruntukan Semasa (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="result_current_allocation">
+                                            <input class="form-control money-convert" type="text" value="{{ currency($project->estimate_cost) }}" readonly>
                                         </div>
                                     </div>
                                 </div>

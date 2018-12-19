@@ -2,9 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
 @section ('content')
@@ -22,13 +19,13 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <button class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                                            <button class="btn btn-diamond" data-toggle="modal" data-target="#modal-default">
                                                 <i class="fa fa-fw fa-plus"></i> Carta Organisasi Pasukan
                                             </button>
                                         </div>
@@ -41,14 +38,16 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="box box-solid">
-                            <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Carta Organisasi Pasukan</h3>
+                        <div class="panel panel-borderless">
+                            <div class="panel-heading panel-dark">
+                                Carta Organisasi Pasukan
                             </div>
-                            <div class="box-body">
+                            <div class="panel-body">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <img src="{{ url('storage/projects/' . $project->id . '/org-chart/' . $project->chart->last()->file_name) }}">
+                                        @if (!empty($project->chart->last()->file_name))
+                                            <img src="{{ url('storage/projects/' . $project->id . '/org-chart/' . $project->chart->last()->file_name) }}" class="img-responsive mrg10B">
+                                        @endif
                                     </div>
                                 </div>
                             </div>

@@ -54,13 +54,13 @@
                                 $active = '';
                                 $textAqua = '';
 
-                                if (request()->is('*allocations*')) {
+                                if (request()->is('*allocations*') || request()->is('*provisions*')) {
                                     $active = 'active';
                                     $textAqua = 'text-aqua';
                                 }
                             ?>
                             <li class="{{ $active }}">
-                                <a href="{{ route('allocations.overview') }}"><i class="fa fa-circle-o {{ $textAqua }}"></i> Peruntukan</a>
+                                <a href="{{ route('provisions.index') }}"><i class="fa fa-circle-o {{ $textAqua }}"></i> Peruntukan</a>
                             </li>
 
                             <li class="{{ request()->is('*transfers*') ? 'active' : '' }}">

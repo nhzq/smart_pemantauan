@@ -16,11 +16,11 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Projek Baru</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Projek Baru
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('projects.store'), 'enctype' => 'multipart/form-data', 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">

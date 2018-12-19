@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -21,14 +19,14 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('contractors.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Kemaskini Kontraktor
+                                            <a href="{{ route('contractors.create', $project->id) }}" class="btn btn-diamond">
+                                                <i class="fa fa-fw fa-plus"></i> Kontraktor
                                             </a>
                                         </div>
                                     </div>
@@ -38,20 +36,28 @@
                     </div>
                 @endhasanyrole
 
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Maklumat Kontraktor</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Maklumat Kontraktor
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
-                                    <tr class="tbl-row-init tbl-default">
+                                    <tr class="info">
                                         <th colspan="2" class="text-center">Perlantikan Kontraktor</th>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Surat Setuju Terima (SST)</th>
-                                        <td>{{ $project->contractorAppointment->sst ?? '' }}</td>
+
+                                        <?php 
+                                            $sst_date = '';
+
+                                            if (!empty($project->contractorAppointment->sst)) {
+                                                $sst_date = $project->contractorAppointment->sst->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $sst_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No. Rujukan SST</th>
@@ -63,7 +69,7 @@
                                     </tr>
 
                                     <!-- new row -->
-                                    <tr class="tbl-row-init tbl-row-end tbl-default">
+                                    <tr class="info">
                                         <th colspan="2" class="text-center">Maklumat Syarikat</th>
                                     </tr>
                                     <tr>
@@ -76,7 +82,20 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tempoh Sah Laku</th>
-                                        <td>{{ $project->contractorAppointment->ssm_start_date ?? '' }} - {{ $project->ssm_end_date ?? '' }}</td>
+
+                                        <?php 
+                                            $ssm_start_date = '';
+                                            $ssm_end_date = '';
+
+                                            if (!empty($project->contractorAppointment->ssm_start_date)) {
+                                                $ssm_start_date = $project->contractorAppointment->ssm_start_date->format('m/d/Y');
+                                            }
+
+                                            if (!empty($project->contractorAppointment->ssm_end_date)) {
+                                                $ssm_end_date = $project->contractorAppointment->ssm_end_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $ssm_start_date }} - {{ $ssm_end_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">No Sijil MOF</th>
@@ -88,7 +107,20 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tempoh Sah Laku</th>
-                                        <td>{{ $project->contractorAppointment->mof_start_date ?? '' }} - {{ $project->mof_end_date ?? '' }}</td>
+
+                                        <?php 
+                                            $mof_start_date = '';
+                                            $mof_end_date = '';
+
+                                            if (!empty($project->contractorAppointment->mof_start_date)) {
+                                                $mof_start_date = $project->contractorAppointment->mof_start_date->format('m/d/Y');
+                                            }
+
+                                            if (!empty($project->contractorAppointment->mof_start_date)) {
+                                                $mof_end_date = $project->contractorAppointment->mof_end_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $mof_start_date }} - {{ $mof_end_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Nama Syarikat</th>
@@ -108,16 +140,16 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Bilangan Kontraktor</th>
-                                        <td></td>
+                                        <td>{{ count($project->contractors) }}</td>
                                     </tr>
 
                                     <!-- new row -->
-                                    <tr class="tbl-row-init tbl-row-end tbl-default">
+                                    <tr class="info">
                                         <th colspan="2" class="text-center">Senarai Kontraktor</th>
                                     </tr>
                                     @foreach ($project->contractors as $data)
-                                        <tr>
-                                            <th colspan="2" class="tbl-default">#{{ $loop->iteration }}</th>
+                                        <tr class="danger">
+                                            <th colspan="2" class="tbl-default">Maklumat {{ $loop->iteration }}</th>
                                         </tr>
                                         <tr>
                                             <th class="col-md-3 min100">Nama</th>
@@ -146,16 +178,32 @@
                                     @endforeach
                                     
                                     <!-- new row -->
-                                    <tr class="tbl-row-init tbl-row-end tbl-default">
+                                    <tr class="info">
                                         <th colspan="2" class="text-center">Tempoh Kontrak</th>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Mula</th>
-                                        <td>{{ $project->contractorAppointment->contract_start_date ?? '' }}</td>
+
+                                        <?php 
+                                            $start_date = '';
+
+                                            if (!empty($project->contractorAppointment->contract_start_date)) {
+                                                $start_date = $project->contractorAppointment->contract_start_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $start_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Akhir</th>
-                                        <td>{{ $project->contractorAppointment->contract_end_date ?? '' }}</td>
+
+                                        <?php 
+                                            $end_date = '';
+
+                                            if (!empty($project->contractorAppointment->contract_end_date)) {
+                                                $end_date = $project->contractorAppointment->contract_end_date->format('m/d/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $end_date }}</td>
                                     </tr>
                                 </table>
                             </div>

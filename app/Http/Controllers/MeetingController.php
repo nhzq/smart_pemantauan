@@ -41,8 +41,7 @@ class MeetingController extends Controller
         $meeting->updated_by = \Auth::user()->id;
         $meeting->save();
 
-        return redirect()
-            ->back()
+        return redirect('/development/' . $project->id . '/meetings#tab_tab' . $meeting->lookup_project_team_id)
             ->with('success', 'Maklumat Mesyuarat telah berjaya dikemaskini.');
     }
 }

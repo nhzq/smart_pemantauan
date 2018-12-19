@@ -2,8 +2,7 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
 @section ('content')
@@ -15,9 +14,9 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Pindah Peruntukan</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Pindah Peruntukan
                     </div>
 
                     <div class="box-body">
@@ -64,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">Dari B01</div>
+                                            <div class="panel-heading bck-diamond font-h5">Dari B01</div>
                                             <div class="panel-body">
                                                 <div class="form-group">
                                                     <div class="col-md-5">
@@ -121,7 +120,7 @@
 
                                     <div class="col-md-6">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">Ke B01</div>
+                                            <div class="panel-heading bck-diamond font-h5">Ke B01</div>
                                             <div class="panel-body">
                                                 <div class="form-group">
                                                     <div class="col-md-5">
@@ -169,7 +168,7 @@
                                                         <label class="control-label" style="padding-top: 5px;">Peruntukan Kemaskini (RM)</label>
                                                     </div>
                                                     <div class="col-md-7 mrg10B">
-                                                        <input class="form-control" type="text" name="" readonly>
+                                                        <input id="sub_to_b01_update_allocation" class="form-control" type="text" name="" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,14 +188,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('transfer_total_allocation') ? 'has-error' : '' }}">
                                             <label>Jumlah Pindah Peruntukan (RM)</label>
-                                            <input class="form-control currency" type="text" name="transfer_total_allocation">
+                                            <input id="transfer_total_allocation" class="form-control currency" type="text" name="transfer_total_allocation">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('transfer_verify_allocation') ? 'has-error' : '' }}">
                                             <label>Pengesahan Pindah Peruntukan (RM)</label>
-                                            <input class="form-control currency" type="text" name="transfer_verify_allocation">
+                                            <input id="transfer_verify_allocation" class="form-control currency" type="text" name="transfer_verify_allocation">
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +204,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tujuan Pindah Peruntukan</label>
-                                            <textarea class="form-control" cols="30" rows="5" name="transfer_allocation_purpose"></textarea>
+                                            <textarea class="form-control texteditor" cols="30" rows="5" name="transfer_allocation_purpose"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -236,9 +235,21 @@
 
 @push ('script')
     <script src="{{ asset('adminlte/plugin/maskMoney/jquery.maskMoney.min.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
     <script type="text/javascript">
+        function addCommas(yourNumber) {
+            var n= yourNumber.toString().split(".");
+            n[0] = n[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return n.join(".");
+        }
+
         $(function () {
             $('.currency').maskMoney();
+
+            $('.texteditor').summernote({
+                toolbar: [],
+                height: 100
+            });
             
             $('.pickdate').datepicker({
                 todayHighlight: true,
@@ -259,16 +270,15 @@
                     success: function (data) {
                         $('#' + panel_id + '_total_allocation').val(' ');
                         $('#' + panel_id + '_current_balance').val(' ');
-                        sub_from_b01_total_allocation
 
                         if (data.amount > 0) {
-                            $('#' + panel_id + '_total_allocation').val(data.amount);
+                            $('#' + panel_id + '_total_allocation').val(addCommas(data.amount));
                         } else {
                             $('#' + panel_id + '_total_allocation').val('0.00');
                         }
 
                         if (data.balance > 0) {
-                            $('#' + panel_id + '_current_balance').val(data.balance);
+                            $('#' + panel_id + '_current_balance').val(addCommas(data.balance.toFixed(2)));
                         } else {
                             $('#' + panel_id + '_current_balance').val('0.00');
                         }
@@ -279,8 +289,31 @@
                 });
             });
 
-            $("input[name='transfer_total_allocation']").on('keyup', function () {
+            $('#transfer_verify_allocation').on('blur', function () {
+                var verify_transfer = $('#transfer_verify_allocation').val().replace(/,/g, '');
+                var transfer = $('#transfer_total_allocation').val().replace(/,/g, '');
+                var sub_from_b01_current_balance = $('#sub_from_b01_current_balance').val().replace(/,/g, '');
+                var sub_to_b01_current_balance = $('#sub_to_b01_current_balance').val().replace(/,/g, '');
 
+                if (transfer !== verify_transfer) {
+                    alert('Jumlah Pindahan Peruntukan dan Jumlah Pengesahan Pindah Peruntukan tidak sama. Sila semak semula.');
+                    $('#transfer_verify_allocation').val('');
+                    $('#transfer_total_allocation').val('');
+                }
+
+                if (Math.round(verify_transfer) > Math.round(sub_from_b01_current_balance)) {
+                    alert('Jumlah Pindahan Peruntukan mestilah lebih kecil atau sama dengan baki semasa.');
+                    $('#transfer_verify_allocation').val('');
+                    $('#transfer_total_allocation').val('');
+                }
+
+                if (Math.round(verify_transfer) <= Math.round(sub_from_b01_current_balance)) {
+                    var update_from_balance = (Math.round(sub_from_b01_current_balance) - Math.round(verify_transfer)).toFixed(2);
+                    var update_to_balance = (Math.round(sub_to_b01_current_balance) + Math.round(verify_transfer)).toFixed(2);
+                    
+                    $('#sub_from_b01_update_allocation').val(addCommas(update_from_balance));
+                    $('#sub_to_b01_update_allocation').val(addCommas(update_to_balance));
+                }
             });
         });
     </script>

@@ -11,10 +11,6 @@ class Allocation extends Model
         'lookup_budget_type_id', 
         'lookup_sub_budget_type_id',
         'amount', 
-        'estimate_cost', 
-        'project_cost', 
-        'total_spending', 
-        'balance',
         'created_by',
         'updated_by',
         'active'
@@ -41,5 +37,10 @@ class Allocation extends Model
     public function transfers()
     {
         return $this->belongsToMany('App\Models\AllocationTransfer', 'transfer_allocation', 'allocation_id', 'transfer_id');
+    }
+
+    public function projects()
+    {
+        return $this->hasMany('App\Models\Project');
     }
 }

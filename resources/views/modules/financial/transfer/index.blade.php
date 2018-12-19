@@ -15,8 +15,8 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div class="panel panel-borderless">
+                    <div class="panel-body panel-nav">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-sm-2" style="padding-left: 0;">
@@ -30,8 +30,8 @@
 
                                 <div class="pull-right">
                                     <div class="btn-group">
-                                        <button class="btn btn-default" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
-                                        <a href="{{ route('transfers.create') }}" class="btn btn-default">
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
+                                        <a href="{{ route('transfers.create') }}" class="btn btn-diamond">
                                             <i class="fa fa-fw fa-plus"></i> Pindah Peruntukan
                                         </a>
                                     </div>
@@ -45,28 +45,28 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Pindah Peruntukan</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Pindah Peruntukan
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr class="tbl-row-init tbl-default">
-                                        <th>#</th>
-                                        <th>Tarikh Kelulusan</th>
-                                        <th>Dari B01</th>
-                                        <th>Ke B01</th>
-                                        <th>No Waran</th>
-                                        <th>Tarikh Waran</th>
-                                        <th>Tujuan</th>
-                                        <th>Jumlah Pindah Peruntukan (RM)</th>
+                                <thead class="font-p">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Tarikh Kelulusan</th>
+                                        <th class="text-center">Dari B01</th>
+                                        <th class="text-center">Ke B01</th>
+                                        <th class="text-center">No Waran</th>
+                                        <th class="text-center">Tarikh Waran</th>
+                                        <th class="text-center">Tujuan</th>
+                                        <th class="text-center">Jumlah Pindah Peruntukan &nbsp;<span class="label bck-diamond">RM</span></th>
                                         {{-- <th>Tindakan</th> --}}
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="font-std">
                                     @if (!empty($transfers))
                                         @foreach ($transfers as $data)
                                             <tr>
@@ -90,8 +90,8 @@
                                                     }
                                                 ?>
                                                 <td>{{ $date_formatted_2 }}</td>
-                                                <td>{{ $data->purpose ?? '' }}</td>
-                                                <td>{{ currency($data->transfer_amount) ?? '' }}</td>
+                                                <td>{!! $data->purpose ?? '' !!}</td>
+                                                <td class="text-right">{{ currency($data->transfer_amount) ?? '' }}</td>
                                                 {{-- <td>
                                                     <div class="btn-group">
                                                         <a href="" class="btn bg-purple">

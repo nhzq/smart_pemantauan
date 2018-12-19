@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
@@ -18,9 +16,9 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel">
-                    <div class="panel-heading with-border panel-header-border-blue">
-                        <h3 class="panel-title panel-custom-title">Maklumat Kontraktor</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Maklumat Kontraktor
                         <span class="pull-right">
                             <!-- Tabs -->
                             <ul class="nav panel-tabs">
@@ -55,7 +53,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Harga Kontrak</label>
-                                                    <input class="form-control money-convert" type="text" name="contractor_value" value="{{ !empty($project->contract_value) ? currency($project->contract_value) : '' }}">
+                                                    <input class="form-control money-convert" type="text" name="contractor_value" value="{{ currency($project->estimate_cost) }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,26 +144,26 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>No Telefon</label>
                                                     <input class="form-control" type="text" name="contractor_company_tel" value="{{ $project->company_tel ?? '' }}">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>No Fax</label>
                                                     <input class="form-control" type="text" name="contractor_company_fax" value="{{ $project->company_fax ?? '' }}">
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            {{-- <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Bilangan Kontraktor</label>
                                                     <input class="form-control" type="text" name="contractor_count" readonly>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
 
@@ -183,14 +181,14 @@
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-bordered" id="item_table">
-                                                <tr class="tbl-row-init tbl-default">
-                                                    <th class="col-sm-3">Nama</th>
-                                                    <th class="col-sm-2">Jawatan</th>
-                                                    <th class="col-sm-2">No MyKad</th>
-                                                    <th class="col-sm-2">Email</th>
-                                                    <th class="col-sm-2">No Telefon</th>
+                                                <tr class="info">
+                                                    <th class="col-sm-3" style="vertical-align: middle;">Nama</th>
+                                                    <th class="col-sm-2" style="vertical-align: middle;">Jawatan</th>
+                                                    <th class="col-sm-2" style="vertical-align: middle;">No MyKad</th>
+                                                    <th class="col-sm-2" style="vertical-align: middle;">Email</th>
+                                                    <th class="col-sm-2" style="vertical-align: middle;">No Telefon</th>
                                                     <th class="col-sm-1">
-                                                        <button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                        <button type="button" name="add" class="btn btn-diamond btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
                                                     </th>
                                                 </tr>
                                             </table>

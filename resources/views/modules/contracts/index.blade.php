@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
@@ -22,13 +20,13 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('contracts.create', $project->id) }}" class="btn btn-default">
+                                            <a href="{{ route('contracts.create', $project->id) }}" class="btn btn-diamond">
                                                 <i class="fa fa-fw fa-plus"></i> Butiran Kontrak
                                             </a>
                                         </div>
@@ -41,15 +39,15 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="box box-solid">
-                            <div class="box-header with-border panel-header-border-blue">
-                                <h3 class="box-title">Butiran Kontrak</h3>
+                        <div class="panel panel-borderless">
+                            <div class="panel-heading panel-dark">
+                                Butiran Kontrak
                             </div>
-                            <div class="box-body">
+                            <div class="panel-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <tr class="tbl-row-init tbl-default">
+                                        <table class="table table-hover table-bordered">
+                                            <tr class="info">
                                                 <th class="col-md-3">&nbsp;</th>
                                                 <th>Maklumat</th>
                                             </tr>
@@ -59,7 +57,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Kos Kontrak (RM)</th>
-                                                <td>{{ $project->contract->cost ?? '' }}</td>
+                                                <td>{{ currency($project->contract->cost) }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No Kontrak</th>
@@ -122,17 +120,20 @@
                                             </tr>
                                             <tr>
                                                 <?php 
-                                                    $review = $project->contract->puu_review_date;
-                                                    $receive = $project->contract->puu_receive_date;
+                                                    $review = '';
+                                                    $receive = '';
 
                                                     $duration = '';
 
-                                                    if (!empty($review) && !empty($receive)) {
-                                                        $duration = $review->diffInDays($receive);
+                                                    if (!empty($project->contract->puu_review_date) && !empty($project->contract->puu_receive_date)) {
+                                                        $review = $project->contract->puu_review_date;
+                                                        $receive = $project->contract->puu_receive_date;
+
+                                                        $duration = $review->diffInDays($receive) . ' hari';
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tempoh Semakan PUU</th>
-                                                <td>{{ $duration }} hari</td>
+                                                <td>{{ $duration }}</td>
                                             </tr>
                                         </table>
                                     </div>

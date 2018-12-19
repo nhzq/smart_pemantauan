@@ -15,15 +15,15 @@ class CreateAllocationsTable extends Migration
     {
         Schema::create('allocations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('provision_id')->unsigned()->nullable();
             $table->integer('lookup_department_id')->unsigned()->nullable();
             $table->integer('lookup_budget_type_id')->unsigned()->nullable();
             $table->integer('lookup_sub_budget_type_id')->unsigned()->nullable();
             $table->decimal('amount', 19, 2)->nullable();
-            $table->decimal('estimate_cost', 19, 2)->nullable();
-            $table->decimal('project_cost', 19, 2)->nullable();
-            $table->decimal('total_spending', 19, 2)->nullable();
-            $table->decimal('balance', 19, 2)->nullable();
-            $table->string('year')->nullable();
+            // $table->decimal('estimate_cost', 19, 2)->nullable();
+            // $table->decimal('project_cost', 19, 2)->nullable();
+            // $table->decimal('total_spending', 19, 2)->nullable();
+            // $table->decimal('balance', 19, 2)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('active')->nullable();

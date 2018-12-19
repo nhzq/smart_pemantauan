@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\LookupSubBudgetType as Sub;
 use App\Models\Allocation;
 use App\Models\AllocationTransfer as Transfer;
+use App\Models\Project;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,9 @@ class AllocationTransferController extends Controller
 {
     public function index()
     {
-        $transfers = Transfer::where('active', 1)->paginate(20);
+        $transfers = Transfer::where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->paginate(20);
 
         return view('modules.financial.transfer.index', [
             'transfers' => $transfers
@@ -31,7 +34,22 @@ class AllocationTransferController extends Controller
 
     public function ajaxType(Request $request)
     {
-        $data = Allocation::where('lookup_sub_budget_type_id', $request->id)->first();
+        $allocation = Allocation::where('lookup_sub_budget_type_id', $request->id)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->first();
+
+        $total_estimate_cost = $allocation->projects()
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->sum('estimate_cost');
+
+        $balance = getEstimateCostBalance($total_estimate_cost, $allocation->amount);
+
+        $data = [
+            'amount' => $allocation->amount,
+            'balance' => $balance
+        ];
 
         return response()->json($data);
     }
@@ -48,7 +66,17 @@ class AllocationTransferController extends Controller
                 ->with('error', 'Sila tetapkan peruntukan terlebih dahulu sebelum melakukan pindah peruntukan.');
         }
 
-        if (removeMaskMoney($request->transfer_total_allocation) > $allocation_from->balance) {
+        $total_allocation = $allocation_from->amount;
+
+        $total_estimate_cost = Project::where('lookup_budget_type_id', 2)
+            ->where('lookup_sub_budget_type_id', $request->sub_from_b01)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->sum('estimate_cost');
+
+        $balance = $total_allocation - $total_estimate_cost;
+
+        if (removeMaskMoney($request->transfer_total_allocation) > $balance) {
             return redirect()
                 ->back()
                 ->withInput()
@@ -58,26 +86,23 @@ class AllocationTransferController extends Controller
         DB::transaction(function () use ($request, $allocation_from, $allocation_to) {
             // Update allocation
             $allocation_from->amount = $allocation_from->amount - removeMaskMoney($request->transfer_total_allocation);
-            $allocation_from->balance = $allocation_from->balance - removeMaskMoney($request->transfer_total_allocation);
             $allocation_from->updated_by = \Auth::user()->id;
             $allocation_from->save();
 
             // Update allocation
             $allocation_to->amount = $allocation_to->amount + removeMaskMoney($request->transfer_total_allocation);
-            $allocation_to->balance = $allocation_to->balance + removeMaskMoney($request->transfer_total_allocation);
             $allocation_to->updated_by = \Auth::user()->id;
             $allocation_to->save();
 
             $transfer = Transfer::create([
-                'approval_date' => Carbon::parse($request->transfer_approval_date),
+                'approval_date' => setDateValue($request->transfer_approval_date, Carbon::parse($request->transfer_approval_date)),
                 'approval_letter_ref_no' => $request->transfer_approval_ref_no,
                 'warrant_no' => $request->transfer_warrant_no,
-                'warrant_date' => Carbon::parse($request->transfer_warrant_date),
+                'warrant_date' => setDateValue($request->transfer_warrant_date, Carbon::parse($request->transfer_warrant_date)),
                 'budget_type_id' => 2,
                 'from_sub_type_id' => $request->sub_from_b01,
                 'to_sub_type_id' => $request->sub_to_b01,
                 'transfer_amount' => removeMaskMoney($request->transfer_total_allocation),
-                'verify_transfer_amount' => removeMaskMoney($request->transfer_verify_allocation),
                 'purpose' => $request->transfer_allocation_purpose,
                 'created_by' => \Auth::user()->id,
                 'active' => 1

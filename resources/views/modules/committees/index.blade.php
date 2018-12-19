@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
@@ -22,14 +20,14 @@
 
             <div class="col-md-9">
                 @hasanyrole ('ku')
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <a href="{{ route('committees.create', $project->id) }}" class="btn btn-default">
-                                                <i class="fa fa-fw fa-plus"></i> Tambah Jawatankuasa
+                                            <a href="{{ route('committees.create', $project->id) }}" class="btn btn-diamond">
+                                                <i class="fa fa-fw fa-plus"></i> Jawatankuasa Perolehan
                                             </a>
                                         </div>
                                     </div>
@@ -41,9 +39,9 @@
                 
                 <!-- Sebutharga, sebutharga B, tender -->
                 @if ($project->lookup_collection_type_id != 5)
-                    <div class="panel">
-                        <div class="panel-heading with-border panel-header-border-blue">
-                            <h3 class="panel-title panel-custom-title">Jawatankuasa Perolehan</h3>
+                    <div class="panel panel-borderless">
+                        <div class="panel-heading panel-dark">
+                            Jawatankuasa Perolehan
                             <span class="pull-right">
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs">
@@ -59,7 +57,7 @@
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-bordered">
-                                                <tr class="tbl-row-init tbl-default">
+                                                <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
                                                     <th>Jawatan</th>
@@ -100,10 +98,10 @@
 
                                     <div class="col-md-12">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" style="background-color: transparent;">
-                                                Maklumat Jawatankuasa Spesifikasi Teknikal
+                                            <div class="panel-heading bck-dark font-h5 clearfix">
+                                                <div class="pull-left" style="padding-top: 7.5px;">Maklumat Jawatankuasa Spesifikasi Teknikal</div>
                                                 <div class="pull-right">
-                                                    <a href="{{ route('committees.edit.information', [$project->id, 1]) }}" class="btn-sm bg-purple">
+                                                    <a href="{{ route('committees.edit.information', [$project->id, 1]) }}" class="btn bg-purple">
                                                         Kemaskini Maklumat
                                                     </a>
                                                 </div>
@@ -113,7 +111,7 @@
 
                                                     <?php $info1 = $project->committees_info->where('committee_type_id', 1)->first(); ?>
                                                     <table class="table table-hover table-bordered">
-                                                        <tr class="tbl-row-init tbl-default">
+                                                        <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
                                                         </tr>
@@ -128,7 +126,7 @@
                                                                         $doc1 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal')->get();
                                                                     } 
                                                                 ?>
-                                                                @if (!empty($doc1))
+                                                                @if (count($doc1) > 0)
                                                                     <a href="{{ route('committees.file.download', [$project->id, $doc1->last()->file_name]) }}">
                                                                         <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                         &nbsp; {{ $doc1->last()->original_name ?? '' }}
@@ -154,7 +152,7 @@
                                                                         $doc2 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal-surat-lantikan')->get();
                                                                     }
                                                                 ?>
-                                                                @if (!empty($doc2))
+                                                                @if (count($doc2) > 0)
                                                                     <a href="{{ route('committees.file.download', [$project->id, $doc2->last()->file_name]) }}">
                                                                         <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                         &nbsp; {{ $doc2->last()->original_name ?? '' }}
@@ -176,7 +174,7 @@
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-bordered">
-                                                <tr class="tbl-row-init tbl-default">
+                                                <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
                                                     <th>Jawatan</th>
@@ -217,10 +215,10 @@
 
                                     <div class="col-md-12">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" style="background-color: transparent;">
-                                                Maklumat Jawatankuasa Penilaian Teknikal
+                                            <div class="panel-heading bck-dark font-h5 clearfix">
+                                                <div class="pull-left" style="padding-top: 7.5px;">Maklumat Jawatankuasa Penilaian Teknikal</div>
                                                 <div class="pull-right">
-                                                    <a href="{{ route('committees.edit.information', [$project->id, 2]) }}" class="btn-sm bg-purple">
+                                                    <a href="{{ route('committees.edit.information', [$project->id, 2]) }}" class="btn bg-purple">
                                                         Kemaskini Maklumat
                                                     </a>
                                                 </div>
@@ -230,7 +228,7 @@
 
                                                     <?php $info2 = $project->committees_info->where('committee_type_id', 2)->first(); ?>
                                                     <table class="table table-hover table-bordered">
-                                                        <tr class="tbl-row-init tbl-default">
+                                                        <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
                                                         </tr>
@@ -249,7 +247,7 @@
                                                                         $doc = $info2->project->documents()->where('category', 'jawatankuasa-penilaian-teknikal-surat-lantikan')->get();
                                                                     }
                                                                 ?>
-                                                                @if (!empty($doc))
+                                                                @if (count($doc) > 0)
                                                                     <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
                                                                         <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                         &nbsp; {{ $doc->last()->original_name ?? '' }}
@@ -271,7 +269,7 @@
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-bordered">
-                                                <tr class="tbl-row-init tbl-default">
+                                                <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
                                                     <th>Jawatan</th>
@@ -312,10 +310,10 @@
 
                                     <div class="col-md-12">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" style="background-color: transparent;">
-                                                Maklumat Jawatankuasa Penilaian Harga
+                                            <div class="panel-heading bck-dark font-h5 clearfix">
+                                                <div class="pull-left" style="padding-top: 7.5px;">Maklumat Jawatankuasa Penilaian Harga</div>
                                                 <div class="pull-right">
-                                                    <a href="{{ route('committees.edit.information', [$project->id, 3]) }}" class="btn-sm bg-purple">
+                                                    <a href="{{ route('committees.edit.information', [$project->id, 3]) }}" class="btn bg-purple">
                                                         Kemaskini Maklumat
                                                     </a>
                                                 </div>
@@ -325,13 +323,13 @@
 
                                                     <?php $info3 = $project->committees_info->where('committee_type_id', 3)->first(); ?>
                                                     <table class="table table-hover table-bordered">
-                                                        <tr class="tbl-row-init tbl-default">
+                                                        <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
-                                                            <th class="col-md-6 col-sm-6">{{ !empty($info3->appointment_date) ? $info3->appointment_date->format('m/d/Y') : '' }}</th>
+                                                            <td class="col-md-6 col-sm-6">{{ !empty($info3->appointment_date) ? $info3->appointment_date->format('m/d/Y') : '' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
@@ -344,7 +342,7 @@
                                                                         $doc = $info3->project->documents()->where('category', 'jawatankuasa-penilaian-harga-surat-lantikan')->get();
                                                                     }
                                                                 ?>
-                                                                @if (!empty($doc))
+                                                                @if (count($doc) > 0)
                                                                     <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
                                                                         <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                         &nbsp; {{ $doc->last()->original_name ?? '' }}
@@ -368,8 +366,8 @@
                 
                 <!-- Rundingan terus -->
                 @if ($project->lookup_collection_type_id == 5)
-                    <div class="panel">
-                        <div class="panel-heading with-border panel-header-border-blue">
+                    <div class="panel panel-borderless">
+                        <div class="panel-heading panel-dark">
                             <h3 class="panel-title panel-custom-title">Jawatankuasa Rundingan Harga</h3>
                         </div>
                         <div class="panel-body">
@@ -378,7 +376,7 @@
                                     <div class="table-responsive">
                                         <table class="table table-hover table-bordered">
                                             <thead>
-                                                <tr class="tbl-row-init tbl-default">
+                                                <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
                                                     <th>Jawatan</th>
@@ -428,7 +426,7 @@
                                         <div class="panel-body">
                                             <div class="table-responsive">
                                                 <table class="table table-hover table-bordered">
-                                                    <tr class="tbl-row-init tbl-default">
+                                                    <tr class="info">
                                                         <th></th>
                                                         <th>Maklumat</th>
                                                     </tr>

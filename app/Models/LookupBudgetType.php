@@ -17,4 +17,14 @@ class LookupBudgetType extends Model
     {
         return $this->hasMany('App\Models\LookupSubBudgetType');
     }
+
+    public function provisions()
+    {
+        return $this->hasMany('App\Models\Provision');
+    }
+
+    public function allocations()
+    {
+        return $this->hasMany('App\Models\Allocation');
+    }
 }

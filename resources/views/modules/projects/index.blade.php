@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -16,8 +14,8 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div class="panel panel-borderless">
+                    <div class="panel-body panel-nav">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-sm-2" style="padding-left: 0;">
@@ -31,10 +29,10 @@
 
                                 <div class="pull-right">
                                     <div class="btn-group">
-                                        <button class="btn btn-default" data-toggle="collapse" data-target="#search" type="button"><i class="fa fa-fw fa-search"></i> Carian</button>
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="button"><i class="fa fa-fw fa-search"></i> Carian</button>
 
                                         @hasrole('ku')
-                                            <a href="{{ route('projects.create') }}" class="btn btn-default">
+                                            <a href="{{ route('projects.create') }}" class="btn btn-diamond">
                                                 <i class="fa fa-fw fa-plus"></i> Tambah Projek
                                             </a>
                                         @endhasrole
@@ -73,20 +71,20 @@
         
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Senarai Projek</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Senarai Projek
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="custom-row" class="table table-hover table-bordered">
-                                <thead>
-                                    <tr class="tbl-row-init tbl-default">
+                            <table id="custom-row" class="table table-bordered">
+                                <thead class="font-p">
+                                    <tr class="info">
                                         <th>Jenis Bajet</th>
-                                        <th>Jumlah (RM)</th>
+                                        <th>Jumlah &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th>#</th>
                                         <th>Nama Projek</th>
-                                        <th class="col-sm-2">Anggaran Kos (RM)</th>
+                                        <th class="col-sm-2">Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="col-sm-1">Status</th>
                                         <th class="col-sm-1">Tindakan</th>
                                     </tr>
@@ -171,6 +169,26 @@
                                         @endif
                                     @endif
                                 </tbody>
+
+                                <!--
+                                <thead class="font-p">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Butiran</th>
+                                        <th class="text-center">Peruntukan (RM)</th>
+                                        <th class="text-center">Kos Projek (RM)</th>
+                                        <th class="text-center">Belanja (RM)</th>
+                                        <th class="text-center">Peratusan Belanja</th>
+                                        <th class="text-center">Baki Semasa (RM)</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="font-p">
+                                    
+                                </tbody>
+                                -->
                             </table>
                         </div>
                         

@@ -29,7 +29,7 @@
                                 <div class="pull-right">
                                     <div class="btn-group">
                                         <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
-                                        <a href="{{ route('allocations.create', $provision->id) }}" class="btn btn-diamond">
+                                        <a href="{{ route('provisions.create') }}" class="btn btn-diamond">
                                             <i class="fa fa-fw fa-plus"></i> Peruntukan
                                         </a>
                                     </div>
@@ -44,9 +44,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-borderless">
-                    <div class="panel-heading panel-dark">
-                        {!! setBudgetTitle($provision->budgetType->code, $provision->budgetType->description) !!}
-                    </div>
+                    <div class="panel-heading panel-dark">Peruntukan mengikut Kategori Bajet</div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
@@ -56,41 +54,31 @@
                                         <th class="text-center">Kod</th>
                                         <th class="text-center">Butiran</th>
                                         <th class="text-center">Peruntukan &nbsp;<span class="label bck-diamond">RM</span></th>
+                                        <th class="text-center">Peruntukan Tambahan &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Kos Projek &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Jumlah Belanja &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Baki Belanja &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th></th>
+                                        <th class="text-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody class="font-std">
-                                    @if (!empty($provision))
-                                        @foreach ($provision->allocations as $data)
+                                    @if (!empty($provisions))
+                                        @foreach ($provisions as $data)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $data->sub->code ?? '' }}</td>
-                                                <td>{{ $data->sub->description ?? '' }}</td>
-                                                <td class="text-right">{{ currency($data->amount) }}</td>
-                                                <td class="text-right">{{ currency($data->projects()->sum('estimate_cost')) }}</td>
-                                                <td class="text-right"></td>
-                                                <td class="text-right"></td>
-                                                <td class="text-right"></td>
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td class="text-right">{{ $data->budgetType->code ?? '-' }}</td>
                                                 <td>
-                                                    <div class="btn-group">
-                                                        <a href="" class="btn bg-purple">
-                                                            <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                        </a>
-                                                    </div>
+                                                    <a href="{{ route('allocations.index', $data->id) }}">{{ $data->budgetType->description ?? '-' }}</a>
                                                 </td>
+                                                <td class="text-right">{{ currency($data->amount) }}</td>
+                                                <td class="text-right"></td>
+                                                <td class="text-right">{{ currency($data->allocations()->sum('amount')) }}</td>
+                                                <td class="text-right"></td>
+                                                <td class="text-right"></td>
+                                                <td></td>
                                             </tr>
                                         @endforeach
-                                        @if (count($provision->allocations) > 0)
-                                            <tr>
-                                                <td colspan="3" class="text-center font-h6">Jumlah Keseluruhan</td>
-                                                <td class="text-right font-h6">{{ currency($provision->allocations()->sum('amount')) }}</td>
-                                                <td class="text-right font-h6">{{ currency($total_estimate[0]) }}</td>
-                                            </tr>
-                                        @endif
                                     @endif
                                 </tbody>
                             </table>
@@ -102,6 +90,3 @@
     </section>
     <!-- /.content -->
 @endsection
-
-@push ('script')
-@endpush

@@ -19,7 +19,6 @@ class AllocationTransfer extends Model
         'from_sub_type_id',
         'to_sub_type_id',
         'transfer_amount',
-        'verify_transfer_amount',
         'purpose',
         'created_by',
         'updated_by',

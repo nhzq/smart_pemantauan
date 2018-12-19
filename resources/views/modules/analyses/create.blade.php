@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -16,21 +14,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Pasukan Pembekal/ Kontraktor Baru</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Pasukan Pembekal/ Kontraktor Baru
                     </div>
                     
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('analyses.store', $project->id), 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered" id="item_table">
-                                        <tr class="tbl-row-init tbl-default">
-                                            <th>Jawatan</th>
-                                            <th>Bilangan</th>
+                                        <tr class="info">
+                                            <th style="vertical-align: middle;">Jawatan</th>
+                                            <th style="vertical-align: middle;">Bilangan</th>
                                             <th class="col-sm-1">
-                                                <button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                <button type="button" name="add" class="btn btn-diamond btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
                                             </th>
                                         </tr>
                                     </table>

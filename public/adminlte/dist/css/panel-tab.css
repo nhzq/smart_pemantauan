@@ -1,14 +1,9 @@
 /*Panel tabs*/
 .panel-tabs {
     position: relative;
-    bottom: 30px;
+    bottom: 11px;
     clear:both;
     border-bottom: 1px solid transparent;
-}
-
-.panel-custom-title {
-    font-size: 18px !important;
-    line-height: 1 !important;
 }
 
 .panel-tabs > li {
@@ -22,7 +17,7 @@
     line-height: .85;
     border: 1px solid transparent;
     border-radius: 4px 4px 0 0;
-    color: #000000;
+    color: #ddd;
 }
 
 .panel-tabs > li > a:hover {

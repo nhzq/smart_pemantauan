@@ -18,6 +18,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.min.css">
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/spacing.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/nhzq.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
 
         @stack ('css')
         

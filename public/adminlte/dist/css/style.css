@@ -4,11 +4,33 @@
     overflow-y: scroll;
 }
 
-/* Panel Header */
-.panel-header-border-blue {
-    border-bottom: 5px solid #00c0ef !important;
+/* Background color */
+.content-wrapper,
+.right-side {
+background-color: #d9e0e7;
 }
 
-.panel-header-border-yellow {
-    border-bottom: 5px solid #f39c12 !important;
+/* Phase Design */
+.thumbnail-custom {
+    background-color: #242a30 !important;
+    border: none;
+    box-shadow: none;
+}
+
+.nav-font-custom {
+    font-size: 14px !important;
+    font-weight: 600;
+    color: #fff;
+}
+
+.nav-pills > li.active-custom > a {
+    background-color: #00c0ef !important;
+    border-color: #00c0ef !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    color: #fff;
+}
+
+.thumbnail-custom > li > a:focus, .thumbnail-custom > li > a:hover {
+  background-color: #b6c2c9;
 }

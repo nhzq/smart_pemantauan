@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -16,39 +14,39 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
                         @if ($project->lookup_collection_type_id != 5)
-                            <h3 class="box-title">Jawatankuasa Perolehan</h3>
+                            Jawatankuasa Perolehan
                         @endif
                         @if ($project->lookup_collection_type_id == 5)
-                            <h3 class="box-title">Jawatankuasa Rundingan Harga</h3>
+                            Jawatankuasa Rundingan Harga
                         @endif
                     </div>
                     
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('committees.store', $project->id), 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered" id="item_table">
-                                        <tr class="tbl-row-init tbl-default">
+                                        <tr class="info">
                                             @if ($project->lookup_collection_type_id != 5)
-                                                <th class="col-sm-3">Jenis Jawatankuasa</th>
-                                                <th class="col-sm-3">Nama</th>
-                                                <th class="col-sm-2">Jawatan</th>
-                                                <th class="col-sm-3">Jabatan</th>
+                                                <th class="col-sm-3" style="vertical-align: middle;">Jenis Jawatankuasa</th>
+                                                <th class="col-sm-3" style="vertical-align: middle;">Nama</th>
+                                                <th class="col-sm-2" style="vertical-align: middle;">Jawatan</th>
+                                                <th class="col-sm-3" style="vertical-align: middle;">Jabatan</th>
                                                 <th class="col-sm-1">
-                                                    <button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    <button type="button" name="add" class="btn btn-diamond btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
                                                 </th>
                                                 <input class="collection_type" type="hidden" value="{{ $project->lookup_collection_type_id ?? '' }}">
                                             @endif
 
                                             @if ($project->lookup_collection_type_id == 5)
-                                                <th class="col-sm-4">Nama</th>
-                                                <th class="col-sm-4">Jawatan</th>
-                                                <th class="col-sm-3">Jabatan</th>
+                                                <th class="col-sm-4" style="vertical-align: middle;">Nama</th>
+                                                <th class="col-sm-4" style="vertical-align: middle;">Jawatan</th>
+                                                <th class="col-sm-3" style="vertical-align: middle;">Jabatan</th>
                                                 <th class="col-sm-1">
-                                                    <button type="button" name="add" class="btn btn-success btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    <button type="button" name="add" class="btn btn-diamond btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
                                                 </th>
                                                 <input class="collection_type" type="hidden" value="{{ $project->lookup_collection_type_id ?? '' }}">
                                             @endif

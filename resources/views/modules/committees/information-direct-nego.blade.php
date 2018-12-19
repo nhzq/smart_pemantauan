@@ -14,12 +14,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Maklumat Jawatankuasa Rundingan Harga</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Maklumat Jawatankuasa Rundingan Harga
                     </div>
                     
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('committees.update.information.direct', $project_id), 'method' => 'PUT', ' enctype' => 'multipart/form-data']) }}
                             <div class="col-md-12">
                                 <div class="row">
