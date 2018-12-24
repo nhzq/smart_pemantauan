@@ -15,7 +15,10 @@ class ProjectInformationController extends Controller
     {
         $project = Project::find($project_id);
 
-        if ($project->status < Status::toPlanningPhase()) {
+        $statuses = [
+            1, 2, 3, 4, 6, 7
+        ];
+        if (in_array($project->status, $statuses)) {
             return redirect()->back()->with('error', 'Maaf, projek ini masih di masa PERMULAAN.');
         }
 
@@ -55,7 +58,6 @@ class ProjectInformationController extends Controller
             $project->minute_approval_date = $approval_minute;
             $project->approval_pwn_date = $approval_pwn;
             $project->lookup_collection_type_id = $request->info_collection_types;
-            $project->status = Status::toPlanningPhase();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 

@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -27,6 +25,15 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
+                                        <a href="" class="btn btn-diamond">
+                                            <i class="fa fa-fw fa-plus"></i> Pindah Peruntukan
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -38,38 +45,27 @@
             <div class="col-md-12">
                 <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">
-                        Pindah Peruntukan
+                        Pindah Peruntukan BSPK
                     </div>
 
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
                                 <thead class="font-p">
-                                    <tr>
-                                        <th class="text-center col-sm-1">#</th>
-                                        <th class="text-center">Butiran</th>
-                                        <th class="text-center">Keterangan</th>
+                                    <tr class="info">
+                                        <th class="text-center align-center">#</th>
+                                        <th class="text-center align-center">Tarikh Kelulusan</th>
+                                        <th class="text-center align-center">Dari Projek</th>
+                                        <th class="text-center align-center">Ke Projek</th>
+                                        <th class="text-center align-center">No Waran</th>
+                                        <th class="text-center align-center">Tarikh Waran</th>
+                                        <th class="text-center align-center">Tujuan</th>
+                                        <th class="text-center align-center">Jumlah Pindah Peruntukan &nbsp;<span class="label bck-diamond">RM</span></th>
+                                        {{-- <th>Tindakan</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="font-std">
-                                    <tr>
-                                        <th class="text-center">1</th>
-                                        <td>
-                                            <a href="{{ route('transfers.index') }}">Pindah Peruntukan untuk BAPK</a>
-                                        </td>
-                                        <td>
-                                            Pindah Peruntukan bagi setiap perbelanjaan di antara BAPK, di dalam Kategori B01.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center">2</th>
-                                        <td>
-                                            <a href="{{ route('bspk.transfers.index') }}">Pindah Peruntukan untuk BSPK</a>
-                                        </td>
-                                        <td>
-                                            Pindah Peruntukan bagi setiap perbelanjaan di antara BSPK.
-                                        </td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>

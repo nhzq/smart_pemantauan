@@ -72,12 +72,14 @@ class ProjectController extends Controller
                         'lookup_sub_budget_type_id' => $request->project_sub_budget_type,
                         'name' => $request->project_name,
                         'file_reference_no' => $request->project_file_reference,
-                        'concept' => $request->project_concept,
+                        'initial_scope' => $request->project_scope,
+                        'initial_concept' => $request->project_concept,
+                        'initial_purpose' => $request->project_purpose,
                         'estimate_cost' => removeMaskMoney($request->project_estimate_cost),
                         'approval_date' => setDateValue($request->project_approval_date, Carbon::parse($request->project_approval_date)),
                         'rmk' => $request->project_rmk,
                         'market_research' => $request->optradio,
-                        'status' => Status::isAppliedByKU(),
+                        'status' => Status::project_application(),
                         'year' => Carbon::now()->year,
                         'created_by' => \Auth::user()->id,
                         'active' => 1
@@ -159,7 +161,7 @@ class ProjectController extends Controller
         $budgets = Budget::where('lookup_department_id', 2)->get();
         $subBudgets = SubBudget::where('lookup_budget_type_id', $project->lookup_budget_type_id)->get();
 
-        if (Status::isApprovedByKS($project->status) || Status::isApprovedBySUB($project->status)) {
+        if (Status::initial_approved_by_ks($project->status) || Status::initial_approved_by_sub($project->status)) {
             return redirect()
                 ->back()
                 ->withInput()
@@ -193,7 +195,7 @@ class ProjectController extends Controller
         $project->rmk = $request->project_rmk;
         $project->market_research = $request->optradio;
         $project->created_by = \Auth::user()->id;
-        $project->status = Status::isAppliedByKU();
+        $project->status = Status::project_application();
         $project->save();
 
         return redirect()
@@ -206,15 +208,6 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         return Storage::download('/projects/' . $project->id . '/' . $filename);
-    }
-
-    public function planningPhase($id)
-    {
-        $project = Project::find($id);
-        $project->status = Status::toPlanningPhase();
-        $project->save();
-
-        return redirect()->route('info.index', $project->id);
     }
 
     public function delete($id)

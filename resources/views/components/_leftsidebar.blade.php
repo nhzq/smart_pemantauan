@@ -63,8 +63,12 @@
                                 <a href="{{ route('provisions.index') }}"><i class="fa fa-circle-o {{ $textAqua }}"></i> Peruntukan</a>
                             </li>
 
-                            <li class="{{ request()->is('*transfers*') ? 'active' : '' }}">
-                                <a href="{{ route('transfers.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfers*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
+                            <li class="{{ request()->is('*transfer*') ? 'active' : '' }}">
+                                <a href="{{ route('transfer.list.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfer*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
+                            </li>
+
+                            <li class="">
+                                <a href=""><i class="fa fa-circle-o"></i> Bayaran Kemajuan</a>
                             </li>
                         </ul>
                     </li>

@@ -21,6 +21,7 @@ class CreateInterimsTable extends Migration
             $table->date('payment_date')->nullable();
             $table->decimal('amount', 19, 2)->nullable();
             $table->text('description')->nullable();
+            $table->integer('status')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('active')->unsigned()->nullable();

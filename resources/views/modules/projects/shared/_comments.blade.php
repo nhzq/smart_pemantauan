@@ -1,8 +1,8 @@
 <?php 
-    $approvedByKS = \App\Helpers\Status::isApprovedByKS();
-    $rejectedByKS = \App\Helpers\Status::isRejectedByKS();
-    $approvedBySUB = \App\Helpers\Status::isApprovedBySUB();
-    $rejectedBySUB = \App\Helpers\Status::isRejectedBySUB();
+    $approvedByKS = \App\Helpers\Status::initial_approved_by_ks();
+    $rejectedByKS = \App\Helpers\Status::initial_rejected_by_ks();
+    $approvedBySUB = \App\Helpers\Status::initial_approved_by_sub();
+    $rejectedBySUB = \App\Helpers\Status::initial_rejected_by_sub();
 ?>
 
 @if (!empty($project))

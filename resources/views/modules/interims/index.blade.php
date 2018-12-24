@@ -57,7 +57,8 @@
                                         <tr>
                                             <td colspan="2">{{ $project->name }}</td>
                                             <td>{{ !empty($project->estimate_cost) ? currency($project->estimate_cost) : '0.00' }}</td>
-                                            <td>{{ !empty($project->contract->cost) ? currency($project->contract->cost) : '0.00' }}</td>
+                                            <td>{{ !empty($project->actual_project_cost) ? currency($project->actual_project_cost) : '0.00' }}</td>
+                                            {{-- <td>{{ !empty($project->contract->cost) ? currency($project->contract->cost) : '0.00' }}</td> --}}
 
                                             <?php 
                                                 $spending = '0.00';
@@ -66,17 +67,16 @@
                                                 if (!empty($project->interims->sum('amount'))) {
                                                     $spending = currency($project->interims->sum('amount'));
 
-                                                    if (!empty($project->contract->cost)) {
-                                                        $balance = currency($project->contract->cost - $project->interims->sum('amount'));
+                                                    if (!empty($project->actual_project_cost)) {
+                                                        $balance = currency($project->actual_project_cost - $project->interims->sum('amount'));
                                                     }
                                                 }
                                             ?>
                                             <td>{{ $spending }}</td>
                                             <td>{{ $balance }}</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td colspan="2"></td>
                                         </tr>
-                                        <tr class="info">
+                                        <tr class="warning">
                                             <th>#</th>
                                             <th>Jenis Bayaran</th>
                                             <th>No. Waran/Voucher/EFT/CEK</th>
@@ -111,7 +111,7 @@
 
                                                     <?php 
                                                         $result = '0';
-                                                        $total_cost = $project->contract->cost;
+                                                        $total_cost = $project->actual_project_cost;
 
                                                         if (!empty($total_cost) && !empty($data->amount)) {
                                                             $result = ($data->amount/$total_cost) * 100;
@@ -119,7 +119,9 @@
 
                                                     ?>
                                                     <td>{{ $result . '%' }}</td>
-                                                    <td></td>
+                                                    <td>
+                                                        <a href="">Notify</a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @endif

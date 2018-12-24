@@ -95,7 +95,7 @@
                                                     <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 1)) }}</strong></td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 1]) }}" class="btn bg-purple">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 1]) }}" class="btn btn-diamond">
                                                                 Kemaskini
                                                             </a>
                                                         </div>
@@ -149,7 +149,7 @@
                                                     <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 2)) }}</strong></td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 2]) }}" class="btn bg-purple">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 2]) }}" class="btn btn-diamond">
                                                                 Kemaskini
                                                             </a>
                                                         </div>
@@ -203,7 +203,7 @@
                                                     <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 3)) }}</strong></td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 3]) }}" class="btn bg-purple">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 3]) }}" class="btn btn-diamond">
                                                                 Kemaskini
                                                             </a>
                                                         </div>
@@ -257,7 +257,7 @@
                                                     <td colspan="2"><strong>{{ count($project->meetings->where('lookup_project_team_id', 4)) }}</strong></td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 4]) }}" class="btn bg-purple">
+                                                            <a href="{{ route('project-team.create.meeting', [$project->id, 4]) }}" class="btn btn-diamond">
                                                                 Kemaskini
                                                             </a>
                                                         </div>

@@ -48,17 +48,17 @@
                                                 <div class="col-md-12">
                                                     <label class="col-sm-3 control-label">Tarikh Pengesahan</label>
                                                     <div class="col-sm-9">
-                                                        @if (\App\Helpers\Status::toPlanningPhase($project->status) || \App\Helpers\Status::planningRejectedByKS($project->status))
+                                                        @if (\App\Helpers\Status::planning_rejected_by_ks($project->status))
                                                             <input class="pickdate form-control" type="text" name="verification_date" placeholder="Tarikh" value="{{ \Carbon\Carbon::now()->format('m/d/Y') }}">
                                                         @endif
 
-                                                        @if (\App\Helpers\Status::planningByKU($project->status))
+                                                        @if (\App\Helpers\Status::project_verification($project->status))
                                                             <input class="form-control" type="text" value="{{ \Carbon\Carbon::now()->format('m/d/Y') }}" readonly>
                                                         @endif
                                                     </div>
 
                                                     <div class="col-md-2 mrg20B mrg20T pull-right">
-                                                        @if (\App\Helpers\Status::toPlanningPhase($project->status) || \App\Helpers\Status::planningRejectedByKS($project->status))
+                                                        @if ('\App\Helpers\Status::toPlanningPhase($project->status)' || \App\Helpers\Status::planning_rejected_by_ks($project->status))
                                                             <button class="btn btn-block btn-primary" type="submit">
                                                                 Hantar
                                                             </button>
@@ -77,7 +77,7 @@
 
                                     <div class="table-responsive">
                                         <table class="table table-hover table-bordered">
-                                            <tr class="tbl-row-init tbl-default">
+                                            <tr class="info">
                                                 <th class="col-md-3 min100">&nbsp;</th>
                                                 <th>Maklumat Pengesahan</th>
                                             </tr>

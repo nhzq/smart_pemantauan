@@ -4,110 +4,134 @@ namespace App\Helpers;
 
 class Status
 {
-    const APPLIED_BY_KU = 1;
-    const APPROVED_BY_KS = 2;
-    const REJECTED_BY_KS = 3;
-    const APPROVED_BY_SUB = 4;
-    const REJECTED_BY_SUB = 5;
-    const PLANNING_PHASE = 10;
-    const PLANNING_BY_KU = 11;
-    const PLANNING_APPROVED_BY_KS = 12;
-    const PLANNING_REJECTED_BY_KS = 13;
-    const PLANNING_APPROVED_BY_SUB = 14;
-    const PLANNING_REJECTED_BY_SUB = 15;
+    const PROJECT_APPLICATION = 1;
 
-    public static function isAppliedByKU($value = null)
+    const INITIAL_APPROVED_BY_KS = 2;
+    const INITIAL_KIV_BY_KS = 3;
+    const INITIAL_REJECTED_BY_KS = 4;
+
+    const INITIAL_APPROVED_BY_SUB = 5;
+    const INITIAL_KIV_BY_SUB = 6;
+    const INITIAL_REJECTED_BY_SUB = 7;
+
+    const PROJECT_VERIFICATION = 8;
+
+    const PLANNING_APPROVED_BY_KS = 9;
+    const PLANNING_KIV_BY_KS = 10;
+    const PLANNING_REJECTED_BY_KS = 11;
+
+    const PLANNING_APPROVED_BY_SUB = 12;
+    const PLANNING_KIV_BY_SUB = 13;
+    const PLANNING_REJECTED_BY_SUB = 14;
+
+    const NOTIFY_FOR_PAYMENT = 20;
+
+
+    public static function project_application($value = null)
     {
         if (!empty($value)) {
-            if (self::APPLIED_BY_KU == $value) {
+            if (self::PROJECT_APPLICATION == $value) {
                 return true;
             }
         } else {
-            return self::APPLIED_BY_KU;
+            return self::PROJECT_APPLICATION;
         }
 
         return false;
     }
 
-    public static function isApprovedByKS($value = null)
+    public static function initial_approved_by_ks($value = null)
     {
         if (!empty($value)) {
-            if (self::APPROVED_BY_KS == $value) {
+            if (self::INITIAL_APPROVED_BY_KS == $value) {
                 return true;
             }
         } else {
-            return self::APPROVED_BY_KS;
+            return self::INITIAL_APPROVED_BY_KS;
         }
 
         return false;
     }
 
-    public static function isRejectedByKS($value = null)
+    public static function initial_kiv_by_ks($value = null)
     {
         if (!empty($value)) {
-            if (self::REJECTED_BY_KS == $value) {
+            if (self::INITIAL_KIV_BY_KS == $value) {
                 return true;
             }
         } else {
-            return self::REJECTED_BY_KS;
+            return self::INITIAL_KIV_BY_KS;
         }
 
         return false;
     }
 
-    public static function isApprovedBySUB($value = null)
+    public static function initial_rejected_by_ks($value = null)
     {
         if (!empty($value)) {
-            if (self::APPROVED_BY_SUB == $value) {
+            if (self::INITIAL_REJECTED_BY_KS == $value) {
                 return true;
             }
         } else {
-            return self::APPROVED_BY_SUB;
+            return self::INITIAL_REJECTED_BY_KS;
         }
 
         return false;
     }
 
-    public static function isRejectedBySUB($value = null)
+    public static function initial_approved_by_sub($value = null)
     {
         if (!empty($value)) {
-            if (self::REJECTED_BY_SUB == $value) {
+            if (self::INITIAL_APPROVED_BY_SUB == $value) {
                 return true;
             }
         } else {
-            return self::REJECTED_BY_SUB;
+            return self::INITIAL_APPROVED_BY_SUB;
         }
 
         return false;
     }
 
-    public static function toPlanningPhase($value = null)
+    public static function initial_kiv_by_sub($value = null)
     {
         if (!empty($value)) {
-            if (self::PLANNING_PHASE == $value) {
+            if (self::INITIAL_KIV_BY_SUB == $value) {
                 return true;
             }
         } else {
-            return self::PLANNING_PHASE;
+            return self::INITIAL_KIV_BY_SUB;
         }
 
         return false;
     }
 
-    public static function planningByKU($value = null)
+    public static function initial_rejected_by_sub($value = null)
     {
         if (!empty($value)) {
-            if (self::PLANNING_BY_KU == $value) {
+            if (self::INITIAL_REJECTED_BY_SUB == $value) {
                 return true;
             }
         } else {
-            return self::PLANNING_BY_KU;
+            return self::INITIAL_REJECTED_BY_SUB;
         }
 
         return false;
     }
 
-    public static function planningApprovedByKS($value = null)
+    public static function project_verification($value = null)
+    {
+        if (!empty($value)) {
+            if (self::PROJECT_VERIFICATION == $value) {
+                return true;
+            }
+        } else {
+            return self::PROJECT_VERIFICATION;
+        }
+
+        return false;
+    }
+
+    public static function planning_approved_by_ks($value = null)
     {
         if (!empty($value)) {
             if (self::PLANNING_APPROVED_BY_KS == $value) {
@@ -120,7 +144,20 @@ class Status
         return false;
     }
 
-    public static function planningRejectedByKS($value = null)
+    public static function planning_kiv_by_ks($value = null)
+    {
+        if (!empty($value)) {
+            if (self::PLANNING_KIV_BY_KS == $value) {
+                return true;
+            }
+        } else {
+            return self::PLANNING_KIV_BY_KS;
+        }
+
+        return false;
+    }
+
+    public static function planning_rejected_by_ks($value = null)
     {
         if (!empty($value)) {
             if (self::PLANNING_REJECTED_BY_KS == $value) {
@@ -133,7 +170,7 @@ class Status
         return false;
     }
 
-    public static function planningApprovedBySUB($value = null)
+    public static function planning_approved_by_sub($value = null)
     {
         if (!empty($value)) {
             if (self::PLANNING_APPROVED_BY_SUB == $value) {
@@ -146,7 +183,20 @@ class Status
         return false;
     }
 
-    public static function planningRejectedBySUB($value = null)
+    public static function planning_kiv_by_sub($value = null)
+    {
+        if (!empty($value)) {
+            if (self::PLANNING_KIV_BY_SUB == $value) {
+                return true;
+            }
+        } else {
+            return self::PLANNING_KIV_BY_SUB;
+        }
+
+        return false;
+    }
+
+    public static function planning_rejected_by_sub($value = null)
     {
         if (!empty($value)) {
             if (self::PLANNING_REJECTED_BY_SUB == $value) {
@@ -154,6 +204,19 @@ class Status
             }
         } else {
             return self::PLANNING_REJECTED_BY_SUB;
+        }
+
+        return false;
+    }
+
+    public static function notify_for_payment($value = null)
+    {
+        if (!empty($value)) {
+            if (self::NOTIFY_FOR_PAYMENT == $value) {
+                return true;
+            }
+        } else {
+            return self::NOTIFY_FOR_PAYMENT;
         }
 
         return false;

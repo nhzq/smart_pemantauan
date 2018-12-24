@@ -19,6 +19,22 @@
             @include ('components._menu')
 
             <div class="col-md-9">
+                @hasanyrole ('ku')
+                    <div class="panel panel-borderless">
+                        <div class="panel-body panel-nav">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <a href="{{ route('info.edit', $project->id) }}" class="btn btn-diamond">Kemaskini Projek</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endhasanyrole
+
                 <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">
                         Maklumat Projek
@@ -193,12 +209,6 @@
                         </div>
                     </div>
                 </div>
-                
-                @hasrole('ku')
-                    <div class="pull-right">
-                        <a href="{{ route('info.edit', $project->id) }}" class="btn bg-purple">Kemaskini Projek</a>
-                    </div>
-                @endhasanyrole
             </div>
         </div>
     </section>

@@ -31,14 +31,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/projects', 'ProjectController');
         Route::get('/projects-ajax-create', 'ProjectController@ajaxSubType')->name('projects.create.sub');
         Route::get('/projects/{id}/timeline', 'ProjectController@timeline')->name('projects.timeline');
-        Route::get('/projects/{id}/planning-phase', 'ProjectController@planningPhase')->name('projects.phase');
         Route::get('/projects/{id}/view-download-file/{filename}', 'ProjectController@downloadFile')->name('projects.file.download');
 
 
         /* Review section */
         Route::post('/reviews/{id}/approve-ks', 'ReviewController@approveKS')->name('reviews.approve.ks');
+        Route::post('/reviews/{id}/kiv-ks', 'ReviewController@kivKS')->name('reviews.kiv.ks');
         Route::post('/reviews/{id}/reject-ks', 'ReviewController@rejectKS')->name('reviews.reject.ks');
         Route::post('/reviews/{id}/approve-sub', 'ReviewController@approveSUB')->name('reviews.approve.sub');
+        Route::post('/reviews/{id}/kiv-sub', 'ReviewController@kivSUB')->name('reviews.kiv.sub');
         Route::post('/reviews/{id}/reject-sub', 'ReviewController@rejectSUB')->name('reviews.reject.sub');
     });
 
@@ -62,7 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/{project_id}/schedules', 'ScheduleController');
 
         /* Gantt section */
-        Route::resource('/{project_id}/gantt', 'GanttController');
+        Route::get('/{project_id}/gantt', 'GanttController@planning')->name('gantt.planning');
 
         /* Verification Section */
         Route::get('/{project_id}/verifications', 'VerificationController@index')->name('verifications.index');
@@ -72,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{project_id}/reviews', 'ReviewController@planningIndex')->name('planning.reviews.index');
         Route::post('/{project_id}/reviews/approve-ks', 'ReviewController@planningApproveKS')->name('planning.reviews.approve.ks');
         Route::post('/{project_id}/reviews/reject-ks', 'ReviewController@planningRejectKS')->name('planning.reviews.reject.ks');
+        Route::post('/{project_id}/reviews/kiv-ks', 'ReviewController@planningKivKS')->name('planning.reviews.kiv.ks');
     });
 
     /* Collection section */
@@ -87,6 +89,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* Methods section */
         Route::resource('/{project_id}/methods', 'CollectionMethodController');
+
+        /* Gantt section */
+        Route::get('/{project_id}/gantt', 'GanttController@collection')->name('gantt.collection');
 
         /* Results section */
         Route::resource('/{project_id}/results', 'ResultController');
@@ -124,6 +129,9 @@ Route::group(['middleware' => 'auth'], function () {
         /* Interim section */
         Route::resource('/{project_id}/interims', 'InterimController');
 
+        /* Payment Interim section */
+        Route::resource('/{project_id}/payments', 'PaymentInterimController');
+
         /* Bond section */
         Route::resource('/{project_id}/bond', 'BondController');
 
@@ -151,9 +159,21 @@ Route::group(['middleware' => 'auth'], function () {
         /* Allocation section */
         Route::resource('/{provision_id}/allocations', 'AllocationController');
 
-        /* Allocation Transfer section */
-        Route::resource('/transfers', 'AllocationTransferController');
-        Route::get('/transfers-ajax-sub', 'AllocationTransferController@ajaxType')->name('transfers.create.type');
+        /* Transfer section */
+        Route::get('/transfer-list', function () {
+            return view('modules.financial.transfer.index');
+        })->name('transfer.list.index');
+
+        Route::group(['prefix' => 'B01'], function () {
+            Route::resource('/transfers', 'AllocationTransferController');
+            Route::get('/transfers-ajax-sub', 'AllocationTransferController@ajaxType')->name('transfers.create.type');
+        });
+
+        Route::group(['prefix' => 'BSPK'], function () {
+            Route::resource('/transfers', 'BspkTransferController', [
+                'as' => 'bspk'
+            ]);
+        });
     });
 
     /* Setting section */

@@ -23,7 +23,7 @@ class VerificationController extends Controller
 
         $project->verification_date = \Carbon\Carbon::parse($request->verification_date);
         $project->verified_by = \Auth::user()->id;
-        $project->status = Status::planningByKU();
+        $project->status = Status::project_verification();
         $project->save();
 
         return redirect()

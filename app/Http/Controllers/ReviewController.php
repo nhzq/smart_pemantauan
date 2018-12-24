@@ -14,13 +14,13 @@ class ReviewController extends Controller
     {
         DB::transaction(function () use ($request, $id) {
             $project = Project::find($id);
-            $project->status = Status::isApprovedByKS();
+            $project->status = Status::initial_approved_by_ks();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 
             $review = Review::create([
                 'project_id' => $id,
-                'status' => Status::isApprovedByKS(),
+                'status' => Status::initial_approved_by_ks(),
                 'content' => $request->review_content,
                 'created_by' => \Auth::user()->id
             ]);
@@ -35,7 +35,7 @@ class ReviewController extends Controller
     {
         DB::transaction(function () use ($request, $id) {
             $project = Project::find($id);
-            $project->status = Status::isRejectedByKS();
+            $project->status = Status::initial_rejected_by_ks();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 
@@ -43,7 +43,7 @@ class ReviewController extends Controller
             
             $review = Review::create([
                 'project_id' => $id,
-                'status' => Status::isRejectedByKS(),
+                'status' => Status::initial_rejected_by_ks(),
                 'content' => $request->review_content,
                 'created_by' => \Auth::user()->id
             ]);
@@ -54,17 +54,40 @@ class ReviewController extends Controller
             ->with('success', 'Projek telah ditolak.');
     }
 
+    public function kivKS(Request $request, $id)
+    {
+        DB::transaction(function () use ($request, $id) {
+            $project = Project::find($id);
+            $project->status = Status::initial_kiv_by_ks();
+            $project->updated_by = \Auth::user()->id;
+            $project->save();
+
+            $request->validate(['review_content' => 'required']);
+            
+            $review = Review::create([
+                'project_id' => $id,
+                'status' => Status::initial_kiv_by_ks(),
+                'content' => $request->review_content,
+                'created_by' => \Auth::user()->id
+            ]);
+        });
+
+        return redirect()
+            ->route('projects.index')
+            ->with('success', 'Status projek telah berjaya dikemaskini.');
+    }
+
     public function approveSUB(Request $request, $id)
     {
         DB::transaction(function () use ($request, $id) {
             $project = Project::find($id);
-            $project->status = Status::isApprovedBySUB();
+            $project->status = Status::initial_approved_by_sub();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 
             $review = Review::create([
                 'project_id' => $id,
-                'status' => Status::isApprovedBySUB(),
+                'status' => Status::initial_approved_by_sub(),
                 'content' => $request->review_content,
                 'created_by' => \Auth::user()->id
             ]);
@@ -79,7 +102,7 @@ class ReviewController extends Controller
     {
         DB::transaction(function () use ($request, $id) {
             $project = Project::find($id);
-            $project->status = Status::isRejectedBySUB();
+            $project->status = Status::initial_rejected_by_sub();
             $project->updated_by = \Auth::user()->id;
             $project->save();
 
@@ -87,7 +110,7 @@ class ReviewController extends Controller
             
             $review = Review::create([
                 'project_id' => $id,
-                'status' => Status::isRejectedBySUB(),
+                'status' => Status::initial_rejected_by_sub(),
                 'content' => $request->review_content,
                 'created_by' => \Auth::user()->id
             ]);
@@ -96,6 +119,29 @@ class ReviewController extends Controller
         return redirect()
             ->route('projects.index')
             ->with('success', 'Projek telah ditolak');
+    }
+
+    public function kivSUB(Request $request, $id)
+    {
+        DB::transaction(function () use ($request, $id) {
+            $project = Project::find($id);
+            $project->status = Status::initial_kiv_by_sub();
+            $project->updated_by = \Auth::user()->id;
+            $project->save();
+
+            $request->validate(['review_content' => 'required']);
+            
+            $review = Review::create([
+                'project_id' => $id,
+                'status' => Status::initial_kiv_by_sub(),
+                'content' => $request->review_content,
+                'created_by' => \Auth::user()->id
+            ]);
+        });
+
+        return redirect()
+            ->route('projects.index')
+            ->with('success', 'Projek telah berjaya dikemaskini.');
     }
 
     public function planningIndex($project_id)
@@ -111,12 +157,12 @@ class ReviewController extends Controller
     {
         $project = Project::find($project_id);
 
-        $project->status = Status::planningApprovedByKS();
+        $project->status = Status::planning_approved_by_ks();
         $project->save();
 
         $project->reviews()->create([
             'project_id' => $project_id,
-            'status' => Status::planningApprovedByKS(),
+            'status' => Status::planning_approved_by_ks(),
             'content' => $request->review_comment,
             'created_by' => \Auth::user()->id
         ]);
@@ -128,12 +174,29 @@ class ReviewController extends Controller
     {
         $project = Project::find($project_id);
 
-        $project->status = Status::planningRejectedByKS();
+        $project->status = Status::planning_rejected_by_ks();
         $project->save();
 
         $project->reviews()->create([
             'project_id' => $project_id,
-            'status' => Status::planningRejectedByKS(),
+            'status' => Status::planning_rejected_by_ks(),
+            'content' => $request->review_comment,
+            'created_by' => \Auth::user()->id
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function planningKivKS($project_id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        $project->status = Status::planning_kiv_by_ks();
+        $project->save();
+
+        $project->reviews()->create([
+            'project_id' => $project_id,
+            'status' => Status::planning_kiv_by_ks(),
             'content' => $request->review_comment,
             'created_by' => \Auth::user()->id
         ]);

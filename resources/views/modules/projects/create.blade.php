@@ -64,9 +64,27 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <div class="form-group {{ $errors->has('project_scope') ? 'has-error' : '' }}">
+                                            <label>Skop</label>
+                                            <textarea class="form-control texteditor" name="project_scope" cols="30" rows="5">{{ old('project_scope') }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group {{ $errors->has('project_concept') ? 'has-error' : '' }}">
-                                            <label>Skop/Konsep/Tujuan</label>
+                                            <label>Konsep</label>
                                             <textarea class="form-control texteditor" name="project_concept" cols="30" rows="5">{{ old('project_concept') }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group {{ $errors->has('project_purpose') ? 'has-error' : '' }}">
+                                            <label>Tujuan</label>
+                                            <textarea class="form-control texteditor" name="project_purpose" cols="30" rows="5">{{ old('project_purpose') }}</textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -45,8 +45,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('gantt.index', $project->id) }}">
-                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'gantt.index' ? 'text-red' : '' }}"></i> Gantt Chart
+                        <a href="{{ route('gantt.planning', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'gantt.planning' ? 'text-red' : '' }}"></i> Gantt Chart
                         </a>
                     </li>
                     <li>
@@ -97,8 +97,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fa fa-circle-o"></i> Jadual Perancangan Projek
+                        <a href="{{ route('gantt.collection', $project->id) }}">
+                            <i class="fa fa-circle-o {{ Route::current()->getName() == 'gantt.collection' ? 'text-red' : '' }}"></i> Jadual Perancangan Projek
                         </a>
                     </li>
                     <li>

@@ -18,7 +18,7 @@ class AllocationTransferController extends Controller
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->paginate(20);
 
-        return view('modules.financial.transfer.index', [
+        return view('modules.financial.transfer.B01.index', [
             'transfers' => $transfers
         ]);
     }
@@ -27,7 +27,7 @@ class AllocationTransferController extends Controller
     {
         $subs = Sub::where('lookup_budget_type_id', 2)->get();
 
-        return view('modules.financial.transfer.create', [
+        return view('modules.financial.transfer.B01.create', [
             'subs' => $subs
         ]);
     }

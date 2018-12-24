@@ -57,7 +57,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Kos Kontrak (RM)</th>
-                                                <td>{{ currency($project->contract->cost) }}</td>
+                                                <td>{{ !empty($project->contract) ? currency($project->contract->cost) : '-' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No Kontrak</th>

@@ -121,7 +121,7 @@
                                                                 @endif
 
                                                                 @if (\Auth::user()->hasRole('ks'))
-                                                                    @if (\App\Helpers\Status::planningByKU($data->status))
+                                                                    @if (\App\Helpers\Status::project_verification($data->status))
                                                                         <a href="{{ route('info.index', $data->id) }}" class="btn bg-purple">
                                                                             <i class="fa fa-fw fa-folder-open-o"></i>
                                                                         </a>
@@ -169,26 +169,6 @@
                                         @endif
                                     @endif
                                 </tbody>
-
-                                <!--
-                                <thead class="font-p">
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Butiran</th>
-                                        <th class="text-center">Peruntukan (RM)</th>
-                                        <th class="text-center">Kos Projek (RM)</th>
-                                        <th class="text-center">Belanja (RM)</th>
-                                        <th class="text-center">Peratusan Belanja</th>
-                                        <th class="text-center">Baki Semasa (RM)</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center"></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody class="font-p">
-                                    
-                                </tbody>
-                                -->
                             </table>
                         </div>
                         
@@ -214,3 +194,4 @@
         });
     </script>
 @endpush
+

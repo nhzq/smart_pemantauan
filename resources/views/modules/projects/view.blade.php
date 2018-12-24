@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
@@ -21,21 +19,6 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                @if (\Auth::user()->hasRole('ku'))
-                    @if (\App\Helpers\Status::isApprovedBySUB($project->status))
-                        <div class="box box-solid">
-                            <div class="box-body">
-                                <div class="col-md-8">
-                                    <h5>Sila Kemaskini Maklumat Projek di sini untuk Fasa Perancangan.</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="{{ route('projects.phase', $project->id) }}" class="btn bg-purple pull-right">Kemaskini Projek</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endif
-
                 <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">
                         Maklumat Asas
@@ -57,8 +40,16 @@
                                         <td>{{ $project->file_reference_no ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="col-md-3 min100">Skop/Konsep/Tujuan</th>
-                                        <td>{!! $project->concept ?? 'N/A' !!}</td>
+                                        <th class="col-md-3 min100">Skop</th>
+                                        <td>{!! $project->initial_scope ?? 'N/A' !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-3 min100">Konsep</th>
+                                        <td>{!! $project->initial_concept ?? 'N/A' !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-3 min100">Tujuan</th>
+                                        <td>{!! $project->initial_purpose ?? 'N/A' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Anggaran Kos (RM)</th>
@@ -105,7 +96,7 @@
                                         <td><strong>{{ $budgetType }}</strong></td>
                                     </tr>
                                     <tr>
-                                        <th class="col-md-3 min100">Jenis Sub Bajet</th>
+                                        <th class="col-md-3 min100">Kategori</th>
                                         <?php 
                                             $subType = '';
 
@@ -134,10 +125,12 @@
                                         </tr>
                                     @endif
                                     <tr>
+                                        <!--
                                         @if ($project->status !== 10)
                                             <th class="col-md-3 min100">Status</th>
                                             <td> @include('components._status') </td>
                                         @endif
+                                        -->
                                     </tr>
                                 </table>
                             </div>
@@ -146,10 +139,13 @@
                 </div>
 
                 @if (\Auth::user()->hasRole('ks'))
-                    @if (\App\Helpers\Status::isAppliedByKU($project->status))
+                    @if (\App\Helpers\Status::project_application($project->status))
                         {{ Form::open(['method' => 'POST']) }}
-                            <div class="box box-solid">
-                                <div class="box-body">
+                            <div class="panel panel-borderless">
+                                <div class="panel-heading panel-dark">
+                                    Semakan dan Sokongan
+                                </div>
+                                <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -164,8 +160,9 @@
                                             <div class="col-md-12">
                                                 <div class="mrg10B mrg10T pull-right">
                                                     <div class="btn-group">
-                                                        <button class="btn btn-primary" type="submit" formaction="{{ route('reviews.approve.ks', $project->id) }}">Terima</button>
-                                                        <button class="btn btn-danger" type="submit" formaction="{{ route('reviews.reject.ks', $project->id) }}">Tolak</button>
+                                                        <button class="btn btn-success" type="submit" formaction="{{ route('reviews.approve.ks', $project->id) }}">Terima Permohonan</button>
+                                                        <button class="btn btn-warning" type="submit" formaction="{{ route('reviews.kiv.ks', $project->id) }}">Mohon Pindaan</button>
+                                                        <button class="btn btn-danger" type="submit" formaction="{{ route('reviews.reject.ks', $project->id) }}">Tolak Permohonan</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,10 +175,13 @@
                 @endif
 
                 @if (\Auth::user()->hasRole('sub'))
-                    @if (\App\Helpers\Status::isApprovedByKS($project->status))
+                    @if (\App\Helpers\Status::initial_approved_by_ks($project->status))
                         {{ Form::open(['method' => 'POST']) }}
-                            <div class="box box-solid">
-                                <div class="box-body">
+                            <div class="panel panel-borderless">
+                                <div class="panel-heading panel-dark">
+                                    Semakan dan Sokongan
+                                </div>
+                                <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -199,8 +199,9 @@
                                 <div class="col-md-12">
                                     <div class="mrg10B mrg10T pull-right">
                                         <div class="btn-group">
-                                            <button class="btn btn-primary" type="submit" formaction="{{ route('reviews.approve.sub', $project->id) }}">Terima</button>
-                                            <button class="btn btn-danger" type="submit" formaction="{{ route('reviews.reject.sub', $project->id) }}">Tolak</button>
+                                            <button class="btn btn-success" type="submit" formaction="{{ route('reviews.approve.sub', $project->id) }}">Terima Permohonan</button>
+                                            <button class="btn btn-warning" type="submit" formaction="{{ route('reviews.kiv.sub', $project->id) }}">Mohon Pindaan</button>
+                                            <button class="btn btn-danger" type="submit" formaction="{{ route('reviews.reject.sub', $project->id) }}">Tolak Permohonan</button>
                                         </div>
                                     </div>
                                 </div>

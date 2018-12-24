@@ -26,7 +26,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
-                            @if (\App\Helpers\Status::planningByKU($project->status))
+                            @if (\App\Helpers\Status::project_verification($project->status))
                                 @hasanyrole ('ks')
                                     {{ Form::open(['method' => 'POST']) }}
                                         <div class="row">
@@ -42,8 +42,9 @@
                                             <div class="col-md-12">
                                                 <div class="mrg10B mrg10T pull-right">
                                                     <div class="btn-group">
-                                                        <button class="btn btn-primary" type="submit" formaction="{{ route('planning.reviews.approve.ks', $project->id) }}">Terima</button>
-                                                        <button class="btn btn-danger" type="submit" formaction="{{ route('planning.reviews.reject.ks', $project->id) }}">Tolak</button>
+                                                        <button class="btn btn-primary" type="submit" formaction="{{ route('planning.reviews.approve.ks', $project->id) }}">Terima Perancangan Projek</button>
+                                                        <button class="btn btn-warning" type="submit" formaction="{{ route('planning.reviews.approve.ks', $project->id) }}">Terima Perlu Pindaan</button>
+                                                        <button class="btn btn-danger" type="submit" formaction="{{ route('planning.reviews.reject.ks', $project->id) }}">Tolak Perancangan Projek</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -52,7 +53,7 @@
                                 @endhasanyrole
                             @endif
                             
-                            @if (\App\Helpers\Status::planningApprovedByKS($project->status) || \App\Helpers\Status::planningRejectedByKS($project->status))
+                            @if (\App\Helpers\Status::planning_approved_by_ks($project->status) || \App\Helpers\Status::planning_rejected_by_ks($project->status))
                                 @hasanyrole ('ku|ks')
                                     <div class="row">
                                         <div class="col-md-12">
@@ -74,10 +75,10 @@
                                                         <tr>
                                                             <th class="col-md-3 min100">Komen</th>
                                                             {{-- @foreach ($project->reviews as $data) --}}
-                                                                @if (\App\Helpers\Status::planningApprovedByKS($project->reviews->last()->status))
+                                                                @if (\App\Helpers\Status::planning_approved_by_ks($project->reviews->last()->status))
                                                                     <td>{{ $project->reviews->last()->content }}</td>
                                                                 @endif
-                                                                @if (\App\Helpers\Status::planningRejectedByKS($project->reviews->last()->status))
+                                                                @if (\App\Helpers\Status::planning_rejected_by_ks($project->reviews->last()->status))
                                                                     <td>{{ $project->reviews->last()->content }}</td>
                                                                 @endif
                                                             {{-- @endforeach --}}

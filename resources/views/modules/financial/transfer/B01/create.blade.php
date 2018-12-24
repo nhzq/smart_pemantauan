@@ -278,7 +278,11 @@
                         }
 
                         if (data.balance > 0) {
-                            $('#' + panel_id + '_current_balance').val(addCommas(data.balance.toFixed(2)));
+                            if (data.balance == data.amount) {
+                                $('#' + panel_id + '_current_balance').val(addCommas(data.balance));
+                            } else {
+                                $('#' + panel_id + '_current_balance').val(addCommas(data.balance.toFixed(2)));
+                            }
                         } else {
                             $('#' + panel_id + '_current_balance').val('0.00');
                         }

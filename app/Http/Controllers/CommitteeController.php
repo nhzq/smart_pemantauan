@@ -15,7 +15,9 @@ class CommitteeController extends Controller
     {
         $project = Project::find($project_id);
 
-        if ($project->status <= 11 || $project->status == 13) {
+        $planningStatuses = [10, 11];
+
+        if ($project->status <= 8 || in_array($project->status, $planningStatuses)) {
             return redirect()
                 ->back()
                 ->with('error', 'Maaf, projek masih lagi di fasa perancangan.');

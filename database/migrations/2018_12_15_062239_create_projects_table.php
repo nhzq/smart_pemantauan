@@ -18,7 +18,9 @@ class CreateProjectsTable extends Migration
             $table->integer('allocation_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('file_reference_no')->nullable();
-            $table->text('concept')->nullable();
+            $table->text('initial_scope')->nullable();
+            $table->text('initial_concept')->nullable();
+            $table->text('initial_purpose')->nullable();
             $table->decimal('estimate_cost', 19, 2)->nullable();
             $table->date('approval_date')->nullable();
             $table->integer('lookup_budget_type_id')->unsigned()->nullable();
