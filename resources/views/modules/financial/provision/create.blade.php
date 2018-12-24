@@ -16,25 +16,28 @@
                 <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">Peruntukan mengikut Kategori Bajet</div>
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('provisions.store'), 'method' => 'POST']) }}
+                        @if (!empty($provision->id))
+                            {{ Form::open(['url' => route('provisions.update', $provision->id), 'method' => 'PUT']) }}
+                        @else
+                            {{ Form::open(['url' => route('provisions.store'), 'method' => 'POST']) }}
+                        @endif
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_type') ? 'has-error' : '' }}">
+                                        <div class="form-group">
                                             <label>Jenis Bajet</label>
-                                            <select id="budget_type" class="form-control" name="budget_type">
-                                                <option>-- Sila Pilih --</option>
-                                                @foreach ($budgets as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->code . ' : ' . $data->description }}</option>
-                                                @endforeach
-                                            </select>
+                                            <input class="form-control" type="text" value="{{ setBudgetTitle($budget->code, $budget->description, 'no-bold') }}" readonly>
+                                            <input class="form-control" type="hidden" name="budget_type" value="{{ $budget->id }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_allocation') ? 'has-error' : '' }}">
+                                        <div class="form-group">
                                             <label>Peruntukan (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="budget_allocation" placeholder="Peruntukan (RM)">
+                                            <input class="form-control money-convert" 
+                                                type="text" name="budget_allocation" 
+                                                placeholder="Peruntukan (RM)" 
+                                                value="{{ !empty($provision->amount) ? currency($provision->amount) : '' }}">
                                         </div>
                                     </div>
                                 </div>

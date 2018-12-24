@@ -19,15 +19,10 @@ class AllocationController extends Controller
                 ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
                 ->sum('estimate_cost');
         }
-        // $allocations = $budget->allocations()->where('lookup_department_id', 2)
-        //     ->where('active', 1)
-        //     ->orderBy('lookup_budget_type_id', 'ASC')
-        //     ->get();
 
         return view('modules.financial.allocation.index', [
             'provision' => $provision,
             'total_estimate' => $total_estimate
-            // 'budget' => $budget
         ]);
     }
 

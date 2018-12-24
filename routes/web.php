@@ -155,6 +155,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'financial'], function () {
         /* Provision section */
         Route::resource('/provisions', 'ProvisionController');
+        Route::post('/provisions/additional', 'ProvisionController@additional')->name('provisions.additional');
 
         /* Allocation section */
         Route::resource('/{provision_id}/allocations', 'AllocationController');

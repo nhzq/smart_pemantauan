@@ -4,37 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Provision;
+use App\Models\Allocation;
 use App\Models\LookupBudgetType as Budget;
 
 class ProvisionController extends Controller
 {
     public function index()
     {
-        $provisions = Provision::where('active', 1)
-            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-            ->orderBy('lookup_budget_type_id', 'ASC')
-            ->get();
+        $lists = Budget::all();
 
         return view('modules.financial.provision.index', [
-            'provisions' => $provisions
+            'lists' => $lists
         ]);
     }
 
-    public function create()
+    public function edit($provision)
     {
-        $budgets = Budget::all();
+        $budget = Budget::find($provision);
+
+        $provision = Provision::where('lookup_budget_type_id', $budget->id)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->first();
 
         return view('modules.financial.provision.create', [
-            'budgets' => $budgets
+            'budget' => $budget,
+            'provision' => $provision
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'budget_type' => 'required'
-        ]);
-
         Provision::create([
             'lookup_budget_type_id' => $request->budget_type,
             'amount' => removeMaskMoney($request->budget_allocation),
@@ -45,5 +45,42 @@ class ProvisionController extends Controller
         return redirect()
             ->route('provisions.index')
             ->with('success', 'Peruntukan telah berjaya dikemaskini');
+    }
+
+    public function update(Request $request, $provision)
+    {
+        $provision = Provision::find($provision);
+
+        $provision->lookup_budget_type_id = $request->budget_type;
+        $provision->amount = removeMaskMoney($request->budget_allocation);
+        $provision->updated_by = \Auth::user()->id;
+        $provision->save();
+
+        return redirect()
+            ->route('provisions.index')
+            ->with('success', 'Peruntukan telah berjaya dikemaskini');
+    }
+
+    public function additional(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|not_in:0'
+        ]);
+
+        $provision = Provision::where('lookup_budget_type_id', $request->category)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->first();
+
+        if (!empty($provision)) {
+            $provision->extra_budget = removeMaskMoney($request->additional_provision);
+            $provision->extra_budget_from = $request->allocation_type;
+            $provision->updated_by = \Auth::user()->id;
+            $provision->save();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Peruntukan Tambahan telah dikemaskini.');
+        }
     }
 }
