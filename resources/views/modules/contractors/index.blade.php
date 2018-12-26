@@ -43,7 +43,7 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <tr class="info">
                                         <th colspan="2" class="text-center">Perlantikan Kontraktor</th>
                                     </tr>
@@ -65,7 +65,7 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Harga Kontrak</th>
-                                        <td>{{ !empty($project->contractorAppointment->contract_value) ? currency($project->contractorAppointment->contract_value) : '' }}</td>
+                                        <td>{{ currency($project->actual_project_cost) }}</td>
                                     </tr>
 
                                     <!-- new row -->

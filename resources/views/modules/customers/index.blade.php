@@ -27,7 +27,7 @@
                             <div class="panel-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
                                                 <th class="col-md-3">&nbsp;</th>
                                                 <th>Maklumat Kontraktor</th>
@@ -50,7 +50,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Harga Kontrak (RM)</th>
-                                                <td>{{ currency($project->contractorAppointment->contract_value) }}</td>
+                                                <td>{{ currency($project->actual_project_cost) }}</td>
                                             </tr>
                                             <tr class="info">
                                                 <th class="col-md-3">&nbsp;</th>

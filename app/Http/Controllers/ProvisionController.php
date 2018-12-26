@@ -53,34 +53,13 @@ class ProvisionController extends Controller
 
         $provision->lookup_budget_type_id = $request->budget_type;
         $provision->amount = removeMaskMoney($request->budget_allocation);
+        $provision->extra_budget = !empty($request->additional_provision) ? removeMaskMoney($request->additional_provision) : null;
+        $provision->extra_budget_from = !empty($request->allocation_type) ? $request->allocation_type : null;
         $provision->updated_by = \Auth::user()->id;
         $provision->save();
 
         return redirect()
             ->route('provisions.index')
             ->with('success', 'Peruntukan telah berjaya dikemaskini');
-    }
-
-    public function additional(Request $request)
-    {
-        $request->validate([
-            'category' => 'required|not_in:0'
-        ]);
-
-        $provision = Provision::where('lookup_budget_type_id', $request->category)
-            ->where('active', 1)
-            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-            ->first();
-
-        if (!empty($provision)) {
-            $provision->extra_budget = removeMaskMoney($request->additional_provision);
-            $provision->extra_budget_from = $request->allocation_type;
-            $provision->updated_by = \Auth::user()->id;
-            $provision->save();
-
-            return redirect()
-                ->back()
-                ->with('success', 'Peruntukan Tambahan telah dikemaskini.');
-        }
     }
 }

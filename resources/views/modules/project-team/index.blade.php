@@ -55,7 +55,7 @@
                             <div class="tab-pane active" id="tab1">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
                                                 <th>#</th>
                                                 <th>Nama</th>

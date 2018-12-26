@@ -28,7 +28,9 @@
 
                                 <div class="pull-right">
                                     <div class="btn-group">
-                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="">
+                                            <i class="fa fa-fw fa-search"></i> Carian
+                                        </button>
                                         <a href="{{ route('allocations.create', $provision->id) }}" class="btn btn-diamond">
                                             <i class="fa fa-fw fa-plus"></i> Peruntukan
                                         </a>
@@ -51,7 +53,7 @@
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
                                 <thead class="font-p">
-                                    <tr>
+                                    <tr class="info">
                                         <th class="text-center">#</th>
                                         <th class="text-center">Kod</th>
                                         <th class="text-center">Butiran</th>
@@ -67,17 +69,17 @@
                                     @if (!empty($provision))
                                         @foreach ($provision->allocations as $data)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $data->sub->code ?? '' }}</td>
-                                                <td>{{ $data->sub->description ?? '' }}</td>
-                                                <td class="text-right">{{ currency($data->amount) }}</td>
-                                                <td class="text-right">{{ currency($data->projects()->sum('estimate_cost')) }}</td>
-                                                <td class="text-right"></td>
-                                                <td class="text-right"></td>
-                                                <td class="text-right"></td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <a href="" class="btn bg-purple">
+                                                <td class="align-center">{{ $loop->iteration }}</td>
+                                                <td class="align-center">{{ $data->sub->code ?? '' }}</td>
+                                                <td class="align-center">{{ $data->sub->description ?? '' }}</td>
+                                                <td class="align-center text-right">{{ currency($data->amount) }}</td>
+                                                <td class="align-center text-right">{{ currency($data->projects()->sum('estimate_cost')) }}</td>
+                                                <td class="align-center text-right">{{ '0.00' }}</td>
+                                                <td class="align-center text-right">{{ '0.00' }}</td>
+                                                <td class="align-center text-right">{{ '0.00' }}</td>
+                                                <td class="text-center">
+                                                    <div class="btn-group-vertical">
+                                                        <a href="{{ route('allocations.edit', [$provision->id, $data->id]) }}" class="btn btn-sm bg-purple">
                                                             <i class="fa fa-fw fa-pencil-square-o"></i>
                                                         </a>
                                                     </div>
@@ -85,10 +87,11 @@
                                             </tr>
                                         @endforeach
                                         @if (count($provision->allocations) > 0)
-                                            <tr>
+                                            <tr class="warning">
                                                 <td colspan="3" class="text-center font-h6">Jumlah Keseluruhan</td>
                                                 <td class="text-right font-h6">{{ currency($provision->allocations()->sum('amount')) }}</td>
                                                 <td class="text-right font-h6">{{ currency($total_estimate[0]) }}</td>
+                                                <td colspan="4"></td>
                                             </tr>
                                         @endif
                                     @endif

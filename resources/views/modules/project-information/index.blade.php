@@ -42,7 +42,7 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <tr class="info">
                                         <th colspan="2" class="text-center">Maklumat Asas</th>
                                     </tr>
@@ -68,7 +68,7 @@
                                             $approval_date = '-';
 
                                             if (!empty($project->approval_date)) {
-                                                $approval_date = $project->approval_date->format('m/d/Y');
+                                                $approval_date = $project->approval_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $approval_date }}</td>
@@ -148,7 +148,7 @@
                                             $approval_date = '-';
 
                                             if (!is_null($project->minute_approval_date)) {
-                                                $approval_date = $project->minute_approval_date->format('m/d/Y');
+                                                $approval_date = $project->minute_approval_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $approval_date }}</td>
@@ -159,7 +159,7 @@
                                             @if (count($project->documents) > 0)
                                                 @foreach ($project->documents as $data)
                                                     @if ($data->category == 'minit-bebas')
-                                                        <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                        <a href="{{ url('storage/projects/' . $project->id . '/' . $data->file_name) }}">
                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                             &nbsp; {{ $data->original_name }}
                                                         </a>
@@ -177,7 +177,7 @@
                                             $pwn_date = '-';
 
                                             if (!is_null($project->approval_pwn_date)) {
-                                                $pwn_date = $project->approval_pwn_date->format('m/d/Y');
+                                                $pwn_date = $project->approval_pwn_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $pwn_date }}</td>
@@ -188,7 +188,7 @@
                                             @if (count($project->documents) > 0)
                                                 @foreach ($project->documents as $data)
                                                     @if ($data->category == 'surat-pwn')
-                                                        <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                        <a href="{{ url('storage/projects/' . $project->id . '/' . $data->file_name) }}">
                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                             &nbsp; {{ $data->original_name }}
                                                         </a>

@@ -40,7 +40,7 @@
                                                 $approval_date = '';
 
                                                 if (!empty($project->minute_approval_date)) {
-                                                    $approval_date = $project->minute_approval_date->format('m/d/Y');
+                                                    $approval_date = $project->minute_approval_date->format('d/m/Y');
                                                 }
                                             ?>
                                             <input type="text" class="form-control pickdate" name="info_date_approval_minute" value="{{  $approval_date }}">
@@ -63,7 +63,7 @@
                                                 $pwn_date = '';
 
                                                 if (!empty($project->minute_approval_date)) {
-                                                    $pwn_date = $project->approval_pwn_date->format('m/d/Y');
+                                                    $pwn_date = $project->approval_pwn_date->format('d/m/Y');
                                                 }
                                             ?>
                                             <input type="text" class="form-control pickdate" name="info_date_approval_pwn" value="{{ $pwn_date }}">
@@ -125,6 +125,7 @@
 
         $('.pickdate').datepicker({
             todayHighlight: true,
+            format: 'dd/mm/yyyy',
             autoclose: true
         });
     </script>

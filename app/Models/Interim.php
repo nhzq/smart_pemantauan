@@ -13,4 +13,9 @@ class Interim extends Model
     protected $fillable = [
         'project_id', 'payment_type', 'payment_no', 'payment_date', 'amount', 'description', 'created_by', 'updated_by', 'active'
     ];
+
+    public function project()
+    {
+        return $this->belongsTo('App\Models\Project');
+    }
 }

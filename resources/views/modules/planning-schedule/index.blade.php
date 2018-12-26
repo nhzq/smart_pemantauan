@@ -43,7 +43,7 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <thead>
                                         <tr class="info">
                                             <th>#</th>

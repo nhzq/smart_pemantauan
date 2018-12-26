@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
@@ -16,12 +14,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Bayaran Ganti Rugi (LAD)</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Bayaran Ganti Rugi (LAD)
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('lad.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
@@ -49,7 +47,7 @@
                                             <?php 
                                                 $finePerDay = 0;
 
-                                                if (!empty($project_cost = $project->contract->cost)) {
+                                                if (!empty($project_cost = $project->actual_project_cost)) {
                                                     $finePerDay = $project_cost * 0.001;
                                                 }
                                             ?>

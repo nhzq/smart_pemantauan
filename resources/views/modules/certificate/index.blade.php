@@ -43,7 +43,7 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <thead>
                                         <tr class="info">
                                             <th colspan="2" class="text-center">Perakuan Akaun dan Bayaran Muktamad</th>
@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <thead>
                                         <tr class="info">
                                             <th colspan="3" class="text-center">Maklumat Kontrak</th>
@@ -93,7 +93,7 @@
                                         </tr>
                                         <tr class="warning">
                                             <th colspan="2">Harga Asal Kontrak</th>
-                                            <td class="col-sm-3 text-right">{{ 'RM ' . currency($project->contract->cost) }}</td>
+                                            <td class="col-sm-3 text-right">{{ 'RM ' . currency($project->actual_project_cost) }}</td>
                                         </tr>
                                         <tr class="warning">
                                             <th colspan="2">Jumlah Bersih Tambahan/ Potongan</th>
@@ -108,7 +108,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <thead>
                                         <tr class="info">
                                             <th colspan="3" class="text-center">Butiran Jumlah Potongan/ Kurangan</th>

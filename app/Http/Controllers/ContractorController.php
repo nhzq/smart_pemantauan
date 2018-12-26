@@ -41,7 +41,7 @@ class ContractorController extends Controller
 
             $project->contractorAppointment->sst = $contractor_sst;
             $project->contractorAppointment->sst_reference_no = $request->contractor_sst_reference;
-            $project->contractorAppointment->contract_value = !empty($request->contractor_value) ? removeMaskMoney($request->contractor_value) : null;
+            // $project->contractorAppointment->contract_value = !empty($request->contractor_value) ? removeMaskMoney($request->contractor_value) : null;
             $project->contractorAppointment->updated_by = \Auth::user()->id;
             $project->contractorAppointment->active = 1;
             $project->contractorAppointment->save();
@@ -58,7 +58,7 @@ class ContractorController extends Controller
             $appointment->project_id = $project->id;
             $appointment->sst = $contractor_sst;
             $appointment->sst_reference_no = $request->contractor_sst_reference;
-            $appointment->contract_value = !empty($request->contractor_value) ? removeMaskMoney($request->contractor_value) : null;
+            // $appointment->contract_value = !empty($request->contractor_value) ? removeMaskMoney($request->contractor_value) : null;
             $appointment->created_by = \Auth::user()->id;
             $appointment->active = 1;
             $appointment->save();

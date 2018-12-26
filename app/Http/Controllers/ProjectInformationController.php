@@ -18,6 +18,7 @@ class ProjectInformationController extends Controller
         $statuses = [
             1, 2, 3, 4, 6, 7
         ];
+
         if (in_array($project->status, $statuses)) {
             return redirect()->back()->with('error', 'Maaf, projek ini masih di masa PERMULAAN.');
         }
@@ -47,11 +48,11 @@ class ProjectInformationController extends Controller
             $approval_pwn = null;
 
             if (!empty($request->info_date_approval_minute)) {
-                $approval_minute = Carbon::parse($request->info_date_approval_minute);
+                $approval_minute = Carbon::createFromFormat('d/m/Y', $request->info_date_approval_minute);
             }
 
             if (!empty($request->info_date_approval_pwn)) {
-                $approval_pwn = Carbon::parse($request->info_date_approval_pwn);
+                $approval_pwn = Carbon::createFromFormat('d/m/Y', $request->info_date_approval_pwn);
             }
 
             $project->objective = $request->info_objective_project;
@@ -65,7 +66,7 @@ class ProjectInformationController extends Controller
                 foreach ($request->info_minute as $data) {
                     if (!empty($data)) {
                         $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                        $data->storeAs('projects/' . $project->id . '/', $doc_new_name);
+                        $data->storeAs('/public/projects/' . $project->id . '/', $doc_new_name);
                         $project->documents()->create([
                             'project_id' => $project->id,
                             'category' => 'minit-bebas',
@@ -82,7 +83,7 @@ class ProjectInformationController extends Controller
                 foreach ($request->info_approval_pwn as $data) {
                     if (!empty($data)) {
                         $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                        $data->storeAs('projects/' . $project->id . '/', $doc_new_name);
+                        $data->storeAs('/public/projects/' . $project->id . '/', $doc_new_name);
                         $project->documents()->create([
                             'project_id' => $project->id,
                             'category' => 'surat-pwn',

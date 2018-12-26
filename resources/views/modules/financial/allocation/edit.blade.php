@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -15,40 +13,20 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Kemaskini Pengguna</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        {!! setBudgetTitle($provision->budgetType->code, $provision->budgetType->description) !!}
                     </div>
-
-                    <div class="box-body">
-                        {{ Form::open(['url' => route('allocations.update', $allocation->id), 'method' => 'PUT']) }}
+                    <div class="panel-body">
+                        {{ Form::open(['url' => route('allocations.update', [$provision->id, $allocation->id]), 'method' => 'PUT']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_type') ? 'has-error' : '' }}">
-                                            <label>Jenis Bajet</label>
-                                            <select id="budget_type" class="form-control" name="budget_type">
-                                                <option>-- Sila Pilih --</option>
-                                                @foreach ($budgets as $data)
-                                                    <?php 
-                                                        $selected = '';
-
-                                                        if ($allocation->lookup_budget_type_id == $data->id) {
-                                                            $selected = 'selected';
-                                                        }
-                                                    ?>
-                                                    <option value="{{ $data->id }}" {{ $selected }}>{{ $data->code . ' : ' . $data->description}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Butiran</label>
-                                            <select id="budget_sub" class="form-control" name="budget_sub">
-                                                <option>-- Sila Pilih --</option>
-                                                @foreach ($subBudgets as $data)
+                                            <select class="form-control" name="budget_sub">
+                                                <option value="0">-- Sila Pilih --</option>
+                                                @foreach ($budget->subs as $data)
                                                     <?php 
                                                         $selected = '';
 
@@ -56,18 +34,16 @@
                                                             $selected = 'selected';
                                                         }
                                                     ?>
-                                                    <option value="{{ $data->id }}" {{ $selected }}>{{ $data->code . ' : ' . $data->description }}</option>
+                                                    <option value="{{ $data->id }}" {{ $selected }}>{!! setBudgetTitle($data->code, $data->description, 'no-bold') !!}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group {{ $errors->has('budget_allocation') ? 'has-error' : '' }}">
+                                        <div class="form-group">
                                             <label>Peruntukan (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="budget_allocation" placeholder="Peruntukan" value="{{ currency($allocation->amount) ?? '' }}">
+                                            <input class="form-control money-convert" type="text" name="budget_allocation" placeholder="Peruntukan (RM)" value="{{ currency($allocation->amount) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -92,33 +68,6 @@
     <script type="text/javascript">
         $(function () {
             $('.money-convert').maskMoney();
-            
-            $('#budget_type').on('change', function () {
-                var selected_value = $(this).val();
-                var type = '';
-
-                $.ajax({
-                    type: 'GET',
-                    datatype: 'json',
-                    url: '{{ route('allocations.create.type') }}',
-                    data: {
-                        'id': selected_value
-                    },
-                    success: function (data) {
-                        type += '<option>-- Sila Pilih --</option>';
-
-                        for (var i = 0; i < data.length; i++) {
-                            type += '<option value="' + data[i].id + '">' + data[i].code + ' : ' + data[i].description + '</option>';
-                        }
-
-                        $('#budget_sub').html(" ");
-                        $('#budget_sub').append(type);
-                    },
-                    error: function (xhr, desc, err) {
-                        console.log('error');
-                    }
-                });
-            });
         });
     </script>
 @endpush

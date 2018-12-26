@@ -54,4 +54,22 @@ class InterimController extends Controller
             ->route('interims.index', $project_id)
             ->with('success', 'Maklumat Pembayaran Kontrak telah dikemaskini.');
     }
+
+    public function notify($project_id, $interim_id)
+    {
+        $project = Project::find($project_id);
+
+        $interim = $project->interims()
+            ->where('id', $interim_id)
+            ->where('active', 1)
+            ->first();
+
+        $interim->status = 1;
+        $interim->updated_by = \Auth::user()->id;
+        $interim->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Maklumat pembayaran kontrak telah pun di kemaskini untuk Unit Kewangan.');
+    }
 }

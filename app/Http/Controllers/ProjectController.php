@@ -76,7 +76,7 @@ class ProjectController extends Controller
                         'initial_concept' => $request->project_concept,
                         'initial_purpose' => $request->project_purpose,
                         'estimate_cost' => removeMaskMoney($request->project_estimate_cost),
-                        'approval_date' => setDateValue($request->project_approval_date, Carbon::parse($request->project_approval_date)),
+                        'approval_date' => setDateValue($request->project_approval_date, Carbon::createFromFormat('d/m/Y', $request->project_approval_date)),
                         'rmk' => $request->project_rmk,
                         'market_research' => $request->optradio,
                         'status' => Status::project_application(),
@@ -89,7 +89,7 @@ class ProjectController extends Controller
                         foreach ($request->project_proposal_files as $data) {
                             if (!empty($data)) {
                                 $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                                $data->storeAs('projects/' . $project->id . '/', $doc_new_name);
+                                $data->storeAs('/public/projects/' . $project->id . '/', $doc_new_name);
                                 $project->documents()->create([
                                     'project_id' => $project->id,
                                     'category' => 'kertas-cadangan',
@@ -106,7 +106,7 @@ class ProjectController extends Controller
                         foreach ($request->project_market_research_files as $data) {
                             if (!empty($data)) {
                                 $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                                $data->storeAs('projects/' . $project->id . '/', $doc_new_name);
+                                $data->storeAs('/public/projects/' . $project->id . '/', $doc_new_name);
                                 $project->documents()->create([
                                     'project_id' => $project->id,
                                     'category' => 'kajian-pasaran',
@@ -182,14 +182,16 @@ class ProjectController extends Controller
         $approval_date = null;
 
         if (!empty($request->project_approval_date)) {
-            $approval_date = Carbon::parse($request->project_approval_date);
+            $approval_date = Carbon::createFromFormat('d/m/Y', $request->project_approval_date);
         }
 
         $project->lookup_budget_type_id = $request->project_budget_type;
         $project->lookup_sub_budget_type_id = $request->project_sub_budget_type;
         $project->name = $request->project_name;
         $project->file_reference_no = $request->project_file_reference;
-        $project->concept = $request->project_concept;
+        $project->initial_scope = $request->project_scope;
+        $project->initial_concept = $request->project_concept;
+        $project->initial_purpose = $request->project_purpose;
         $project->estimate_cost = removeMaskMoney($request->project_estimate_cost);
         $project->approval_date = $approval_date;
         $project->rmk = $request->project_rmk;

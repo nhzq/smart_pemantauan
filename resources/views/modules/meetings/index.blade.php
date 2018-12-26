@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/panel-tab.css') }}">
 @endpush
 
@@ -39,14 +37,14 @@
                             <div class="tab-pane active" id="tab1">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <thead>
                                                 <tr>
                                                     <th class="col-sm-4">Perkara</th>
                                                     <th class="col-sm-2">Tarikh Jangkaan</th>
                                                     <th class="col-sm-2">Tarikh Sebenar</th>
                                                     <th class="col-sm-3">Minit Mesyuarat</th>
-                                                    <th class="col-sm-1">Tindakan</th>
+                                                    <th class="col-sm-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -83,7 +81,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <button class="btn bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
+                                                                    <button class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </button>
                                                                 </div>
@@ -149,7 +147,7 @@
                                                     <th class="col-sm-2">Tarikh Jangkaan</th>
                                                     <th class="col-sm-2">Tarikh Sebenar</th>
                                                     <th class="col-sm-3">Minit Mesyuarat</th>
-                                                    <th class="col-sm-1">Tindakan</th>
+                                                    <th class="col-sm-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -186,7 +184,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <button class="btn bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
+                                                                    <button class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </button>
                                                                 </div>
@@ -252,7 +250,7 @@
                                                     <th class="col-sm-2">Tarikh Jangkaan</th>
                                                     <th class="col-sm-2">Tarikh Sebenar</th>
                                                     <th class="col-sm-3">Minit Mesyuarat</th>
-                                                    <th class="col-sm-1">Tindakan</th>
+                                                    <th class="col-sm-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -289,7 +287,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <button class="btn bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
+                                                                    <button class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </button>
                                                                 </div>
@@ -355,7 +353,7 @@
                                                     <th class="col-sm-2">Tarikh Jangkaan</th>
                                                     <th class="col-sm-2">Tarikh Sebenar</th>
                                                     <th class="col-sm-3">Minit Mesyuarat</th>
-                                                    <th class="col-sm-1">Tindakan</th>
+                                                    <th class="col-sm-1"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -392,7 +390,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <button class="btn bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
+                                                                    <button class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-default-{{ $data->id }}">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </button>
                                                                 </div>

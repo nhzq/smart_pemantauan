@@ -53,7 +53,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Harga Kontrak</label>
-                                                    <input class="form-control money-convert" type="text" name="contractor_value" value="{{ currency($project->estimate_cost) }}" readonly>
+                                                    <input class="form-control money-convert" type="text" name="contractor_value" value="{{ currency($project->actual_project_cost) }}" readonly>
                                                 </div>
                                             </div>
                                         </div>

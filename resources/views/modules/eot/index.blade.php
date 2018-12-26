@@ -44,13 +44,13 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover table-bordered font-std">
                                         <tr class="info">
                                             <th class="col-md-1">#</th>
-                                            <th class="col-md-1">Tarikh dari SST mula</th>
-                                            <th class="col-md-1">Tarikh Lanjutan Tempoh Akhir</th>
-                                            <th class="col-md-4">Sebab-sebab</th>
-                                            <th class="col-md-5">Tindakan Diambil</th>
+                                            <th>Tarikh dari SST mula</th>
+                                            <th>Tarikh Lanjutan Tempoh Akhir</th>
+                                            <th>Sebab-sebab</th>
+                                            <th>Tindakan</th>
                                         </tr>
                                         <tr>
                                             @if(!empty($project->eots))

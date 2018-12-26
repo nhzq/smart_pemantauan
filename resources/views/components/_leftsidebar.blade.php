@@ -67,8 +67,8 @@
                                 <a href="{{ route('transfer.list.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfer*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
                             </li>
 
-                            <li class="">
-                                <a href=""><i class="fa fa-circle-o"></i> Bayaran Kemajuan</a>
+                            <li class="{{ request()->is('*payments*') ? 'active' : '' }}">
+                                <a href="{{ route('payments.index') }}"><i class="fa fa-circle-o {{ request()->is('*payments*') ? 'text-aqua' : '' }}"></i> Bayaran Kemajuan</a>
                             </li>
                         </ul>
                     </li>

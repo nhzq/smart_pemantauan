@@ -44,20 +44,20 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered font-p">
+                                    <table class="table table-hover table-bordered font-std">
                                         <tr class="info">
-                                            <th colspan="2">Nama Projek</th>
-                                            <th>Anggaran Kos (RM)</th>
-                                            <th>Kos Sebenar (RM)</th>
-                                            <th>Jumlah Belanja (RM)</th>
-                                            <th>Baki Belanja (RM)</th>
-                                            <th>Status Projek</th>
+                                            <th class="text-center" colspan="2">Nama Projek</th>
+                                            <th class="text-center">Anggaran Kos (RM)</th>
+                                            <th class="text-center">Kos Sebenar (RM)</th>
+                                            <th class="text-center">Jumlah Belanja (RM)</th>
+                                            <th class="text-center">Baki Belanja (RM)</th>
+                                            <th class="text-center">Status Projek</th>
                                             <th></th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">{{ $project->name }}</td>
-                                            <td>{{ !empty($project->estimate_cost) ? currency($project->estimate_cost) : '0.00' }}</td>
-                                            <td>{{ !empty($project->actual_project_cost) ? currency($project->actual_project_cost) : '0.00' }}</td>
+                                            <td class="text-center" colspan="2">{{ $project->name }}</td>
+                                            <td class="text-right">{{ !empty($project->estimate_cost) ? currency($project->estimate_cost) : '0.00' }}</td>
+                                            <td class="text-right">{{ !empty($project->actual_project_cost) ? currency($project->actual_project_cost) : '0.00' }}</td>
                                             {{-- <td>{{ !empty($project->contract->cost) ? currency($project->contract->cost) : '0.00' }}</td> --}}
 
                                             <?php 
@@ -72,18 +72,21 @@
                                                     }
                                                 }
                                             ?>
-                                            <td>{{ $spending }}</td>
-                                            <td>{{ $balance }}</td>
-                                            <td colspan="2"></td>
+                                            <td class="text-right">{{ $spending }}</td>
+                                            <td class="text-right">{{ $balance }}</td>
+                                            <td class="text-center" colspan="2"></td>
                                         </tr>
-                                        <tr class="warning">
-                                            <th>#</th>
-                                            <th>Jenis Bayaran</th>
-                                            <th>No. Waran/Voucher/EFT/CEK</th>
-                                            <th>Tarikh Bayaran</th>
-                                            <th>Jumlah Bayaran (RM)</th>
-                                            <th>Tujuan Bayaran</th>
-                                            <th>Peratus Bayaran</th>
+                                    </table>
+
+                                    <table class="table table-hover table-bordered font-std">
+                                        <tr class="info">
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Jenis Bayaran</th>
+                                            <th class="text-center">No. Waran/Voucher/EFT/CEK</th>
+                                            <th class="text-center">Tarikh Bayaran</th>
+                                            <th class="text-center">Jumlah Bayaran (RM)</th>
+                                            <th class="text-center">Tujuan Bayaran</th>
+                                            <th class="text-center">Peratus Bayaran</th>
                                             <th></th>
                                         </tr>
                                         @if (!empty($project->interims))
@@ -106,7 +109,7 @@
                                                         }
                                                     ?>
                                                     <td>{{ $payment_date }}</td>
-                                                    <td>{{ $amount }}</td>
+                                                    <td class="text-right">{{ $amount }}</td>
                                                     <td>{{ $data->description ?? '' }}</td>
 
                                                     <?php 
@@ -118,9 +121,17 @@
                                                         }
 
                                                     ?>
-                                                    <td>{{ $result . '%' }}</td>
-                                                    <td>
-                                                        <a href="">Notify</a>
+                                                    <td>{{ number_format($result, 2, '.', '') . '%' }}</td>
+                                                    <td class="text-center align-center">
+                                                        @if (empty($data->status))
+                                                            <a href="{{ route('interims.notify', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
+                                                                <i class="fa fa-paper-plane"></i>
+                                                            </a>
+                                                        @elseif ($data->status == 2)
+                                                            <i class="fa fa-check clr-diamond"></i>
+                                                        @else
+                                                            <i class="fa fa-clock-o clr-diamond"></i>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach

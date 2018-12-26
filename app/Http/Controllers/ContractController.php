@@ -72,7 +72,7 @@ class ContractController extends Controller
             $project->contract->title = $request->contract_title;
             $project->contract->contract_no = $request->contract_no;
             $project->contract->agreement_date = $contract_agreement_date;
-            $project->contract->cost = !empty($request->contract_cost) ? removeMaskMoney($request->contract_cost) : null;
+            // $project->contract->cost = !empty($request->contract_cost) ? removeMaskMoney($request->contract_cost) : null;
             $project->contract->puu_review_date = contract_review_date;
             $project->contract->puu_receive_date = contract_receive_date;
             // $project->contract->duration = $request->duration
@@ -105,7 +105,7 @@ class ContractController extends Controller
             $contract->title = $request->contract_title;
             $contract->contract_no = $request->contract_no;
             $contract->agreement_date = $contract_agreement_date;
-            $contract->cost = !empty($request->contract_cost) ? removeMaskMoney($request->contract_cost) : $request->contract_cost;
+            // $contract->cost = !empty($request->contract_cost) ? removeMaskMoney($request->contract_cost) : $request->contract_cost;
             $contract->puu_review_date = $contract_review_date;
             $contract->puu_receive_date = $contract_receive_date;
             // $contract->duration = $request->duration

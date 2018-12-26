@@ -44,7 +44,7 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover table-bordered font-std">
                                         <tr class="info">
                                             <th class="col-md-3">&nbsp;</th>
                                             <th>Maklumat</th>

@@ -2,7 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
@@ -16,11 +15,11 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Projek Baru</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Projek Baru
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('projects.update', $project->id), 'enctype' => 'multipart/form-data', 'method' => 'PUT']) }}
                             <div class="col-md-12">
                                 <div class="row">
@@ -81,9 +80,27 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <div class="form-group {{ $errors->has('project_scope') ? 'has-error' : '' }}">
+                                            <label>Skop</label>
+                                            <textarea class="form-control texteditor" name="project_scope" cols="30" rows="5">{!! $project->initial_scope ?? '' !!}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group {{ $errors->has('project_concept') ? 'has-error' : '' }}">
-                                            <label>Skop/Konsep/Tujuan</label>
-                                            <textarea class="form-control texteditor" name="project_concept" cols="30" rows="5">{{ $project->concept ?? '' }}</textarea>
+                                            <label>Konsep</label>
+                                            <textarea class="form-control texteditor" name="project_concept" cols="30" rows="5">{!! $project->initial_concept ?? '' !!}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group {{ $errors->has('project_purpose') ? 'has-error' : '' }}">
+                                            <label>Tujuan</label>
+                                            <textarea class="form-control texteditor" name="project_purpose" cols="30" rows="5">{!! $project->initial_purpose ?? '' !!}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -92,14 +109,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
                                             <label>Anggaran Kos (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="project_estimate_cost" placeholder="Anggaran Kos (RM)" value="{{ currency($project->estimate_cost ?? '') }}">
+                                            <input class="form-control money-convert" type="text" name="project_estimate_cost" placeholder="Anggaran Kos (RM)" value="{{ currency($project->estimate_cost) }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->has('project_description') ? 'has-error' : '' }}">
                                             <label>Tarikh Kelulusan JPICT</label>
-                                            <input id="datepicker" class="form-control" type="text" name="project_approval_date" placeholder="Tarikh Kelulusan JPICT" value="{{ $project->approval_date->format('m/d/Y') ?? '' }}">
+                                            <input id="datepicker" class="form-control" type="text" name="project_approval_date" placeholder="Tarikh Kelulusan JPICT" value="{{ $project->approval_date->format('d/m/Y') ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +183,8 @@
     <script type="text/javascript">
         $(function () {
             $('.texteditor').summernote({
-                toolbar: []
+                toolbar: [],
+                height: 100
             });
             $('.money-convert').maskMoney();
             
@@ -174,6 +192,8 @@
             $('#radio-research').hide();
 
             $('#datepicker').datepicker({
+                todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
 
@@ -214,6 +234,12 @@
                     $('#rmk').hide();
                 }
             });
+
+            if ($('input[name=optradio]').val() == 1) {
+                $('#radio-research').toggle();
+            } else {
+                $('#radio-research').hide();
+            }
 
             $('input[name=optradio]').on('change', function () {
                 selected_value = $(this).val();

@@ -46,7 +46,7 @@
                             <div class="panel-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
                                                 <th class="col-md-3">&nbsp;</th>
                                                 <th>Maklumat</th>
@@ -57,7 +57,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Kos Kontrak (RM)</th>
-                                                <td>{{ !empty($project->contract) ? currency($project->contract->cost) : '-' }}</td>
+                                                <td>{{ currency($project->actual_project_cost) }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">No Kontrak</th>
@@ -129,7 +129,7 @@
                                                         $review = $project->contract->puu_review_date;
                                                         $receive = $project->contract->puu_receive_date;
 
-                                                        $duration = $review->diffInDays($receive) . ' hari';
+                                                        $duration = $review->diffInDays($receive) + 1 . ' hari';
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tempoh Semakan PUU</th>

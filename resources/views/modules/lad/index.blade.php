@@ -44,7 +44,7 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover table-bordered font-std">
                                         <tr class="info">
                                             <th class="col-md-3">&nbsp;</th>
                                             <th>Maklumat</th>
@@ -77,15 +77,15 @@
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Jumlah Hari Denda</th>
-                                            <td>{{ !empty($project->lads) ? $project->lads->last()->total_days : '' }}</td>
+                                            <td>{{ !empty($project->lads->last()->total_days) ? $project->lads->last()->total_days : '' }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Kos LAD</th>
-                                            <td>{{ !empty($project->lads) ? $project->lads->last()->total_fine : '' }}</td>
+                                            <td>{{ !empty($project->lads->last()->total_fine) ? $project->lads->last()->total_fine : '' }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Tindakan</th>
-                                            <td>{!! !empty($project->lads) ? $project->lads->last()->action : '' !!}</td>
+                                            <td>{!! !empty($project->lads->last()->action) ? $project->lads->last()->action : '' !!}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-md-5">Upload</th>

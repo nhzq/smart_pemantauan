@@ -128,9 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* Interim section */
         Route::resource('/{project_id}/interims', 'InterimController');
-
-        /* Payment Interim section */
-        Route::resource('/{project_id}/payments', 'PaymentInterimController');
+        Route::get('/{project_id}/interims/{interim_id}/notify', 'InterimController@notify')->name('interims.notify');
 
         /* Bond section */
         Route::resource('/{project_id}/bond', 'BondController');
@@ -155,7 +153,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'financial'], function () {
         /* Provision section */
         Route::resource('/provisions', 'ProvisionController');
-        Route::post('/provisions/additional', 'ProvisionController@additional')->name('provisions.additional');
 
         /* Allocation section */
         Route::resource('/{provision_id}/allocations', 'AllocationController');
@@ -175,6 +172,11 @@ Route::group(['middleware' => 'auth'], function () {
                 'as' => 'bspk'
             ]);
         });
+
+        /* Progress Payment section */
+        Route::resource('/payments', 'ProgressPaymentController');
+        Route::get('/{project_id}/payments/list', 'ProgressPaymentController@list')->name('payments.list');
+        Route::get('/{project_id}/payments/{id}/approve-payment', 'ProgressPaymentController@approve')->name('payments.approve');
     });
 
     /* Setting section */

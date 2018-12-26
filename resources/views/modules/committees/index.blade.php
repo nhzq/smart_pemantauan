@@ -56,7 +56,7 @@
                                 <div class="tab-pane active" id="tab1">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-bordered">
+                                            <table class="table table-hover table-bordered font-std">
                                                 <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
@@ -110,7 +110,7 @@
                                                 <div class="table-responsive">
 
                                                     <?php $info1 = $project->committees_info->where('committee_type_id', 1)->first(); ?>
-                                                    <table class="table table-hover table-bordered">
+                                                    <table class="table table-hover table-bordered font-std">
                                                         <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
@@ -123,15 +123,19 @@
                                                                     $doc1 = '';
 
                                                                     if (!empty($info1)) {
-                                                                        $doc1 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal')->get();
+                                                                        if (!empty($info1->project->documents())) {
+                                                                            $doc1 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal')->get();
+                                                                        }
                                                                     } 
                                                                 ?>
-                                                                @if (count($doc1) > 0)
-                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc1->last()->file_name]) }}">
-                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
-                                                                        &nbsp; {{ $doc1->last()->original_name ?? '' }}
-                                                                    </a>
-                                                                    </br>
+                                                                @if (!empty($doc1))
+                                                                    @if (count($doc1) > 0)
+                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc1->last()->file_name]) }}">
+                                                                            <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                            &nbsp; {{ $doc1->last()->original_name ?? '' }}
+                                                                        </a>
+                                                                        </br>
+                                                                    @endif
                                                                 @else
                                                                     N/A
                                                                 @endif
@@ -149,15 +153,19 @@
                                                                     $doc2 = '';
 
                                                                     if (!empty($info1)) {
-                                                                        $doc2 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal-surat-lantikan')->get();
+                                                                        if (!empty($info1->project->documents())) {
+                                                                            $doc2 = $info1->project->documents()->where('category', 'jawatankuasa-spesifikasi-teknikal-surat-lantikan')->get();
+                                                                        }
                                                                     }
                                                                 ?>
-                                                                @if (count($doc2) > 0)
-                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc2->last()->file_name]) }}">
-                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
-                                                                        &nbsp; {{ $doc2->last()->original_name ?? '' }}
-                                                                    </a>
-                                                                    </br>
+                                                                @if (!empty($doc2))
+                                                                    @if (count($doc2) > 0)
+                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc2->last()->file_name]) }}">
+                                                                            <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                            &nbsp; {{ $doc2->last()->original_name ?? '' }}
+                                                                        </a>
+                                                                        </br>
+                                                                    @endif
                                                                 @else
                                                                     N/A
                                                                 @endif
@@ -173,7 +181,7 @@
                                 <div class="tab-pane" id="tab2">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-bordered">
+                                            <table class="table table-hover table-bordered font-std">
                                                 <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
@@ -227,7 +235,7 @@
                                                 <div class="table-responsive">
 
                                                     <?php $info2 = $project->committees_info->where('committee_type_id', 2)->first(); ?>
-                                                    <table class="table table-hover table-bordered">
+                                                    <table class="table table-hover table-bordered font-std">
                                                         <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
@@ -244,15 +252,19 @@
                                                                     $doc = '';
 
                                                                     if (!empty($info2)) {
-                                                                        $doc = $info2->project->documents()->where('category', 'jawatankuasa-penilaian-teknikal-surat-lantikan')->get();
+                                                                        if (!empty($info2->project->documents())) {
+                                                                            $doc = $info2->project->documents()->where('category', 'jawatankuasa-penilaian-teknikal-surat-lantikan')->get();
+                                                                        }
                                                                     }
                                                                 ?>
-                                                                @if (count($doc) > 0)
-                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
-                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
-                                                                        &nbsp; {{ $doc->last()->original_name ?? '' }}
-                                                                    </a>
-                                                                    </br>
+                                                                @if (!empty($doc))
+                                                                    @if (count($doc) > 0)
+                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
+                                                                            <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                            &nbsp; {{ $doc->last()->original_name ?? '' }}
+                                                                        </a>
+                                                                        </br>
+                                                                    @endif
                                                                 @else
                                                                     N/A
                                                                 @endif
@@ -268,7 +280,7 @@
                                 <div class="tab-pane" id="tab3">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-bordered">
+                                            <table class="table table-hover table-bordered font-std">
                                                 <tr class="info">
                                                     <th>#</th>
                                                     <th>Nama</th>
@@ -322,7 +334,7 @@
                                                 <div class="table-responsive">
 
                                                     <?php $info3 = $project->committees_info->where('committee_type_id', 3)->first(); ?>
-                                                    <table class="table table-hover table-bordered">
+                                                    <table class="table table-hover table-bordered font-std">
                                                         <tr class="info">
                                                             <th></th>
                                                             <th>Maklumat</th>
@@ -339,15 +351,19 @@
                                                                     $doc = '';
 
                                                                     if (!empty($info3)) {
-                                                                        $doc = $info3->project->documents()->where('category', 'jawatankuasa-penilaian-harga-surat-lantikan')->get();
+                                                                        if (!empty($info3->project->documents())) {
+                                                                            $doc = $info3->project->documents()->where('category', 'jawatankuasa-penilaian-harga-surat-lantikan')->get();
+                                                                        }
                                                                     }
                                                                 ?>
-                                                                @if (count($doc) > 0)
-                                                                    <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
-                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
-                                                                        &nbsp; {{ $doc->last()->original_name ?? '' }}
-                                                                    </a>
-                                                                    </br>
+                                                                @if (!empty($doc))
+                                                                    @if (count($doc) > 0)
+                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
+                                                                            <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                            &nbsp; {{ $doc->last()->original_name ?? '' }}
+                                                                        </a>
+                                                                        </br>
+                                                                    @endif
                                                                 @else
                                                                     N/A
                                                                 @endif
@@ -374,7 +390,7 @@
                             <div class="tab-pane active" id="tab1">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <thead>
                                                 <tr class="info">
                                                     <th>#</th>
@@ -425,7 +441,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <div class="table-responsive">
-                                                <table class="table table-hover table-bordered">
+                                                <table class="table table-hover table-bordered font-std">
                                                     <tr class="info">
                                                         <th></th>
                                                         <th>Maklumat</th>

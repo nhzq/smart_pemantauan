@@ -29,14 +29,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    {{-- <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Kos Kontrak (RM)</label>
                                             <input class="form-control money-convert" type="text" name="contract_cost">
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>No Kontrak</label>
                                             <input class="form-control" type="text" name="contract_no">

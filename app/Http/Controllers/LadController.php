@@ -46,7 +46,7 @@ class LadController extends Controller
             $payment_amount = removeMaskMoney($request->payment_amount);
         }
 
-        $project->lad()->create([
+        $project->lads()->create([
             'total_days' => $request->total_fine_days,
             'total_fine' => $payment_amount,
             'action' => $request->action_taken,

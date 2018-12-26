@@ -28,10 +28,8 @@
 
                                 <div class="pull-right">
                                     <div class="btn-group">
-                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i> Carian</button>
-
-                                        <button class="btn btn-diamond" data-toggle="modal" data-target="#modal-default">
-                                            <i class="fa fa-fw fa-plus"></i> Peruntukan Tambahan
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="">
+                                            <i class="fa fa-fw fa-search"></i> Carian
                                         </button>
                                     </div>
                                 </div>
@@ -50,12 +48,12 @@
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
                                 <thead class="font-p">
-                                    <tr>
+                                    <tr class="info">
                                         <th class="text-center">#</th>
                                         <th class="text-center">Kod</th>
                                         <th class="text-center">Butiran</th>
                                         <th class="text-center">Peruntukan &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center">Peruntukan Tambahan &nbsp;<span class="label bck-diamond">RM</span></th>
+                                        <th class="text-center" colspan="2">Peruntukan Tambahan &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Kos Projek &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th class="text-center">Jumlah Belanja &nbsp;<span class="label bck-diamond">RM</span></th>
@@ -68,30 +66,55 @@
                                         @foreach ($lists as $data)
                                             <tr>
                                                 <?php 
-                                                    $provision = $data->provisions()
-                                                        ->where('active', 1)
-                                                        ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-                                                        ->first();
+                                                    if (!empty($data->provisions)) {
+                                                        $provision = $data->provisions()
+                                                            ->where('active', 1)
+                                                            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                            ->first();
 
-                                                    $total_estimate_cost = $provision->allocations()
-                                                        ->where('active', 1)
-                                                        ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-                                                        ->sum('amount');
+                                                        if (!empty($provision)) {
+                                                            $total_estimate_cost = $provision->allocations()
+                                                                ->where('active', 1)
+                                                                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                ->sum('amount');
+                                                        }
+                                                    }
                                                 ?>
 
-                                                <td class="text-center">{{ $loop->iteration }}</td>
-                                                <td class="text-center">{{ $data->code ?? '-' }}</td>
-                                                <td>
-                                                    <a href="{{ !empty($provision) ? route('allocations.index', $provision->id) : '' }}">{{ $data->description ?? '-' }}</a>
+                                                <td class="text-center align-center">{{ $loop->iteration }}</td>
+                                                <td class="text-cente align-center">{{ $data->code ?? '-' }}</td>
+                                                <td class="align-center">
+                                                    <a href="{{ !empty($provision) ? route('allocations.index', $provision->id) : '' }}">
+                                                        {{ $data->description ?? '' }}
+                                                    </a>
                                                 </td>
-                                                <td class="text-right">{{ !empty($provision->amount) ? currency($provision->amount) : '0.00' }}</td>
-                                                <td class="text-right">{{ currency($provision->extra_budget) }}</td>
-                                                <td class="text-right">{{ currency($total_estimate_cost) }}</td>
-                                                <td class="text-right"></td>
-                                                <td class="text-right"></td>
-                                                <td></td>
+                                                <td class="text-right align-center">
+                                                    {{ !empty($provision) ? currency($provision->amount) : '0.00' }}
+                                                </td>
+                                                <td class="align-center">
+                                                    {{ $provision->extra_budget_from ?? '' }}
+                                                </td>
+                                                <td class="text-right align-center">
+                                                    {{ !empty($provision) ? currency($provision->extra_budget) : '0.00' }}
+                                                </td>
+                                                <td class="text-right align-center">
+                                                    {{ !empty($total_estimate_cost) ? currency($total_estimate_cost) : '0.00' }}
+                                                </td>
+                                                <td class="text-right align-center">
+                                                    {{ '0.00' }}
+                                                </td>
+                                                <td class="text-right align-center">
+                                                    {{ '0.00' }}
+                                                </td>
+                                                <td class="text-right align-center">
+                                                    {{ '0.00' }}
+                                                </td>
                                                 <td>
-                                                    <a href="{{ route('provisions.edit', $data->id) }}">Kemaskini</a>
+                                                    <div class="btn-group-vertical">
+                                                        <a href="{{ route('provisions.edit', $data->id) }}" class="btn btn-sm bg-purple">
+                                                            <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                        </a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -102,69 +125,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="modal fade" id="modal-default">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <div class="modal-title font-h5">Peruntukan Tambahan</div>
-                    </div>
-                    {{ Form::open(['url' => route('provisions.additional'), 'method' => 'POST']) }}
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-3 control-label">Kategori</label>
-                                    <div class="col-sm-9">
-                                        <select id="category" class="form-control" name="category">
-                                            <option value="0">-- Sila Pilih --</option>
-                                            @foreach ($lists as $data)
-                                                <option value="{{ $data->id }}">{{ setBudgetTitle($data->code, $data->description, 'no-bold') }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-3 control-label">Jenis Peruntukan</label>
-                                    <div class="col-sm-9">
-                                        <select id="provision_type" class="form-control" name="allocation_type">
-                                            <?php 
-                                                $types = [
-                                                    'Dasar Baru',
-                                                    'One Off'
-                                                ];
-                                            ?>
-                                            <option value="0">-- Sila Pilih --</option>
-                                            @foreach ($types as $data)
-                                                <option value="{{ $data }}">{{ $data }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <label class="col-sm-3 control-label">Jumlah</label>
-                                    <div class="col-sm-9">
-                                        <input id="additional_provision" class="form-control money-convert" type="text" name="additional_provision">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Kemaskini Peruntukan Tambahan</button>
-                        </div>
-                    {{ Form::close() }}
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
         </div>
     </section>
     <!-- /.content -->

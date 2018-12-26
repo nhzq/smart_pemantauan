@@ -33,7 +33,7 @@
 
                                         @hasrole('ku')
                                             <a href="{{ route('projects.create') }}" class="btn btn-diamond">
-                                                <i class="fa fa-fw fa-plus"></i> Tambah Projek
+                                                <i class="fa fa-fw fa-plus"></i> Projek
                                             </a>
                                         @endhasrole
                                     </div>
@@ -84,9 +84,9 @@
                                         <th>Jumlah &nbsp;<span class="label bck-diamond">RM</span></th>
                                         <th>#</th>
                                         <th>Nama Projek</th>
-                                        <th class="col-sm-2">Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="col-sm-1">Status</th>
-                                        <th class="col-sm-1">Tindakan</th>
+                                        <th>Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
+                                        <th>Status</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -95,7 +95,7 @@
                                             @foreach ($projects as $key => $data)
                                                 <?php
                                                     $total_sub_budget = \App\Models\Project::where('lookup_sub_budget_type_id', $data->lookup_sub_budget_type_id)
-                                                                            ->sum('estimate_cost');
+                                                        ->sum('estimate_cost');
                                                 ?>
 
                                                 <tr>
@@ -106,32 +106,27 @@
                                                     <td>{{ currency($data->estimate_cost) }}</td>
                                                     <td> @include ('components._status') </td>
                                                     <td>
-                                                        <div class="min130">
-                                                            <div class="btn-group">
-                                                                @if (\Auth::user()->hasRole('ku'))
-                                                                    <a href="{{ route('projects.show', $data->id) }}" class="btn bg-purple">
+                                                        <div class="btn-group">
+                                                            @if (\Auth::user()->hasRole('ku'))
+                                                                <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
+                                                                </a>
+                                                                <button class="btn btn-sm btn-danger" type="submit">
+                                                                    <i class="fa fa-fw fa-trash-o"></i>
+                                                                </button>
+                                                            @endif
+
+                                                            @if (\Auth::user()->hasRole('ks'))
+                                                                @if (\App\Helpers\Status::project_verification($data->status))
+                                                                    <a href="{{ route('info.index', $data->id) }}" class="btn btn-sm bg-purple">
                                                                         <i class="fa fa-fw fa-folder-open-o"></i>
                                                                     </a>
-                                                                    <a href="{{ route('projects.edit', $data->id) }}" class="btn bg-purple">
-                                                                        <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                                @else
+                                                                    <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                        <i class="fa fa-fw fa-folder-open-o"></i>
                                                                     </a>
-                                                                    <button class="btn btn-danger" type="submit">
-                                                                        <i class="fa fa-fw fa-trash-o"></i>
-                                                                    </button>
                                                                 @endif
-
-                                                                @if (\Auth::user()->hasRole('ks'))
-                                                                    @if (\App\Helpers\Status::project_verification($data->status))
-                                                                        <a href="{{ route('info.index', $data->id) }}" class="btn bg-purple">
-                                                                            <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                        </a>
-                                                                    @else
-                                                                        <a href="{{ route('projects.show', $data->id) }}" class="btn bg-purple">
-                                                                            <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                        </a>
-                                                                    @endif
-                                                                @endif
-                                                            </div>
+                                                            @endif
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -156,12 +151,10 @@
                                                     <td>{{ currency($data->estimate_cost) }}</td>
                                                     <td> @include ('components._status') </td>
                                                     <td>
-                                                        <div class="min130">
-                                                            <div class="btn-group">
-                                                                <a href="{{ route('projects.show', $data->id) }}" class="btn bg-purple">
-                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                </a>
-                                                            </div>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                <i class="fa fa-fw fa-folder-open-o"></i>
+                                                            </a>
                                                         </div>
                                                     </td>
                                                 </tr>

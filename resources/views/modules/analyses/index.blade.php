@@ -43,7 +43,7 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                                <table class="table table-hover table-bordered font-std">
                                     <tr class="info">
                                         <th class="col-sm-1">#</th>
                                         <th class="col-sm-5">Jawatan</th>
