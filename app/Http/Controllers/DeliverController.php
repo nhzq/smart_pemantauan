@@ -32,11 +32,11 @@ class DeliverController extends Controller
         $official_date = null;
 
         if (!empty($request->deliverable_date)) {
-            $deliverable_date = \Carbon\Carbon::parse($request->deliverable_date);
+            $deliverable_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->deliverable_date);
         }
 
         if (!empty($request->official_date)) {
-            $official_date = \Carbon\Carbon::parse($request->official_date);
+            $official_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->official_date);
         }
 
         $project->deliver()->create([

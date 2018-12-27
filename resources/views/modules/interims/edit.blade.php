@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('interims.store', $project->id) , 'method' => 'POST']) }}
+                        {{ Form::open(['url' => route('interims.update', [$project->id, $interim->id]) , 'method' => 'PUT']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -33,7 +33,16 @@
                                             <select class="form-control" name="payment_type">
                                                 <option value="">-- Sila Pilih --</option>
                                                 @foreach ($types as $data)
-                                                    <option value="{{ $data }}">{{ ucwords($data) }}</option>
+                                                    <?php   
+                                                        $selected = '';
+
+                                                        if (!empty($interim->payment_type)) {
+                                                            if ($interim->payment_type == $data) {
+                                                                $selected = 'selected';
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <option value="{{ $data }}" {{ $selected }}>{{ ucwords($data) }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -42,14 +51,21 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>No Waran/Voucher/EFT/Cek</label>
-                                            <input class="form-control" type="text" name="payment_no">
+                                            <input class="form-control" type="text" name="payment_no" value="{{ $interim->payment_no ?? '' }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tarikh Bayaran</label>
-                                            <input class="form-control pickdate" type="text" name="payment_date">
+                                            <?php 
+                                                $payment_date = '';
+
+                                                if (!empty($interim->payment_date)) {
+                                                    $payment_date = $interim->payment_date->format('d/m/Y');
+                                                }
+                                            ?>
+                                            <input class="form-control pickdate" type="text" name="payment_date" value="{{ $payment_date }}">
                                         </div>
                                     </div>
                                 </div>
@@ -58,14 +74,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jumlah Bayaran</label>
-                                            <input class="form-control money-convert" type="text" name="payment_amount">
+                                            <input class="form-control money-convert" type="text" name="payment_amount" value="{{ currency($interim->amount) }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tujuan Bayaran</label>
-                                            <input class="form-control" type="text" name="description">
+                                            <input class="form-control" type="text" name="description" value="{{ $interim->description ?? '' }}">
                                         </div>
                                     </div>
                                 </div>

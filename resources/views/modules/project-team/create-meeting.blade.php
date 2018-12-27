@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -89,6 +87,7 @@
             $('#team_meeting_list').html('');
             $('#team_meeting_list').append(row).find('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
         });

@@ -46,11 +46,11 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered font-std">
                                         <tr class="info">
-                                            <th class="col-md-1">#</th>
-                                            <th>Tarikh dari SST mula</th>
-                                            <th>Tarikh Lanjutan Tempoh Akhir</th>
-                                            <th>Sebab-sebab</th>
-                                            <th>Tindakan</th>
+                                            <th class="text-center align-center">#</th>
+                                            <th class="text-center align-center">Tarikh dari SST mula</th>
+                                            <th class="text-center align-center">Tarikh Lanjutan Tempoh Akhir</th>
+                                            <th class="text-center align-center">Sebab-sebab</th>
+                                            <th class="text-center align-center">Tindakan</th>
                                         </tr>
                                         <tr>
                                             @if(!empty($project->eots))
@@ -60,11 +60,11 @@
                                                         $extend_date = '';
 
                                                         if (!empty($project->contractorAppointment->sst)) {
-                                                            $sst_start = $project->contractorAppointment->sst->format('m/d/Y');
+                                                            $sst_start = $project->contractorAppointment->sst->format('d/m/Y');
                                                         }
 
                                                         if (!empty($data->extend_date)) {
-                                                            $extend_date = $data->extend_date->format('m/d/Y');
+                                                            $extend_date = $data->extend_date->format('d/m/Y');
                                                         }
                                                     ?>
                                                     <tr>

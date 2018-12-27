@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* Schedule section */
         Route::resource('/{project_id}/schedules', 'ScheduleController');
+        // Route::put('/{project_id}/schedules/{id}/activity', 'ScheduleController@updateParent')->name('schedule.update.parent');
 
         /* Gantt section */
         Route::get('/{project_id}/gantt', 'GanttController@planning')->name('gantt.planning');

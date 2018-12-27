@@ -54,7 +54,7 @@
                                             $sst_date = '';
 
                                             if (!empty($project->contractorAppointment->sst)) {
-                                                $sst_date = $project->contractorAppointment->sst->format('m/d/Y');
+                                                $sst_date = $project->contractorAppointment->sst->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $sst_date }}</td>
@@ -88,11 +88,11 @@
                                             $ssm_end_date = '';
 
                                             if (!empty($project->contractorAppointment->ssm_start_date)) {
-                                                $ssm_start_date = $project->contractorAppointment->ssm_start_date->format('m/d/Y');
+                                                $ssm_start_date = $project->contractorAppointment->ssm_start_date->format('d/m/Y');
                                             }
 
                                             if (!empty($project->contractorAppointment->ssm_end_date)) {
-                                                $ssm_end_date = $project->contractorAppointment->ssm_end_date->format('m/d/Y');
+                                                $ssm_end_date = $project->contractorAppointment->ssm_end_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $ssm_start_date }} - {{ $ssm_end_date }}</td>
@@ -113,11 +113,11 @@
                                             $mof_end_date = '';
 
                                             if (!empty($project->contractorAppointment->mof_start_date)) {
-                                                $mof_start_date = $project->contractorAppointment->mof_start_date->format('m/d/Y');
+                                                $mof_start_date = $project->contractorAppointment->mof_start_date->format('d/m/Y');
                                             }
 
                                             if (!empty($project->contractorAppointment->mof_start_date)) {
-                                                $mof_end_date = $project->contractorAppointment->mof_end_date->format('m/d/Y');
+                                                $mof_end_date = $project->contractorAppointment->mof_end_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $mof_start_date }} - {{ $mof_end_date }}</td>
@@ -188,7 +188,7 @@
                                             $start_date = '';
 
                                             if (!empty($project->contractorAppointment->contract_start_date)) {
-                                                $start_date = $project->contractorAppointment->contract_start_date->format('m/d/Y');
+                                                $start_date = $project->contractorAppointment->contract_start_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $start_date }}</td>
@@ -200,7 +200,7 @@
                                             $end_date = '';
 
                                             if (!empty($project->contractorAppointment->contract_end_date)) {
-                                                $end_date = $project->contractorAppointment->contract_end_date->format('m/d/Y');
+                                                $end_date = $project->contractorAppointment->contract_end_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $end_date }}</td>

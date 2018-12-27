@@ -68,7 +68,7 @@
                                                     $agreement_date = '';
 
                                                     if (!empty($project->contract->agreement_date)) {
-                                                        $agreement_date = $project->contract->agreement_date->format('m/d/Y');
+                                                        $agreement_date = $project->contract->agreement_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Perjanjian Kontrak</th>
@@ -79,7 +79,7 @@
                                                     $contract_start_date = '';
 
                                                     if (!empty($project->contractorAppointment->contract_start_date)) {
-                                                        $contract_start_date = $project->contractorAppointment->contract_start_date->format('m/d/Y');
+                                                        $contract_start_date = $project->contractorAppointment->contract_start_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Mula Projek</th>
@@ -90,7 +90,7 @@
                                                     $contract_end_date = '';
 
                                                     if (!empty($project->contractorAppointment->contract_end_date)) {
-                                                        $contract_end_date = $project->contractorAppointment->contract_end_date->format('m/d/Y');
+                                                        $contract_end_date = $project->contractorAppointment->contract_end_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Siap Projek</th>
@@ -101,7 +101,7 @@
                                                     $puu_review_date = '';
 
                                                     if (!empty($project->contract->puu_review_date)) {
-                                                        $puu_review_date = $project->contract->puu_review_date->format('m/d/Y');
+                                                        $puu_review_date = $project->contract->puu_review_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Semakan Kontrak Kepada PUU</th>
@@ -112,7 +112,7 @@
                                                     $puu_receive_date = '';
 
                                                     if (!empty($project->contract->puu_receive_date)) {
-                                                        $puu_receive_date = $project->contract->puu_receive_date->format('m/d/Y');
+                                                        $puu_receive_date = $project->contract->puu_receive_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Terimaan Kontrak Kepada PUU</th>

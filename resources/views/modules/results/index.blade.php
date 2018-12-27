@@ -49,7 +49,15 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Tarikh Kelulusan</th>
-                                        <td>{{ !empty($project->actual_approval_date) ? $project->actual_approval_date : '' }}</td>
+
+                                        <?php 
+                                            $actual_approval_date = '';
+
+                                            if (!empty($project->actual_approval_date)) {
+                                                $actual_approval_date = $project->actual_approval_date->format('d/m/Y');
+                                            }
+                                        ?>
+                                        <td>{{ $actual_approval_date }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Minit Mesyuarat Kelulusan</th>

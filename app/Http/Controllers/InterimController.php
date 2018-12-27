@@ -32,7 +32,7 @@ class InterimController extends Controller
         $amount = '';
 
         if (!empty($request->payment_date)) {
-            $payment_date = \Carbon\Carbon::parse($request->payment_date);
+            $payment_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->payment_date);
         }
 
         if (!empty($request->payment_amount)) {
@@ -49,6 +49,56 @@ class InterimController extends Controller
             'created_by' => \Auth::user()->id,
             'active' => 1
         ]);
+
+        return redirect()
+            ->route('interims.index', $project_id)
+            ->with('success', 'Maklumat Pembayaran Kontrak telah dikemaskini.');
+    }
+
+    public function edit($project_id, $id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        $interim = $project->interims()
+            ->where('id', $id)
+            ->where('active', 1)
+            ->first();
+
+        return view('modules.interims.edit', [
+            'project' => $project,
+            'interim' => $interim
+        ]);
+    }
+
+    public function update($project_id, $id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        $interim = $project->interims()
+            ->where('id', $id)
+            ->where('active', 1)
+            ->first();
+
+        $payment_date = null;
+        $amount = '';
+
+        if (!empty($request->payment_date)) {
+            $payment_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->payment_date);
+        }
+
+        if (!empty($request->payment_amount)) {
+            $amount = removeMaskMoney($request->payment_amount);
+        }
+
+        $interim->project_id = $project->id;
+        $interim->payment_type = $request->payment_type;
+        $interim->payment_no = $request->payment_no;
+        $interim->payment_date = $payment_date;
+        $interim->amount = $amount;
+        $interim->description = $request->description;
+        $interim->updated_by = \Auth::user()->id;
+        $interim->active = 1;
+        $interim->save();
 
         return redirect()
             ->route('interims.index', $project_id)

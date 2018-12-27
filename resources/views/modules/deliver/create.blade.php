@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
@@ -16,26 +14,34 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Serahan Projek</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Serahan Projek
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('deliverables.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nama Pegawai</label>
-                                            <input class="form-control" type="text" name="officer_name">
+                                            <input class="form-control" 
+                                                type="text" 
+                                                name="officer_name"
+                                                value="{{ !empty($project->deliver->officer_name) ? $project->deliver->officer_name : '' }}"
+                                            >
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jawatan</label>
-                                            <input class="form-control" type="text" name="officer_position">
+                                            <input class="form-control" 
+                                                type="text" 
+                                                name="officer_position"
+                                                value="{{ !empty($project->deliver->position) ? $project->deliver->position : '' }}"
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -44,14 +50,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tarikh Serahan Projek</label>
-                                            <input class="form-control pickdate" type="text" name="deliverable_date">
+                                            <input class="form-control pickdate" 
+                                                type="text" 
+                                                name="deliverable_date"
+                                                value="{{ !empty($project->deliver->deliverable_date) ? $project->deliver->deliverable_date->format('d/m/Y') : '' }}"
+                                            >
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tarikh Penyerahan Projek Secara Rasmi</label>
-                                            <input class="form-control pickdate" type="text" name="official_date">
+                                            <input class="form-control pickdate" 
+                                                type="text" 
+                                                name="official_date"
+                                                value="{{ !empty($project->deliver->official_deliverable_date) ? $project->deliver->official_deliverable_date->format('d/m/Y') : '' }}"
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -82,6 +96,7 @@
 
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
         });

@@ -25,14 +25,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Wang Jaminan Perlaksanaan</label>
-                                            <input class="form-control" type="text" name="guarantee_money">
+                                            <input class="form-control" 
+                                                type="text" 
+                                                name="guarantee_money" 
+                                                value="{{ !empty($project->bond->guarantee_money) ? $project->bond->guarantee_money : '' }}"
+                                            >
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jumlah Pembayaran (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="total_payment">
+                                            <input class="form-control money-convert" 
+                                                type="text" 
+                                                name="total_payment" 
+                                                value="{{ !empty($project->bond->total_payment) ? currency($project->bond->total_payment) : '' }}"
+                                            >
                                         </div>
                                     </div>
                                 </div>

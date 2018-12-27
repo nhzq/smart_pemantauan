@@ -64,11 +64,11 @@
                                                                 $actual_date = '';
 
                                                                 if (!empty($data->plan_meeting_dates)) {
-                                                                    $plan_date = $data->plan_meeting_dates->format('m/d/Y');
+                                                                    $plan_date = $data->plan_meeting_dates->format('d/m/Y');
                                                                 }
 
                                                                 if (!empty($data->actual_meeting_dates)) {
-                                                                    $actual_date = $data->actual_meeting_dates->format('m/d/Y');
+                                                                    $actual_date = $data->actual_meeting_dates->format('d/m/Y');
                                                                 }
                                                             ?>
                                                             <td>{{ $meeting }}</td>
@@ -105,7 +105,7 @@
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label>Tarikh Sebenar</label>
-                                                                                <input type="text" name="actual_date" class="form-control pickdate">
+                                                                                <input type="text" name="actual_date" class="form-control pickdate" value="{{ $actual_date }}">
                                                                             </div>
 
                                                                             <div class="form-group">
@@ -167,11 +167,11 @@
                                                                 $actual_date = '';
 
                                                                 if (!empty($data->plan_meeting_dates)) {
-                                                                    $plan_date = $data->plan_meeting_dates->format('m/d/Y');
+                                                                    $plan_date = $data->plan_meeting_dates->format('d/m/Y');
                                                                 }
 
                                                                 if (!empty($data->actual_meeting_dates)) {
-                                                                    $actual_date = $data->actual_meeting_dates->format('m/d/Y');
+                                                                    $actual_date = $data->actual_meeting_dates->format('d/m/Y');
                                                                 }
                                                             ?>
                                                             <td>{{ $meeting }}</td>
@@ -270,11 +270,11 @@
                                                                 $actual_date = '';
 
                                                                 if (!empty($data->plan_meeting_dates)) {
-                                                                    $plan_date = $data->plan_meeting_dates->format('m/d/Y');
+                                                                    $plan_date = $data->plan_meeting_dates->format('d/m/Y');
                                                                 }
 
                                                                 if (!empty($data->actual_meeting_dates)) {
-                                                                    $actual_date = $data->actual_meeting_dates->format('m/d/Y');
+                                                                    $actual_date = $data->actual_meeting_dates->format('d/m/Y');
                                                                 }
                                                             ?>
                                                             <td>{{ $meeting }}</td>
@@ -373,11 +373,11 @@
                                                                 $actual_date = '';
 
                                                                 if (!empty($data->plan_meeting_dates)) {
-                                                                    $plan_date = $data->plan_meeting_dates->format('m/d/Y');
+                                                                    $plan_date = $data->plan_meeting_dates->format('d/m/Y');
                                                                 }
 
                                                                 if (!empty($data->actual_meeting_dates)) {
-                                                                    $actual_date = $data->actual_meeting_dates->format('m/d/Y');
+                                                                    $actual_date = $data->actual_meeting_dates->format('d/m/Y');
                                                                 }
                                                             ?>
                                                             <td>{{ $meeting }}</td>
@@ -458,6 +458,7 @@
         $(function () {
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
         });

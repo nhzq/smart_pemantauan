@@ -85,7 +85,7 @@ class ProjectTeamController extends Controller
 
         if (!empty($request->team_meeting_date)) {
             foreach ($request->team_meeting_date as $date) {
-                $arrayDate[] = \Carbon\Carbon::parse($date)->format('Y-m-d');
+                $arrayDate[] = \Carbon\Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
             }
 
             $arrayDateToString = implode('|', $arrayDate);
@@ -129,7 +129,7 @@ class ProjectTeamController extends Controller
                 $project->meetings()->create([
                     'project_id' => $project->id,
                     'lookup_project_team_id' => $id,
-                    'plan_meeting_dates' => Carbon::parse($data),
+                    'plan_meeting_dates' => Carbon::createFromFormat('d/m/Y', $data),
                     'created_by' => \Auth::user()->id,
                     'active' => 1
                 ]);

@@ -33,7 +33,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tarikh Kelulusan</label>
-                                            <input class="form-control pickdate" type="text" name="result_approval_date">
+                                            <?php 
+                                                $result_approval_date = '';
+
+                                                if ($project->actual_approval_date) {
+                                                    $result_approval_date = $project->actual_approval_date->format('d/m/Y');
+                                                }
+                                            ?>
+                                            <input class="form-control pickdate" 
+                                                type="text" 
+                                                name="result_approval_date" 
+                                                value="{{ $result_approval_date }}"
+                                            >
                                         </div>
                                     </div>
                                     
@@ -63,7 +74,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kos Projek Sebenar (RM)</label>
-                                            <input class="form-control money-convert" type="text" name="result_actual_project_cost">
+                                            <input class="form-control money-convert" 
+                                                type="text" 
+                                                name="result_actual_project_cost"
+                                                value="{{ currency($project->actual_project_cost) }}"
+                                            >
                                         </div>
                                     </div>
 
@@ -79,7 +94,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Butiran (Justifikasi Kos Projek Sebenar)</label>
-                                            <textarea class="form-control texteditor" name="result_justification"></textarea>
+                                            <textarea class="form-control texteditor" name="result_justification">
+                                                {{ $project->justification ?? '' }}
+                                            </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -106,6 +123,7 @@
         $(function () {
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
 

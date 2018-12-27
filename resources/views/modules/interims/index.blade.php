@@ -101,7 +101,7 @@
                                                         $amount = '0.00';
 
                                                         if (!empty($data->payment_date)) {
-                                                            $payment_date = $data->payment_date->format('m/d/Y');
+                                                            $payment_date = $data->payment_date->format('d/m/Y');
                                                         }
 
                                                         if (!empty($data->amount)) {
@@ -124,9 +124,14 @@
                                                     <td>{{ number_format($result, 2, '.', '') . '%' }}</td>
                                                     <td class="text-center align-center">
                                                         @if (empty($data->status))
-                                                            <a href="{{ route('interims.notify', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
-                                                                <i class="fa fa-paper-plane"></i>
-                                                            </a>
+                                                            <div class="btn-group-vertical">
+                                                                <a href="{{ route('interims.edit', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
+                                                                    <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                                </a>
+                                                                <a href="{{ route('interims.notify', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
+                                                                    <i class="fa fa-paper-plane"></i>
+                                                                </a>
+                                                            </div>
                                                         @elseif ($data->status == 2)
                                                             <i class="fa fa-check clr-diamond"></i>
                                                         @else

@@ -80,6 +80,7 @@
 
                 $('#item_table').append(html).find('.pickdate').datepicker({
                     todayHighlight: true,
+                    format: 'dd/mm/yyyy',
                     autoclose: true
                 });
             });

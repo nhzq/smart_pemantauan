@@ -34,13 +34,24 @@ class BondController extends Controller
             $total_payment = removeMaskMoney($request->total_payment);
         }
 
-        $project->bond()->create([
-            'project_id' => $project->id,
-            'guarantee_money' => $request->guarantee_money,
-            'total_payment' => $total_payment,
-            'created_by' => \Auth::user()->id,
-            'active' => 1
-        ]);
+        $bond = $project->bond()->where('active', 1)->first();
+
+        if (!empty($bond)) {
+            $bond->project_id = $project->id;
+            $bond->guarantee_money = $request->guarantee_money;
+            $bond->total_payment = $total_payment;
+            $bond->updated_by = \Auth::user()->id;
+            $bond->active = 1;
+            $bond->save();
+        } else {
+            $project->bond()->create([
+                'project_id' => $project->id,
+                'guarantee_money' => $request->guarantee_money,
+                'total_payment' => $total_payment,
+                'created_by' => \Auth::user()->id,
+                'active' => 1
+            ]);
+        }
 
         return redirect()
                 ->route('bond.index', $project->id)

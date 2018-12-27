@@ -57,18 +57,18 @@
                                     <div class="table-responsive">
                                         <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
-                                                <th>#</th>
-                                                <th>Nama</th>
-                                                <th>Jawatan</th>
-                                                <th>Bahagian</th>
-                                                <th>Unit</th>
-                                                <th>Peranan</th>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Nama</th>
+                                                <th class="text-center">Jawatan</th>
+                                                <th class="text-center">Bahagian</th>
+                                                <th class="text-center">Unit</th>
+                                                <th class="text-center">Peranan</th>
                                                 <th class="col-sm-1"></th>
                                             </tr>
                                             @if (!empty($project->teams))
                                                 @foreach ($project->teams->where('lookup_project_team_id', 1) as $data)
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td class="text-center">{{ $loop->iteration }}</td>
                                                         <td>{{ $data->name ?? '' }}</td>
                                                         <td>{{ $data->position ?? '' }}</td>
                                                         <td>{{ $data->group ?? '' }}</td>
@@ -77,10 +77,10 @@
                                                         <td class="text-center">
                                                             <div class="min100">
                                                                 <div class="btn-group">
-                                                                    <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
+                                                                    <a href="{{ route('project-team.edit', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
                                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                     </a>
-                                                                    <button class="btn btn-danger" type="submit">
+                                                                    <button class="btn btn-sm btn-danger" type="submit">
                                                                         <i class="fa fa-fw fa-trash-o"></i>
                                                                     </button>
                                                                 </div>

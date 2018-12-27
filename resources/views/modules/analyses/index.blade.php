@@ -45,25 +45,25 @@
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered font-std">
                                     <tr class="info">
-                                        <th class="col-sm-1">#</th>
-                                        <th class="col-sm-5">Jawatan</th>
-                                        <th class="col-sm-4">Bilangan Kakitangan</th>
-                                        <th class="col-sm-2">Tindakan</th>
+                                        <th class="col-sm-1 text-center">#</th>
+                                        <th class="text-center">Jawatan</th>
+                                        <th class="text-center">Bilangan Kakitangan</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                     @if (!empty($analyses))
                                         @foreach ($analyses as $data)
                                             <tr>
-                                                <td>{{ $analyses->perPage() * ($analyses->currentPage() - 1) + $loop->iteration }}</td>
-                                                <td>{{ $data->position ?? 'N/A' }}</td>
-                                                <td>{{ $data->total ?? 'N/A' }}</td>
+                                                <td class="text-center">{{ $analyses->perPage() * ($analyses->currentPage() - 1) + $loop->iteration }}</td>
+                                                <td>{{ $data->position ?? '' }}</td>
+                                                <td class="text-center">{{ $data->total ?? '' }}</td>
                                                 <td>
                                                     {{ Form::open(['url' => route('analyses.destroy', [$project->id, $data->id]), 'method' => 'delete']) }}
                                                         <div class="min50">
                                                             <div class="btn-group">
-                                                                <a href="{{ route('analyses.edit', [$project->id, $data->id]) }}" class="btn bg-purple">
+                                                                <a href="{{ route('analyses.edit', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
                                                                     <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                 </a>
-                                                                <button class="btn btn-danger" type="submit">
+                                                                <button class="btn btn-sm btn-danger" type="submit">
                                                                     <i class="fa fa-fw fa-trash-o"></i>
                                                                 </button>
                                                             </div>

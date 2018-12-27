@@ -2,7 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
 @endpush
 
 @section ('content')
@@ -79,7 +78,7 @@
                                             @if (count($project->documents) > 0)
                                                 @foreach ($project->documents as $data)
                                                     @if ($data->category == 'kertas-cadangan')
-                                                        <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                        <a href="{{ url('storage/projects/' . $project->id . '/' . $data->file_name) }}">
                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                             &nbsp; {{ $data->original_name }}
                                                         </a>
@@ -122,7 +121,7 @@
                                                 @if (count($project->documents) > 0)
                                                     @foreach ($project->documents as $data)
                                                         @if ($data->category == 'kajian-pasaran')
-                                                            <a href="{{ route('projects.file.download', [$project->id, $data->file_name]) }}">
+                                                            <a href="{{ url('storage/projects/' . $project->id . '/' . $data->file_name) }}">
                                                                 <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                 &nbsp; {{ $data->original_name }}
                                                             </a>

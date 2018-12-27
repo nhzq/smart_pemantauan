@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
 @endpush
 
@@ -16,19 +14,19 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Lanjutan Masa (EOT)</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Lanjutan Masa (EOT)
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         {{ Form::open(['url' => route('eot.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tarikh dari SST Mula</label>
-                                            <input class="form-control" type="text" value="{{ $project->contractorAppointment->sst->format('m/d/Y') }}" readonly>
+                                            <input class="form-control" type="text" value="{{ $project->contractorAppointment->sst->format('d/m/Y') }}" readonly>
                                         </div>
                                     </div>
 
@@ -84,6 +82,7 @@
 
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
         });

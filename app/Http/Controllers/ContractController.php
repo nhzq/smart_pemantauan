@@ -53,29 +53,27 @@ class ContractController extends Controller
 
         if (!empty($project->contract)) {
             if (!empty($request->contract_agreement_date)) {
-                $contract_agreement_date = Carbon::parse($request->contract_agreement_date);
+                $contract_agreement_date = Carbon::createFromFormat('d/m/Y', $request->contract_agreement_date);
             }
 
             if (!empty($request->contract_review_date)) {
-                $contract_review_date = Carbon::parse($request->contract_review_date);
+                $contract_review_date = Carbon::createFromFormat('d/m/Y', $request->contract_review_date);
             }
 
             if (!empty($request->contract_review_date)) {
-                $contract_review_date = Carbon::parse($request->contract_review_date);
+                $contract_review_date = Carbon::createFromFormat('d/m/Y', $request->contract_review_date);
             }
 
             if (!empty($request->contract_receive_date)) {
-                $contract_receive_date = Carbon::parse($request->contract_receive_date);
+                $contract_receive_date = Carbon::createFromFormat('d/m/Y', $request->contract_receive_date);
             }
 
             $project->contract->project_id = $project_id;
             $project->contract->title = $request->contract_title;
             $project->contract->contract_no = $request->contract_no;
             $project->contract->agreement_date = $contract_agreement_date;
-            // $project->contract->cost = !empty($request->contract_cost) ? removeMaskMoney($request->contract_cost) : null;
-            $project->contract->puu_review_date = contract_review_date;
-            $project->contract->puu_receive_date = contract_receive_date;
-            // $project->contract->duration = $request->duration
+            $project->contract->puu_review_date = $contract_review_date;
+            $project->contract->puu_receive_date = $contract_receive_date;
             $project->contract->updated_by = \Auth::user()->id;
             $project->contract->active = 1;
             $project->contract->save();
@@ -85,19 +83,19 @@ class ContractController extends Controller
                 ->with('success', 'Maklumat butiran kontrak telah berjaya dikemaskini.');
         } else {
             if (!empty($request->contract_agreement_date)) {
-                $contract_agreement_date = Carbon::parse($request->contract_agreement_date);
+                $contract_agreement_date = Carbon::createFromFormat('d/m/Y', $request->contract_agreement_date);
             }
 
             if (!empty($request->contract_review_date)) {
-                $contract_review_date = Carbon::parse($request->contract_review_date);
+                $contract_review_date = Carbon::createFromFormat('d/m/Y', $request->contract_review_date);
             }
 
             if (!empty($request->contract_review_date)) {
-                $contract_review_date = Carbon::parse($request->contract_review_date);
+                $contract_review_date = Carbon::createFromFormat('d/m/Y', $request->contract_review_date);
             }
 
             if (!empty($request->contract_receive_date)) {
-                $contract_receive_date = Carbon::parse($request->contract_receive_date);
+                $contract_receive_date = Carbon::createFromFormat('d/m/Y', $request->contract_receive_date);
             }
 
             $contract = new Contract;
@@ -105,10 +103,8 @@ class ContractController extends Controller
             $contract->title = $request->contract_title;
             $contract->contract_no = $request->contract_no;
             $contract->agreement_date = $contract_agreement_date;
-            // $contract->cost = !empty($request->contract_cost) ? removeMaskMoney($request->contract_cost) : $request->contract_cost;
             $contract->puu_review_date = $contract_review_date;
             $contract->puu_receive_date = $contract_receive_date;
-            // $contract->duration = $request->duration
             $contract->created_by = \Auth::user()->id;
             $contract->active = 1;
             $contract->save();

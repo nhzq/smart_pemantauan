@@ -36,7 +36,7 @@ class ContractorController extends Controller
         if (!empty($project->contractorAppointment)) {
             
             if (!empty($request->contractor_sst)) {
-                $contractor_sst = Carbon::parse($request->contractor_sst);
+                $contractor_sst = Carbon::createFromFormat('d/m/Y', $request->contractor_sst);
             }
 
             $project->contractorAppointment->sst = $contractor_sst;
@@ -51,7 +51,7 @@ class ContractorController extends Controller
                 ->with('success', 'Maklumat perlantikan kontraktor telah berjaya dikemaskini.');
         } else {
             if (!empty($request->contractor_sst)) {
-                $contractor_sst = Carbon::parse($request->contractor_sst);
+                $contractor_sst = Carbon::createFromFormat('d/m/Y', $request->contractor_sst);
             }
 
             $appointment = new Appointment;
@@ -79,19 +79,19 @@ class ContractorController extends Controller
 
         if (!empty($project->contractorAppointment)) {
             if (!empty($request->contractor_ssm_start_date)) {
-                $contractor_ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
+                $contractor_ssm_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_ssm_start_date);
             }
 
             if (!empty($request->contractor_ssm_end_date)) {
-                $contractor_ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+                $contractor_ssm_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_ssm_end_date);
             }
 
             if (!empty($request->contractor_mof_start_date)) {
-                $contractor_mof_start_date = Carbon::parse($request->contractor_mof_start_date);
+                $contractor_mof_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_mof_start_date);
             }
 
             if (!empty($request->contractor_mof_end_date)) {
-                $contractor_mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+                $contractor_mof_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_mof_end_date);
             }
             $project->contractorAppointment->ssm_no = $request->contractor_ssm;
             $project->contractorAppointment->ssm_reference_no = $request->contractor_ssm_reference;
@@ -114,19 +114,19 @@ class ContractorController extends Controller
                 ->with('success', 'Maklumat syarikat untuk kontraktor telah berjaya dikemaskini.');
         } else {
             if (!empty($request->contractor_ssm_start_date)) {
-                $contractor_ssm_start_date = Carbon::parse($request->contractor_ssm_start_date);
+                $contractor_ssm_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_ssm_start_date);
             }
 
             if (!empty($request->contractor_ssm_end_date)) {
-                $contractor_ssm_end_date = Carbon::parse($request->contractor_ssm_end_date);
+                $contractor_ssm_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_ssm_end_date);
             }
 
             if (!empty($request->contractor_mof_start_date)) {
-                $contractor_mof_start_date = Carbon::parse($request->contractor_mof_start_date);
+                $contractor_mof_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_mof_start_date);
             }
 
             if (!empty($request->contractor_mof_end_date)) {
-                $contractor_mof_end_date = Carbon::parse($request->contractor_mof_end_date);
+                $contractor_mof_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_mof_end_date);
             }
 
             $appointment = new Appointment;
@@ -184,11 +184,11 @@ class ContractorController extends Controller
 
         if (!empty($project->contractorAppointment)) {
             if (!empty($request->contractor_duration_start_date)) {
-                $contractor_duration_start_date = Carbon::parse($request->contractor_duration_start_date);
+                $contractor_duration_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_duration_start_date);
             }
 
             if (!empty($request->contractor_duration_end_date)) {
-                $contractor_duration_end_date = Carbon::parse($request->contractor_duration_end_date);
+                $contractor_duration_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_duration_end_date);
             }
 
             $project->contractorAppointment->contract_start_date = $contractor_duration_start_date;
@@ -200,16 +200,16 @@ class ContractorController extends Controller
                 ->with('success', 'Tempoh kontrak telah berjaya dikemaskini.');
         } else {
             if (!empty($$request->contractor_duration_start_date)) {
-                $contractor_duration_start_date = Carbon::parse($request->contractor_duration_start_date);
+                $contractor_duration_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_duration_start_date);
             }
 
             if (!empty($request->contractor_duration_end_date)) {
-                $contractor_duration_end_date = Carbon::parse($request->contractor_duration_end_date);
+                $contractor_duration_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_duration_end_date);
             }
 
             $appointment = new Appointment;
-            $appointment->contract_start_date = Carbon::parse($request->contractor_duration_start_date);
-            $appointment->contract_end_date = Carbon::parse($request->contractor_duration_end_date);
+            $appointment->contract_start_date = Carbon::createFromFormat('d/m/Y', $request->contractor_duration_start_date);
+            $appointment->contract_end_date = Carbon::createFromFormat('d/m/Y', $request->contractor_duration_end_date);
             $appointment->save();
 
             return redirect()

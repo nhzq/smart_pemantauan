@@ -25,14 +25,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Rekod</label>
-                                            <input class="form-control" type="text" name="record_type">
+                                            <input class="form-control" 
+                                                type="text" 
+                                                name="record_type" 
+                                                value="{{ !empty($project->record->record_type) ? $project->record->record_type : '' }}"
+                                            >
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Lokasi Simpanan Rekod</label>
-                                            <input class="form-control" type="text" name="record_location">
+                                            <input class="form-control" 
+                                                type="text" 
+                                                name="record_location"
+                                                value="{{ !empty($project->record->record_location) ? $project->record->record_location : '' }}"
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +49,11 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Pegawai Bertanggungjawab</label>
-                                            <input class="form-control money-convert" type="text" name="record_officer">
+                                            <input class="form-control money-convert" 
+                                                type="text" 
+                                                name="record_officer"
+                                                value="{{ !empty($project->record->authorized_officer) ? $project->record->authorized_officer : '' }}"
+                                            >
                                         </div>
                                     </div>
                                 </div>

@@ -39,21 +39,41 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Tarikh Surat Setuju Terima (SST)</label>
-                                                    <input class="form-control pickdate" type="text" name="contractor_sst" value="{{ $project->sst ?? '' }}">
+                                                    <?php 
+                                                        $contractor_sst = '';
+
+                                                        if (!empty($project->contractorAppointment->sst)) {
+                                                            $contractor_sst = $project->contractorAppointment->sst->format('d/m/Y');
+                                                        }
+                                                    ?>
+                                                    <input class="form-control pickdate" 
+                                                        type="text" 
+                                                        name="contractor_sst" 
+                                                        value="{{ $contractor_sst }}"
+                                                    >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>No. Rujukan SST</label>
-                                                    <input class="form-control" type="text" name="contractor_sst_reference" value="{{ $project->sst_reference_no ?? '' }}">
+                                                    <input class="form-control" 
+                                                        type="text" 
+                                                        name="contractor_sst_reference" 
+                                                        value="{{ $project->contractorAppointment->sst_reference_no ?? '' }}"
+                                                    >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Harga Kontrak</label>
-                                                    <input class="form-control money-convert" type="text" name="contractor_value" value="{{ currency($project->actual_project_cost) }}" readonly>
+                                                    <input class="form-control money-convert" 
+                                                        type="text" 
+                                                        name="contractor_value" 
+                                                        value="{{ currency($project->actual_project_cost) }}" 
+                                                        readonly
+                                                    >
                                                 </div>
                                             </div>
                                         </div>
@@ -75,14 +95,18 @@
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>No Sijil SSM</label>
-                                                    <input class="form-control" type="text" name="contractor_ssm" value="{{ $project->ssm_no ?? '' }}">
+                                                    <input class="form-control" type="text" name="contractor_ssm" value="{{ $project->contractorAppointment->ssm_no ?? '' }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>No Rujukan Pendaftaran SSM</label>
-                                                    <input class="form-control" type="text" name="contractor_ssm_reference" value="{{ $project->ssm_reference_no ?? '' }}">
+                                                    <input class="form-control" 
+                                                        type="text" 
+                                                        name="contractor_ssm_reference" 
+                                                        value="{{ $project->contractorAppointment->ssm_reference_no ?? '' }}"
+                                                    >
                                                 </div>
                                             </div>
 
@@ -90,9 +114,33 @@
                                                 <div class="form-group">
                                                     <label>Tempoh Sah Laku</label>
                                                     <div class="input-group">
-                                                        <input class="form-control pickdate" type="text" name="contractor_ssm_start_date" value="{{ $project->ssm_start_date ?? '' }}">
+
+                                                        <?php 
+                                                            $contractor_ssm_start_date = '';
+
+                                                            if (!empty($project->contractorAppointment->ssm_start_date)) {
+                                                                $contractor_ssm_start_date = $project->contractorAppointment->ssm_start_date->format('d/m/Y');
+                                                            }
+                                                        ?>
+                                                        <input class="form-control pickdate" 
+                                                            type="text" 
+                                                            name="contractor_ssm_start_date" 
+                                                            value="{{ $contractor_ssm_start_date }}"
+                                                        >
                                                         <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
-                                                        <input class="form-control pickdate" type="text" name="contractor_ssm_end_date" value="{{ $project->ssm_end_date ?? '' }}">
+
+                                                        <?php 
+                                                            $contractor_ssm_end_date = '';
+
+                                                            if (!empty($project->contractorAppointment->ssm_end_date)) {
+                                                                $contractor_ssm_end_date = $project->contractorAppointment->ssm_end_date->format('d/m/Y');
+                                                            }
+                                                        ?>
+                                                        <input class="form-control pickdate" 
+                                                            type="text" 
+                                                            name="contractor_ssm_end_date" 
+                                                            value="{{ $contractor_ssm_end_date }}"
+                                                        >
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,14 +150,18 @@
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>No Sijil MOF</label>
-                                                    <input class="form-control" type="text" name="contractor_mof" value="{{ $project->mof_no ?? '' }}">
+                                                    <input class="form-control" type="text" name="contractor_mof" value="{{ $project->contractorAppointment->mof_no ?? '' }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>No Rujukan Pendaftaran MOF</label>
-                                                    <input class="form-control" type="text" name="contractor_mof_reference" value="{{ $project->mof_reference_no ?? '' }}">
+                                                    <input class="form-control" 
+                                                        type="text" 
+                                                        name="contractor_mof_reference" 
+                                                        value="{{ $project->contractorAppointment->mof_reference_no ?? '' }}"
+                                                    >
                                                 </div>
                                             </div>
 
@@ -117,9 +169,33 @@
                                                 <div class="form-group">
                                                     <label>Tempoh Sah Laku</label>
                                                     <div class="input-group">
-                                                        <input class="form-control pickdate" type="text" name="contractor_mof_start_date" value="{{ $project->mof_start_date ?? '' }}">
+
+                                                        <?php 
+                                                            $contractor_mof_start_date = '';
+
+                                                            if (!empty($project->contractorAppointment->mof_start_date)) {
+                                                                $contractor_mof_start_date = $project->contractorAppointment->mof_start_date->format('d/m/Y');
+                                                            }
+                                                        ?>
+                                                        <input class="form-control pickdate" 
+                                                            type="text" 
+                                                            name="contractor_mof_start_date" 
+                                                            value="{{ $contractor_mof_start_date }}"
+                                                        >
                                                         <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
-                                                        <input class="form-control pickdate" type="text" name="contractor_mof_end_date" value="{{ $project->mof_end_date ?? '' }}">
+
+                                                        <?php 
+                                                            $contractor_mof_end_date = '';
+
+                                                            if (!empty($project->contractorAppointment->mof_end_date)) {
+                                                                $contractor_mof_end_date = $project->contractorAppointment->mof_end_date->format('d/m/Y');
+                                                            }
+                                                        ?>
+                                                        <input class="form-control pickdate" 
+                                                            type="text" 
+                                                            name="contractor_mof_end_date" 
+                                                            value="{{ $contractor_mof_end_date }}"
+                                                        >
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,7 +205,11 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <label>Nama Syarikat</label>
-                                                    <input class="form-control" type="text" name="contractor_company_name" value="{{ $project->company_name ?? '' }}">
+                                                    <input class="form-control" 
+                                                        type="text" 
+                                                        name="contractor_company_name" 
+                                                        value="{{ $project->contractorAppointment->company_name ?? '' }}"
+                                                    >
                                                 </div>
                                             </div>
                                         </div>
@@ -138,7 +218,9 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <label>Alamat Syarikat</label>
-                                                    <textarea class="form-control texteditor" type="text" name="contractor_company_address">{!! $project->company_address ?? '' !!}</textarea>
+                                                    <textarea class="form-control texteditor" type="text" name="contractor_company_address">
+                                                        {!! $project->contractorAppointment->company_address ?? '' !!}
+                                                    </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,14 +229,22 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>No Telefon</label>
-                                                    <input class="form-control" type="text" name="contractor_company_tel" value="{{ $project->company_tel ?? '' }}">
+                                                    <input class="form-control" 
+                                                        type="text" 
+                                                        name="contractor_company_tel" 
+                                                        value="{{ $project->contractorAppointment->company_tel ?? '' }}"
+                                                    >
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>No Fax</label>
-                                                    <input class="form-control" type="text" name="contractor_company_fax" value="{{ $project->company_fax ?? '' }}">
+                                                    <input class="form-control" 
+                                                        type="text" 
+                                                        name="contractor_company_fax" 
+                                                        value="{{ $project->contractorAppointment->company_fax ?? '' }}"
+                                                    >
                                                 </div>
                                             </div>
 
@@ -210,9 +300,33 @@
                                         <div class="form-group">
                                             <label>Tempoh Sah Laku</label>
                                             <div class="input-group">
-                                                <input class="form-control pickdate" type="text" name="contractor_duration_start_date">
+
+                                                <?php 
+                                                    $contractor_duration_start_date = '';
+
+                                                    if (!empty($project->contractorAppointment->contract_start_date)) {
+                                                        $contractor_duration_start_date = $project->contractorAppointment->contract_start_date->format('d/m/Y');
+                                                    }
+                                                ?>
+                                                <input class="form-control pickdate" 
+                                                    type="text" 
+                                                    name="contractor_duration_start_date"
+                                                    value="{{ $contractor_duration_start_date }}"
+                                                >
                                                 <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
-                                                <input class="form-control pickdate" type="text" name="contractor_duration_end_date">
+
+                                                <?php 
+                                                    $contractor_duration_end_date = '';
+
+                                                    if (!empty($project->contractorAppointment->contract_end_date)) {
+                                                        $contractor_duration_end_date = $project->contractorAppointment->contract_end_date->format('d/m/Y');
+                                                    }
+                                                ?>
+                                                <input class="form-control pickdate" 
+                                                    type="text" 
+                                                    name="contractor_duration_end_date"
+                                                    value="{{ $contractor_duration_end_date }}"
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -278,6 +392,7 @@
 
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
 

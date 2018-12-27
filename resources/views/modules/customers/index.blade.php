@@ -39,7 +39,7 @@
                                                     $sst_date = '';
 
                                                     if (!empty($project->contractorAppointment->sst)) {
-                                                        $sst_date = $project->contractorAppointment->sst->format('m/d/Y');
+                                                        $sst_date = $project->contractorAppointment->sst->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <td>{{ $sst_date }}</td>
@@ -71,11 +71,11 @@
                                                     $ssm_end_date = '';
 
                                                     if (!empty($project->contractorAppointment->ssm_start_date)) {
-                                                        $ssm_start_date = $project->contractorAppointment->ssm_start_date->format('m/d/Y');
+                                                        $ssm_start_date = $project->contractorAppointment->ssm_start_date->format('d/m/Y');
                                                     }
 
                                                     if (!empty($project->contractorAppointment->ssm_end_date)) {
-                                                        $ssm_end_date = $project->contractorAppointment->ssm_end_date->format('m/d/Y');
+                                                        $ssm_end_date = $project->contractorAppointment->ssm_end_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <td>{{ $ssm_start_date }} - {{ $ssm_end_date }}</td>
@@ -95,11 +95,11 @@
                                                     $mof_end_date = '';
 
                                                     if (!empty($project->contractorAppointment->mof_start_date)) {
-                                                        $mof_start_date = $project->contractorAppointment->mof_start_date->format('m/d/Y');
+                                                        $mof_start_date = $project->contractorAppointment->mof_start_date->format('d/m/Y');
                                                     }
 
                                                     if (!empty($project->contractorAppointment->mof_start_date)) {
-                                                        $mof_end_date = $project->contractorAppointment->mof_end_date->format('m/d/Y');
+                                                        $mof_end_date = $project->contractorAppointment->mof_end_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <td>{{ $mof_start_date }} - {{ $mof_end_date }}</td>
@@ -166,7 +166,7 @@
                                                     $contract_start_date = '';
 
                                                     if (!empty($project->contractorAppointment->contract_start_date)) {
-                                                        $contract_start_date = $project->contractorAppointment->contract_start_date->format('m/d/Y');
+                                                        $contract_start_date = $project->contractorAppointment->contract_start_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Mula</th>
@@ -177,7 +177,7 @@
                                                     $contract_end_date = '';
 
                                                     if (!empty($project->contractorAppointment->contract_end_date)) {
-                                                        $contract_end_date = $project->contractorAppointment->contract_end_date->format('m/d/Y');
+                                                        $contract_end_date = $project->contractorAppointment->contract_end_date->format('d/m/Y');
                                                     }
                                                 ?>
                                                 <th class="col-md-5">Tarikh Akhir</th>

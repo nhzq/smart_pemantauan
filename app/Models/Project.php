@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $dates = [
-        'approval_date', 'minute_approval_date', 'approval_pwn_date', 'verification_date'
+        'approval_date', 'minute_approval_date', 'approval_pwn_date', 'verification_date', 'actual_approval_date'
     ];
     
     protected $fillable = [

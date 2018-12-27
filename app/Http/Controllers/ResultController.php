@@ -30,7 +30,7 @@ class ResultController extends Controller
     {
         $project = Project::find($project_id);
 
-        $project->actual_approval_date = Carbon::parse($request->result_approval_date);
+        $project->actual_approval_date = Carbon::createFromFormat('d/m/Y', $request->result_approval_date);
         $project->actual_project_cost = removeMaskMoney($request->result_actual_project_cost);
         $project->justification = $request->result_justification;
         $project->save();

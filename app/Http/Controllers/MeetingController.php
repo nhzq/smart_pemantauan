@@ -24,7 +24,7 @@ class MeetingController extends Controller
         $actual_date = null;
 
         if (!empty($request->actual_date)) {
-            $actual_date = \Carbon\Carbon::parse($request->actual_date);
+            $actual_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->actual_date);
         }
 
         if ($request->file('minute_meeting')) {

@@ -61,7 +61,7 @@
                                             $deliverable_date = '';
 
                                             if (!empty($project->deliver->deliverable_date)) {
-                                                $deliverable_date = $project->deliver->deliverable_date->format('m/d/Y');
+                                                $deliverable_date = $project->deliver->deliverable_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $deliverable_date }}</td>
@@ -72,7 +72,7 @@
                                             $official_date = '';
 
                                             if (!empty($project->deliver->official_deliverable_date)) {
-                                                $official_date = $project->deliver->official_deliverable_date->format('m/d/Y');
+                                                $official_date = $project->deliver->official_deliverable_date->format('d/m/Y');
                                             }
                                         ?>
                                         <td>{{ $official_date }}</td>

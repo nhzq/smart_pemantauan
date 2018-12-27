@@ -26,7 +26,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Skop Kontrak</label>
-                                            <textarea class="form-control texteditor" name="scope_contract"></textarea>
+                                            <textarea class="form-control texteditor" name="scope_contract">
+                                                {{ $project->scope ?? '' }}
+                                            </textarea>
                                         </div>
                                     </div>
                                 </div>

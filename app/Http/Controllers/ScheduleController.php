@@ -43,8 +43,8 @@ class ScheduleController extends Controller
                     'project_id' => $project->id,
                     'parent_id' => $activity->id,
                     'activity' => $sub,
-                    'start_date' => !empty($request->start_date[$key]) ? \Carbon\Carbon::parse($request->start_date[$key]) : null,
-                    'end_date' => !empty($request->end_date[$key]) ? \Carbon\Carbon::parse($request->end_date[$key]) : null,
+                    'start_date' => !empty($request->start_date[$key]) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->start_date[$key]) : null,
+                    'end_date' => !empty($request->end_date[$key]) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->end_date[$key]) : null,
                     'created_by' => \Auth::user()->id,
                     'active' => 1
                 ]);
@@ -54,5 +54,21 @@ class ScheduleController extends Controller
         return redirect()
             ->route('schedules.index', $project->id)
             ->with('success', 'Jadual Perancangan telah berjaya dikemaskini.');
+    }
+
+    public function update($project_id, $id, Request $request)
+    {
+        $project = Project::find($project_id);
+        $schedule = $project->schedules()->where('id', $id)->first();
+
+        $schedule->activity = $request->activity;
+        $schedule->start_date = !empty($request->start_date) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->start_date) : null;
+        $schedule->end_date = !empty($request->end_date) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->end_date) : null;
+        $schedule->updated_by = \Auth::user()->id;
+        $schedule->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Maklumat aktiviti telah berjaya dikemaskini.');
     }
 }
