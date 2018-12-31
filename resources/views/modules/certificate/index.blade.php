@@ -18,24 +18,6 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                @hasanyrole ('ku')
-                    <div class="panel panel-borderless">
-                        <div class="panel-body panel-nav">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="pull-right">
-                                        <div class="btn-group">
-                                            <a href="{{ route('certificates.create', $project->id) }}" class="btn btn-diamond">
-                                                <i class="fa fa-fw fa-plus"></i> Perakuan Akaun Muktamad
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endhasanyrole
-
                 <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">
                         Perakuan Akaun Muktamad
@@ -56,15 +38,25 @@
                                         </tr>
                                         <tr>
                                             <th class="col-sm-3">Maksud</th>
-                                            <td></td>
+                                            <td>{!! !empty($project->certificate->definition) ? $project->certificate->definition : '' !!}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-sm-3">Butiran</th>
-                                            <td></td>
+                                            <td>{!! !empty($project->certificate->details) ? $project->certificate->details : '' !!}</td>
                                         </tr>
                                     </tbody>
                                 </table>
+
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <a href="{{ route('certificates.edit.account', $project->id) }}" class="btn bg-purple">
+                                            Kemaskini Perakauan Akaun
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+
+                            <hr>
 
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered font-std">
@@ -105,7 +97,17 @@
                                         </tr>
                                     </tbody>
                                 </table>
+
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <a href="" class="btn bg-purple">
+                                            Kemaskini Maklumat Kontrak
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+
+                            <hr>
 
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered font-std">
@@ -131,7 +133,28 @@
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    test
+                                    <table class="table table-hover table-bordered font-std">
+                                        <tr>
+                                            <th>Tarikh</th>
+                                            <td>{{ !empty($project->certificate->witness_date) ? $project->certificate->witness_date->format('d/m/Y') : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nama Pegawai</th>
+                                            <td>{{ !empty($project->certificate->witness_officer_name) ? $project->certificate->witness_officer_name : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nama Penuh (Saksi)</th>
+                                            <td>{{ !empty($project->certificate->witness_name) ? $project->certificate->witness_name : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>No MyKad (Saksi)</th>
+                                            <td>{{ !empty($project->certificate->witness_ic) ? $project->certificate->witness_ic : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Alamat (Saksi)</th>
+                                            <td>{{ !empty($project->certificate->witness_address) ? $project->certificate->witness_address : '' }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +162,34 @@
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    test
+                                    <table class="table table-hover table-bordered font-std">
+                                        <tr>
+                                            <th>Tarikh</th>
+                                            <td>{{ !empty($project->certificate->contractor_date) ? $project->certificate->contractor_date->format('d/m/Y') : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nama Penuh (Kontraktor)</th>
+                                            <td>{{ !empty($project->certificate->contractor_name) ? $project->certificate->contractor_name : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>No MyKad (Kontraktor)</th>
+                                            <td>{{ !empty($project->certificate->contractor_ic) ? $project->certificate->contractor_ic : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Alamat (Kontraktor)</th>
+                                            <td>{{ !empty($project->certificate->contractor_address) ? $project->certificate->contractor_address : '' }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <a href="{{ route('certificates.edit.agreement', $project->id) }}" class="btn bg-purple">
+                                        Kemaskini Pengakuan Persetujuan
+                                    </a>
                                 </div>
                             </div>
                         </div>

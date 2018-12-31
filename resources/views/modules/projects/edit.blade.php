@@ -136,6 +136,20 @@
                                     <div class="col-md-4">
                                         <div class="form-group {{ $errors->has('project_proposal_files') ? 'has-error' : '' }}">
                                             <label>Kertas Cadangan</label>
+                                            {{-- @if (count($project->documents) > 0)
+                                                <ul class="list-group">
+                                                    @foreach ($project->documents as $data)
+                                                        @if ($data->category == 'kertas-cadangan')
+                                                            <li class="list-group-item">
+                                                                {{ $data->original_name ?? '' }}
+                                                                <span class="pull-right">
+                                                                    <a href="{{ route('projects.destroy.file', [$project->id, $data->id]) }}">Hapus</a>
+                                                                </span>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach 
+                                                </ul>
+                                            @endif --}}
                                             <input class="form-control" type="file" name="project_proposal_files">
                                         </div>
                                     </div>

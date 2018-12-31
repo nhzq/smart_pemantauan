@@ -73,7 +73,7 @@
                                                 Tarikh Buka Tender
                                             @endif
                                         </th>
-                                        <td>{{ $project->collection_open_date ?? '' }}</td>
+                                        <td>{{ !empty($project->collection_open_date) ? $project->collection_open_date->format('d/m/Y') : '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-sm-5">
@@ -87,7 +87,7 @@
                                                 Tarikh Tutup Tender
                                             @endif
                                         </th>
-                                        <td>{{ $project->collection_close_date ?? '' }}</td>
+                                        <td>{{ !empty($project->collection_close_date) ? $project->collection_close_date->format('d/m/Y') : '' }}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-sm-5">
@@ -115,7 +115,7 @@
                                                 Tarikh Mesyuarat Lembaga Perolehan Negeri
                                             @endif
                                         </th>
-                                        <td>{{ $project->collection_meeting_date ?? '' }}</td>
+                                        <td>{{ !empty($project->collection_meeting_date) ? $project->collection_meeting_date->format('d/m/Y') : '' }}</td>
                                     </tr>
                                 </table>
                             </div>

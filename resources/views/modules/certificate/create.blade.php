@@ -23,29 +23,29 @@
                         {{ Form::open(['url' => route('certificates.store', $project->id) , 'method' => 'POST']) }}
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Peruntukan Pembangunan</label>
-                                            <input class="form-control" type="text" name="officer_name">
-                                        </div>
-                                    </div>
+                                    <hr>
+                                    <div class="font-h5 text-center">Perakuan Akaun dan Bayaran Muktamad</div>
+                                    <hr>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Maksud</label>
-                                            <input class="form-control" type="text" name="officer_position">
+                                            <input class="form-control" type="text" name="definition">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Butiran</label>
-                                            <input class="form-control" type="text" name="officer_position">
+                                            <input class="form-control" type="text" name="details">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
+                                    <hr>
+                                    <div class="font-h5 text-center">Maklumat Kontrak</div>
+                                    <hr>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tajuk Kerja</label>

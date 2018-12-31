@@ -55,10 +55,14 @@
                                             <?php 
                                                 $fine_start = '';
 
-                                                if (!empty($eot = $project->eots->last()->extend_date)) {
-                                                    $fine_start = $eot->format('m/d/Y');
-                                                } else if (!empty($sst = $project->contractorAppointment->contract_end_date)) {
-                                                    $fine_start = $sst->format('m/d/Y');
+                                                if (!empty($project->eots->last()->extend_date)) {
+                                                    $eot = $project->eots->last()->extend_date;
+
+                                                    $fine_start = $eot->format('d/m/Y');
+                                                } else if (!empty($project->contractorAppointment->contract_end_date)) {
+                                                    $sst = $project->contractorAppointment->contract_end_date;
+
+                                                    $fine_start = $sst->format('d/m/Y');
                                                 }
                                             ?>
                                             <td>{{ $fine_start }}</td>
@@ -69,7 +73,9 @@
                                             <?php 
                                                 $finePerDay = 0;
 
-                                                if (!empty($project_cost = $project->contract->cost)) {
+                                                if (!empty($project->contract->cost)) {
+                                                    $project_cost = $project->contract->cost;
+                                                    
                                                     $finePerDay = $project_cost * 0.001;
                                                 }
                                             ?>

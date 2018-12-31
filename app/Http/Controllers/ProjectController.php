@@ -205,13 +205,6 @@ class ProjectController extends Controller
             ->with('success', 'Projek telah berjaya dikemaskini.');
     }
 
-    public function downloadFile($id, $filename)
-    {
-        $project = Project::find($id);
-
-        return Storage::download('/projects/' . $project->id . '/' . $filename);
-    }
-
     public function delete($id)
     {
         //

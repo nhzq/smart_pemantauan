@@ -26,7 +26,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tarikh dari SST Mula</label>
-                                            <input class="form-control" type="text" value="{{ $project->contractorAppointment->sst->format('d/m/Y') }}" readonly>
+                                            <input class="form-control" 
+                                                type="text" 
+                                                value="{{ !empty($project->contractorAppointment->sst) ? $project->contractorAppointment->sst->format('d/m/Y') : '' }}" 
+                                                readonly
+                                            >
                                         </div>
                                     </div>
 

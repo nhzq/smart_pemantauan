@@ -33,15 +33,15 @@ class CollectionMethodController extends Controller
         $meeting_date = null;
 
         if ($request->method_open_date) {
-            $open_date = Carbon::parse($request->method_open_date);
+            $open_date = Carbon::createFromFormat('d/m/Y', $request->method_open_date);
         }
 
         if ($request->method_close_date) {
-            $close_date = Carbon::parse($request->method_close_date);
+            $close_date = Carbon::createFromFormat('d/m/Y', $request->method_close_date);
         }
 
         if ($request->method_meeting_date) {
-            $meeting_date = Carbon::parse($request->method_meeting_date);
+            $meeting_date = Carbon::createFromFormat('d/m/Y', $request->method_meeting_date);
         }
 
         $project = Project::find($project_id);

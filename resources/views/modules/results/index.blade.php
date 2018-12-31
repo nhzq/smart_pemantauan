@@ -61,7 +61,21 @@
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Minit Mesyuarat Kelulusan</th>
-                                        <td>N/A</td>
+                                        <td>
+                                            @if (count($project->documents) > 0)
+                                                @foreach ($project->documents as $data)
+                                                        @if ($data->category == 'minit-mesyuarat-kelulusan')
+                                                            <a href="{{ url('storage/projects/' . $project->id . '/results/' . $data->file_name) }}">
+                                                                <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                &nbsp; {{ $data->original_name }}
+                                                            </a>
+                                                            </br>
+                                                        @endif
+                                                @endforeach
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr class="info">
                                         <th colspan="2" class="text-center">Butiran Kewangan/ Sumber Pembiayaan</th>

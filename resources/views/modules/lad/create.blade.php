@@ -30,10 +30,14 @@
                                             <?php 
                                                 $fine_start = '';
 
-                                                if (!empty($eot = $project->eots->last()->extend_date)) {
-                                                    $fine_start = $eot->format('m/d/Y');
-                                                } else if (!empty($sst = $project->contractorAppointment->contract_end_date)) {
-                                                    $fine_start = $sst->format('m/d/Y');
+                                                if (!empty($project->eots->last()->extend_date)) {
+                                                    $eot = $project->eots->last()->extend_date;
+
+                                                    $fine_start = $eot->format('d/m/Y');
+                                                } else if (!empty($project->contractorAppointment->contract_end_date)) {
+                                                    $sst = $project->contractorAppointment->contract_end_date;
+
+                                                    $fine_start = $sst->format('d/m/Y');
                                                 }
                                             ?>
                                             <input class="form-control" type="text" value="{{ $fine_start }}" readonly>
@@ -60,14 +64,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jumlah Hari Denda</label>
-                                            <input id="count-days" class="form-control" type="text" name="total_fine_days">
+                                            <input id="count-days" class="form-control" 
+                                                type="text" 
+                                                name="total_fine_days"
+                                                value="{{ !empty($project->lads[0]->total_days) ? $project->lads[0]->total_days : '' }}"
+                                            >
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kos LAD</label>
-                                            <input id="lad-cost" class="form-control money-convert" type="text" name="payment_amount" readonly>
+                                            <input id="lad-cost" class="form-control money-convert" 
+                                                type="text" 
+                                                name="payment_amount"
+                                                value="{{ !empty($project->lads[0]->total_fine) ? $project->lads[0]->total_fine : '' }}"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +88,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tindakan Diambil</label>
-                                            <textarea class="form-control texteditor" name="action_taken" cols="30" rows="5"></textarea>
+                                            <textarea class="form-control texteditor" name="action_taken" cols="30" rows="5">
+                                                {{ !empty($project->lads[0]->action) ? $project->lads[0]->action : '' }}
+                                            </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -128,6 +142,7 @@
                     total += vtd/parseInt(t);
                 }
 
+                $('#lad-cost').val('');
                 $('#lad-cost').val((total * 0.05).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
             });
         });

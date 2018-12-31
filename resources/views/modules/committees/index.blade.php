@@ -130,7 +130,7 @@
                                                                 ?>
                                                                 @if (!empty($doc1))
                                                                     @if (count($doc1) > 0)
-                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc1->last()->file_name]) }}">
+                                                                        <a href="{{ url('storage/projects/' . $project->id . '/committees/' . $info1->id . '/' . $doc1->last()->file_name) }}">
                                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                             &nbsp; {{ $doc1->last()->original_name ?? '' }}
                                                                         </a>
@@ -143,7 +143,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
-                                                            <td class="col-md-6 col-sm-6">{{ !empty($info1->appointment_date) ? $info1->appointment_date->format('m/d/Y') : ''  }}</td>
+                                                            <td class="col-md-6 col-sm-6">{{ !empty($info1->appointment_date) ? $info1->appointment_date->format('d/m/Y') : ''  }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
@@ -160,7 +160,7 @@
                                                                 ?>
                                                                 @if (!empty($doc2))
                                                                     @if (count($doc2) > 0)
-                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc2->last()->file_name]) }}">
+                                                                        <a href="{{ url('storage/projects/' . $project->id . '/committees/' . $info1->id . '/' . $doc2->last()->file_name) }}">
                                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                             &nbsp; {{ $doc2->last()->original_name ?? '' }}
                                                                         </a>
@@ -242,7 +242,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
-                                                            <td class="col-md-6 col-sm-6">{{ !empty($info2->appointment_date) ? $info2->appointment_date->format('m/d/Y') : '' }}</td>
+                                                            <td class="col-md-6 col-sm-6">{{ !empty($info2->appointment_date) ? $info2->appointment_date->format('d/m/Y') : '' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
@@ -259,7 +259,7 @@
                                                                 ?>
                                                                 @if (!empty($doc))
                                                                     @if (count($doc) > 0)
-                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
+                                                                        <a href="{{ url('storage/projects/' . $project->id . '/committees/' . $info2->id . '/' . $doc->last()->file_name) }}">
                                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                             &nbsp; {{ $doc->last()->original_name ?? '' }}
                                                                         </a>
@@ -341,7 +341,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Tarikh Lantikan Jawatan Spesifikasi Teknikal</th>
-                                                            <td class="col-md-6 col-sm-6">{{ !empty($info3->appointment_date) ? $info3->appointment_date->format('m/d/Y') : '' }}</td>
+                                                            <td class="col-md-6 col-sm-6">{{ !empty($info3->appointment_date) ? $info3->appointment_date->format('d/m/Y') : '' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th class="col-md-6 col-sm-6">Dokumen Surat Lantikan</th>
@@ -358,7 +358,7 @@
                                                                 ?>
                                                                 @if (!empty($doc))
                                                                     @if (count($doc) > 0)
-                                                                        <a href="{{ route('committees.file.download', [$project->id, $doc->last()->file_name]) }}">
+                                                                        <a href="{{ url('storage/projects/' . $project->id . '/committees/' . $info3->id . '/' . $doc->last()->file_name) }}">
                                                                             <small class="label bg-maroon"><i class="fa fa-download"></i></small>
                                                                             &nbsp; {{ $doc->last()->original_name ?? '' }}
                                                                         </a>

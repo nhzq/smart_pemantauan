@@ -91,13 +91,13 @@
                                                 <td>
                                                     @if (count($project->documents) > 0)
                                                         @foreach ($project->documents as $data)
-                                                                @if ($data->category == 'kertas-cadangan')
-                                                                    <a href="{{ url('storage/projects/' . $project->id . '/' . $data->file_name) }}">
-                                                                        <small class="label bg-maroon"><i class="fa fa-download"></i></small>
-                                                                        &nbsp; {{ $data->original_name }}
-                                                                    </a>
-                                                                    </br>
-                                                                @endif
+                                                            @if ($data->category == 'kertas-cadangan')
+                                                                <a href="{{ url('storage/projects/' . $project->id . '/' . $data->file_name) }}">
+                                                                    <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                    &nbsp; {{ $data->original_name }}
+                                                                </a>
+                                                                </br>
+                                                            @endif
                                                         @endforeach
                                                     @else
                                                         N/A

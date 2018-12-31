@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -75,12 +73,15 @@
                                                         <tr>
                                                             <th class="col-md-3 min100">Komen</th>
                                                             {{-- @foreach ($project->reviews as $data) --}}
+                                                            @if (!empty($project->reviews->last()->status))
                                                                 @if (\App\Helpers\Status::planning_approved_by_ks($project->reviews->last()->status))
                                                                     <td>{{ $project->reviews->last()->content }}</td>
                                                                 @endif
+
                                                                 @if (\App\Helpers\Status::planning_rejected_by_ks($project->reviews->last()->status))
                                                                     <td>{{ $project->reviews->last()->content }}</td>
                                                                 @endif
+                                                            @endif
                                                             {{-- @endforeach --}}
                                                         </tr>
                                                     </tbody>

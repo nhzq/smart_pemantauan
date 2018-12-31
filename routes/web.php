@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/projects-ajax-create', 'ProjectController@ajaxSubType')->name('projects.create.sub');
         Route::get('/projects/{id}/timeline', 'ProjectController@timeline')->name('projects.timeline');
         Route::get('/projects/{id}/view-download-file/{filename}', 'ProjectController@downloadFile')->name('projects.file.download');
+        // Route::post('/projects/{id}/delete/{file_id}', 'ProjectController@destroyFile')->name('projects.destroy.file');
 
 
         /* Review section */
@@ -147,7 +148,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/{project_id}/deliverables', 'DeliverController');
 
         /* Certificate Section */
-        Route::resource('/{project_id}/certificates', 'CertificateController');
+        Route::get('/{project_id}/certificates', 'CertificateController@index')->name('certificates.index');
+        Route::get('/{project_id}/certificates/edit-account', 'CertificateController@editAccount')->name('certificates.edit.account');
+        Route::get('/{project_id}/certificates/edit-agreement', 'CertificateController@editAgreement')->name('certificates.edit.agreement');
+        Route::post('/{project_id}/certificates/store', 'CertificateController@store')->name('certificates.store');
     });
 
     /* Financial section */

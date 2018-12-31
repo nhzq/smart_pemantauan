@@ -19,16 +19,19 @@ class LadController extends Controller
     public function create($project_id)
     {
         $project = Project::find($project_id);
+        $diff = '';
 
-        $start_date = $project->contractorAppointment->contract_start_date;
-        $end_date = $project->contractorAppointment->contract_end_date;
-        $eot = $project->eots->last()->extend_date;
-        $diff = 0;
+        if (!empty($project->contractorAppointment)) {
+            $start_date = $project->contractorAppointment->contract_start_date;
+            $end_date = $project->contractorAppointment->contract_end_date;
+            $eot = $project->eots->last()->extend_date;
+            $diff = 0;
 
-        if (!empty($eot)) {
-            $diff = $start_date->diffInDays($eot);
-        } else if (!empty($end_date)) {
-            $diff = $start_date->diffInDays($end_date);
+            if (!empty($eot)) {
+                $diff = $start_date->diffInDays($eot);
+            } else if (!empty($end_date)) {
+                $diff = $start_date->diffInDays($end_date);
+            }
         }
 
         return view('modules.lad.create', [
@@ -46,13 +49,22 @@ class LadController extends Controller
             $payment_amount = removeMaskMoney($request->payment_amount);
         }
 
-        $project->lads()->create([
-            'total_days' => $request->total_fine_days,
-            'total_fine' => $payment_amount,
-            'action' => $request->action_taken,
-            'created_by' => \Auth::user()->id,
-            'active' => 1
-        ]);
+        if (count($project->lads) == 0) {
+            $project->lads()->create([
+                'total_days' => $request->total_fine_days,
+                'total_fine' => $payment_amount,
+                'action' => $request->action_taken,
+                'created_by' => \Auth::user()->id,
+                'active' => 1
+            ]);
+        } else {
+            $lad = $project->lads[0];
+            $lad->total_days = $request->total_fine_days;
+            $lad->total_fine = $payment_amount;
+            $lad->action = $request->action_taken;
+            $lad->updated_by = \Auth::user()->id;
+            $lad->save();
+        }
 
         return redirect()
             ->route('lad.index', $project->id)

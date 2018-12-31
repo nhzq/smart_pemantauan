@@ -109,7 +109,7 @@
                             <div class="tab-pane" id="tab2">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
                                                 <th>#</th>
                                                 <th>Nama</th>
@@ -163,7 +163,7 @@
                             <div class="tab-pane" id="tab3">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
                                                 <th>#</th>
                                                 <th>Nama</th>
@@ -217,7 +217,7 @@
                             <div class="tab-pane" id="tab4">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered">
+                                        <table class="table table-hover table-bordered font-std">
                                             <tr class="info">
                                                 <th>#</th>
                                                 <th>Nama</th>

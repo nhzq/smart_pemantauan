@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $dates = [
-        'approval_date', 'minute_approval_date', 'approval_pwn_date', 'verification_date', 'actual_approval_date'
+        'approval_date', 
+        'minute_approval_date', 
+        'approval_pwn_date', 
+        'verification_date', 
+        'actual_approval_date',
+        'collection_open_date',
+        'collection_close_date',
+        'collection_meeting_date'
     ];
     
     protected $fillable = [
@@ -157,6 +164,11 @@ class Project extends Model
     public function schedules()
     {
         return $this->hasMany('App\Models\Gantt');
+    }
+
+    public function certificate()
+    {
+        return $this->hasOne('App\Models\Certificate');
     }
 
     /*

@@ -35,7 +35,7 @@
                                                 <label>No Tender</label>
                                             @endif
 
-                                            <input class="form-control" type="text" name="method_file_no" value="">
+                                            <input class="form-control" type="text" name="method_file_no" value="{{ $project->collection_file_no ?? '' }}">
                                         </div>
                                     </div>
 
@@ -51,7 +51,11 @@
                                                 <label>Tarikh Mesyuarat Lembaga Perolehan Negeri</label>
                                             @endif
 
-                                            <input class="form-control pickdate" type="text" name="method_meeting_date">
+                                            <input class="form-control pickdate" 
+                                                type="text" 
+                                                name="method_meeting_date" 
+                                                value="{{ !empty($project->collection_meeting_date) ? $project->collection_meeting_date->format('d/m/Y') : '' }}"
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +73,11 @@
                                                 <label>Tarikh Buka Tender</label>
                                             @endif
 
-                                            <input id="start_date" class="form-control" type="text" name="method_open_date">
+                                            <input id="start_date" class="form-control" 
+                                                type="text" 
+                                                name="method_open_date"
+                                                value="{{ !empty($project->collection_open_date) ? $project->collection_open_date->format('d/m/Y') : '' }}"
+                                            >
                                         </div>
                                     </div>
 
@@ -85,7 +93,11 @@
                                                 <label>Tarikh Tutup Tender</label>
                                             @endif
 
-                                            <input id="end_date" class="form-control" type="text" name="method_close_date">
+                                            <input id="end_date" class="form-control" 
+                                                type="text" 
+                                                name="method_close_date"
+                                                value="{{ !empty($project->collection_close_date) ? $project->collection_close_date->format('d/m/Y') : '' }}"
+                                            >
                                         </div>
                                     </div>
 
@@ -126,11 +138,13 @@
         $(function () {
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
 
             $('#start_date').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             }).on('changeDate', function (e) {
                 $('#end_date').datepicker('setStartDate', $('#start_date').val());
@@ -138,16 +152,15 @@
 
             $('#end_date').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             }).on('changeDate', function (e) {
-                var start = $('#start_date').val();
-                var startD = new Date(start);
+                var startD = $("#start_date").datepicker('getDate');
+                var endD = $("#end_date").datepicker('getDate');
 
-                var end = $('#end_date').val();
-                var endD = new Date(end);
+                var diff = Math.round(((endD.getTime() - startD.getTime()) / (1000*60*60*24)) + 1);
 
-                var diff = parseInt(((endD.getTime() - startD.getTime()) / (24*3600*1000)) + 1);
-
+                $('#total_days').val('');
                 $('#total_days').val(diff);
             });
         });

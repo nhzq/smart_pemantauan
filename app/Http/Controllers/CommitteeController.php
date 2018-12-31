@@ -129,7 +129,7 @@ class CommitteeController extends Controller
                 $appointment_date = null;
 
                 if (!empty($request->committee_appointment_date)) {
-                    $appointment_date = \Carbon\Carbon::parse($request->committee_appointment_date);
+                    $appointment_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->committee_appointment_date);
                 }
 
                 $info->project_id = $project_id;
@@ -150,7 +150,7 @@ class CommitteeController extends Controller
                         $data = $request->committee_appointment_letter;
 
                         $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                        $data->storeAs('committees/' . $info->id . '/', $doc_new_name);
+                        $data->storeAs('/public/projects/' . $project_id . '/committees/' . $info->id, $doc_new_name);
 
                         $obj = $info->with('project.documents')->where('id', $info->id)->first();
                         $obj->project->documents()->create([
@@ -168,7 +168,7 @@ class CommitteeController extends Controller
                         $data = $request->committee_spec_document;
 
                         $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                        $data->storeAs('committees/' . $info->id . '/', $doc_new_name);
+                        $data->storeAs('/public/projects/' . $project_id . '/committees/' . $info->id, $doc_new_name);
 
                         $obj = $info->with('project.documents')->where('id', $info->id)->first();
                         $obj->project->documents()->create([
