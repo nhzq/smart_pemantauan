@@ -62,9 +62,9 @@
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-purple">
                     <div class="inner">
-                        <h3>{{ count(\App\Models\User::role('kewangan')->get()) }}</h3>
+                        <h3>{{ count(\App\Models\User::role('kw')->get()) }}</h3>
 
-                        <p>Jumlah Pengguna: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'kewangan')->pluck('displayed_name')->first() }}</b></p>
+                        <p>Jumlah Pengguna: <br /> <b>{{ \Spatie\Permission\Models\Role::where('name', 'kw')->pluck('displayed_name')->first() }}</b></p>
 
                     </div>
                     <div class="icon">
@@ -77,39 +77,37 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Senarai Peranan</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Senarai Peranan
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered font-std">
                                 <thead>
-                                    <tr class="tbl-row-init tbl-default">
-                                        <th class="max20">#</th>
-                                        <th>Nama Paparan</th>
-                                        <th>Nama (kod)</th>
-                                        <th>Tindakan</th>
+                                    <tr class="info">
+                                        <th class="max20 text-center">#</th>
+                                        <th class="text-center">Nama Paparan</th>
+                                        <th class="text-center">Nama (kod)</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (!empty($roles))
                                         @foreach ($roles as $role)
                                             <tr>
-                                                <th class="col-md-1">{{ $loop->iteration }}</th>
-                                                <td class="col-md-5">{{ $role->displayed_name }}</td>
-                                                <td class="col-md-5">{{ $role->name }}</td>
-                                                <td class="col-md-1">
-                                                    <div class="min90">
-                                                        {{ Form::open() }}
-                                                            <div class="btn-group">
-                                                                <a href="{{ route('roles.edit', $role->id) }}" class="btn bg-purple">
-                                                                    <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                                </a>
-                                                            </div>
-                                                        {{ Form::close() }}
-                                                    </div>
+                                                <th class="col-md-1 text-center align-center">{{ $loop->iteration }}</th>
+                                                <td class="col-md-5 align-center">{{ $role->displayed_name }}</td>
+                                                <td class="col-md-5 align-center">{{ $role->name }}</td>
+                                                <td class="col-md-1 text-center">
+                                                    {{ Form::open() }}
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm bg-purple">
+                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    {{ Form::close() }}
                                                 </td>
                                             </tr>
                                         @endforeach

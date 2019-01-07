@@ -11,18 +11,9 @@ class AllocationController extends Controller
     public function index($provision_id)
     {
         $provision = Provision::find($provision_id);
-        $total_estimate = [];
-
-        foreach ($provision->allocations as $data) {
-            $total_estimate[] = $data->projects()
-                ->where('active', 1)
-                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-                ->sum('estimate_cost');
-        }
 
         return view('modules.financial.allocation.index', [
             'provision' => $provision,
-            'total_estimate' => $total_estimate
         ]);
     }
 
@@ -131,8 +122,28 @@ class AllocationController extends Controller
                 ->with('error', 'Jumlah peruntukan baru telah melebihi peruntukan yang ditetapkan.');
         }
 
+        $provision_extra_budget = !empty($provision->extra_budget) ? $provision->extra_budget : 0;
+        $sum_of_extra_budget = $provision->allocations()
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->sum('extra_budget');
+
+        $get_sum = $sum_of_extra_budget ?? 0;
+        $get_request = removeMaskMoney($request->additional_provision) ?? 0;
+        $get_current = $allocation->extra_budget ?? 0;
+        $get_net = $get_sum - $get_current + $get_request;
+
+        if ($get_net > $provision_extra_budget) {
+            return redirect()
+                ->back()
+                ->with('error', 'Jumlah peruntukan baru telah melebihi peruntukan yang ditetapkan.');
+        }
+
         $allocation->lookup_sub_budget_type_id = $request->budget_sub;
         $allocation->amount = removeMaskMoney($request->budget_allocation);
+        $allocation->extra_budget = removeMaskMoney($request->additional_provision);
+        $allocation->extra_budget_from = $request->provision_type;
+        $allocation->extra_budget_date = \Carbon\Carbon::now();
         $allocation->updated_by = \Auth::user()->id;
         $allocation->save();
 

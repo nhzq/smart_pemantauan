@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Allocation extends Model
 {
     protected $fillable = [
+        'provision_id',
         'lookup_department_id', 
         'lookup_budget_type_id', 
         'lookup_sub_budget_type_id',
-        'amount', 
+        'amount',
+        'extra_budget',
+        'extra_budget_from',
+        'extra_budget_date', 
         'created_by',
         'updated_by',
         'active'

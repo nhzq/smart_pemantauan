@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -15,12 +13,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Kemaskini Seksyen</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Kemaskini Seksyen
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="mrg10T mrg10B">
                             {{ Form::open(['url' => route('sections.update', $section->id), 'method' => 'PUT']) }}
                                 <div class="col-md-12">

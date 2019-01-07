@@ -83,7 +83,7 @@
 <!-- End -->
 
 <!-- Allocation Transfer-->
-@if (Route::current()->getName() == 'transfers.index')
+@if (Route::current()->getName() == 'transfers.index' || Route::current()->getName() == 'bspk.transfers.index')
     <section class="content-header">
         <h1>
             Pindah Peruntukan
@@ -96,7 +96,7 @@
     </section>
 @endif
 
-@if (Route::current()->getName() == 'transfers.create')
+@if (Route::current()->getName() == 'transfers.create' || Route::current()->getName() == 'bspk.transfers.create')
     <section class="content-header">
         <h1>
             Pindah Peruntukan

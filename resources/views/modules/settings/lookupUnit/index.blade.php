@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -15,37 +13,35 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Senarai Unit</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Senarai Unit
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered font-std">
                                 <thead>
-                                    <tr class="tbl-row-init tbl-default">
-                                        <th class="col-md-1">#</th>
-                                        <th class="col-md-3">Seksyen</th>
-                                        <th class="col-md-3">Nama Paparan</th>
-                                        <th class="col-md-1">Nama (kod)</th>
-                                        <th class="col-md-1">Tindakan</th>
+                                    <tr class="info">
+                                        <th class="col-md-1 text-center">#</th>
+                                        <th class="col-md-3 text-center">Seksyen</th>
+                                        <th class="col-md-3 text-center">Nama Paparan</th>
+                                        <th class="col-md-1 text-center">Nama (kod)</th>
+                                        <th class="col-md-1">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (!empty($units))
                                         @foreach ($units as $unit)
                                             <tr>
-                                                <th>{{ $loop->iteration }}</th>
-                                                <td>{{ $unit->section->displayed_name ?? 'N/A' }}</td>
-                                                <td>{{ $unit->displayed_name ?? 'N/A' }}</td>
-                                                <td>{{ $unit->name ?? 'N/A' }}</td>
-                                                <td>
-                                                    <div class="min90">
-                                                        <div class="btn-group">
-                                                            <a href="{{ route('units.edit', $unit->id) }}" class="btn bg-purple">
-                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                            </a>
-                                                        </div>
+                                                <th class="text-center align-center">{{ $loop->iteration }}</th>
+                                                <td class="align-center">{{ $unit->section->displayed_name ?? 'N/A' }}</td>
+                                                <td class="align-center">{{ $unit->displayed_name ?? 'N/A' }}</td>
+                                                <td class="align-center">{{ $unit->name ?? 'N/A' }}</td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="{{ route('units.edit', $unit->id) }}" class="btn btn-sm bg-purple">
+                                                            <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -253,6 +253,7 @@
             
             $('.pickdate').datepicker({
                 todayHighlight: true,
+                format: 'dd/mm/yyyy',
                 autoclose: true
             });
 
@@ -272,17 +273,17 @@
                         $('#' + panel_id + '_current_balance').val(' ');
 
                         if (data.amount > 0) {
-                            $('#' + panel_id + '_total_allocation').val(addCommas(data.amount));
+                            var dataAmount = parseFloat(data.amount);
+
+                            $('#' + panel_id + '_total_allocation').val(addCommas(dataAmount.toFixed(2)));
                         } else {
                             $('#' + panel_id + '_total_allocation').val('0.00');
                         }
 
                         if (data.balance > 0) {
-                            if (data.balance == data.amount) {
-                                $('#' + panel_id + '_current_balance').val(addCommas(data.balance));
-                            } else {
-                                $('#' + panel_id + '_current_balance').val(addCommas(data.balance.toFixed(2)));
-                            }
+                            var dataBalance = parseFloat(data.balance);
+                            
+                            $('#' + panel_id + '_current_balance').val(addCommas(dataBalance.toFixed(2)));
                         } else {
                             $('#' + panel_id + '_current_balance').val('0.00');
                         }

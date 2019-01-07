@@ -36,7 +36,9 @@
                                                             $selected = 'selected';
                                                         }
                                                     ?>
-                                                    <option value="{{ $data->id }}" {{ $selected }}>{{ $data->code . ' : ' . $data->description }}</option>
+                                                    @if ($data->code == 'B01')
+                                                        <option value="{{ $data->id }}" {{ $selected }}>{{ $data->code . ' : ' . $data->description }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

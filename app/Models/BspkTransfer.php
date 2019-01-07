@@ -23,4 +23,19 @@ class BspkTransfer extends Model
         'updated_by',
         'active'
     ];
+
+    public function fromProject()
+    {
+        return $this->belongsTo('App\Models\Project', 'from_project_id');
+    }
+
+    public function toProject()
+    {
+        return $this->belongsTo('App\Models\Project', 'to_project_id');
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany('App\Models\Project', 'bspk_project', 'bspk_transfer_id', 'project_id');
+    }
 }

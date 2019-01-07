@@ -2,9 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/spacing.css') }}">
-
 @endpush
 
 @section ('content')
@@ -16,12 +13,12 @@
         
         <div class="row mrg10T">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Pengguna Baru</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Pengguna Baru
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="mrg10T mrg10B">
                             {{ Form::open(['url' => route('users.store'), 'method' => 'POST']) }}
                                 <div class="col-md-12">
@@ -82,7 +79,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 mrg20B mrg20T pull-right">
+                                <div class="col-md-2 mrg20T pull-right">
                                     <button class="btn btn-block btn-primary" type="submit">
                                         Simpan
                                     </button>

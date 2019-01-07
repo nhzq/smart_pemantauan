@@ -39,15 +39,41 @@ class AllocationTransferController extends Controller
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->first();
 
+        $from_transfer = 0;
+        $to_transfer = 0;
+        $net_allocation = $allocation->amount;
+
+        if (!empty($allocation->transfers)) {
+            $from_transfer = $allocation->transfers()
+                ->where('from_sub_type_id', $allocation->lookup_sub_budget_type_id)
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('transfer_amount');
+
+            $to_transfer = $allocation->transfers()
+                ->where('to_sub_type_id', $allocation->lookup_sub_budget_type_id)
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('transfer_amount');
+
+            if ($from_transfer > 0) {
+                $net_allocation = $net_allocation - $from_transfer;
+            }
+
+            if ($to_transfer > 0) {
+                $net_allocation = $net_allocation + $to_transfer;
+            }
+        }
+
         $total_estimate_cost = $allocation->projects()
             ->where('active', 1)
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->sum('estimate_cost');
 
-        $balance = getEstimateCostBalance($total_estimate_cost, $allocation->amount);
+        $balance = getEstimateCostBalance($total_estimate_cost, $net_allocation);
 
         $data = [
-            'amount' => $allocation->amount,
+            'amount' => $net_allocation,
             'balance' => $balance
         ];
 
@@ -85,20 +111,20 @@ class AllocationTransferController extends Controller
 
         DB::transaction(function () use ($request, $allocation_from, $allocation_to) {
             // Update allocation
-            $allocation_from->amount = $allocation_from->amount - removeMaskMoney($request->transfer_total_allocation);
-            $allocation_from->updated_by = \Auth::user()->id;
-            $allocation_from->save();
+            // $allocation_from->amount = $allocation_from->amount - removeMaskMoney($request->transfer_total_allocation);
+            // $allocation_from->updated_by = \Auth::user()->id;
+            // $allocation_from->save();
 
             // Update allocation
-            $allocation_to->amount = $allocation_to->amount + removeMaskMoney($request->transfer_total_allocation);
-            $allocation_to->updated_by = \Auth::user()->id;
-            $allocation_to->save();
+            // $allocation_to->amount = $allocation_to->amount + removeMaskMoney($request->transfer_total_allocation);
+            // $allocation_to->updated_by = \Auth::user()->id;
+            // $allocation_to->save();
 
             $transfer = Transfer::create([
-                'approval_date' => setDateValue($request->transfer_approval_date, Carbon::parse($request->transfer_approval_date)),
+                'approval_date' => setDateValue($request->transfer_approval_date, Carbon::createFromFormat('d/m/Y', $request->transfer_approval_date)),
                 'approval_letter_ref_no' => $request->transfer_approval_ref_no,
                 'warrant_no' => $request->transfer_warrant_no,
-                'warrant_date' => setDateValue($request->transfer_warrant_date, Carbon::parse($request->transfer_warrant_date)),
+                'warrant_date' => setDateValue($request->transfer_warrant_date, Carbon::createFromFormat('d/m/Y', $request->transfer_warrant_date)),
                 'budget_type_id' => 2,
                 'from_sub_type_id' => $request->sub_from_b01,
                 'to_sub_type_id' => $request->sub_to_b01,
@@ -114,7 +140,7 @@ class AllocationTransferController extends Controller
                 foreach ($request->transfer_letter as $data) {
                     if (!empty($data)) {
                         $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
-                        $data->storeAs('transfer/' . $transfer->id . '/', $doc_new_name);
+                        $data->storeAs('/public/transfers/' . $transfer->id . '/', $doc_new_name);
                         $transfer->documents()->create([
                             'allocation_transfer_id' => $transfer->id,
                             'category' => 'pindah-peruntukan',

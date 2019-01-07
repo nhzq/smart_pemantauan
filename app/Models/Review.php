@@ -20,7 +20,7 @@ class Review extends Model
 
     public function createdByUser()
     {
-        return $this->belongsTo('App\Models\User', 'status');
+        return $this->belongsTo('App\Models\User', 'created_by');
     }
 
     /*

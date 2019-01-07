@@ -20,6 +20,9 @@ class CreateAllocationsTable extends Migration
             $table->integer('lookup_budget_type_id')->unsigned()->nullable();
             $table->integer('lookup_sub_budget_type_id')->unsigned()->nullable();
             $table->decimal('amount', 19, 2)->nullable();
+            $table->decimal('extra_budget', 19, 2)->nullable();
+            $table->string('extra_budget_from')->nullable();
+            $table->date('extra_budget_date')->nullable();
             // $table->decimal('estimate_cost', 19, 2)->nullable();
             // $table->decimal('project_cost', 19, 2)->nullable();
             // $table->decimal('total_spending', 19, 2)->nullable();

@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -15,35 +13,33 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Senarai Seksyen</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Senarai Seksyen
                     </div>
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered font-std">
                                 <thead>
-                                    <tr class="tbl-row-ini tbl-default">
-                                        <th>#</th>
-                                        <th>Nama Paparan</th>
-                                        <th>Nama (kod)</th>
-                                        <th>Tindakan</th>
+                                    <tr class="info">
+                                        <th class="text-center col-sm-1">#</th>
+                                        <th class="text-center col-sm-5">Nama Paparan</th>
+                                        <th class="text-center col-sm-5">Nama (kod)</th>
+                                        <th class="col-sm-1">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (!empty($sections))
                                         @foreach ($sections as $section)
                                             <tr>
-                                                <th class="col-md-2">{{ $loop->iteration }}</th>
-                                                <td class="col-md-4">{{ $section->displayed_name ?? 'N/A' }}</td>
-                                                <td class="col-md-4">{{ $section->name ?? 'N/A' }}</td>
-                                                <td class="col-md-2">
-                                                    <div class="min90">
-                                                        <div class="btn-group">
-                                                            <a href="{{ route('sections.edit', $section->id) }}" class="btn bg-purple">
-                                                                <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                            </a>
-                                                        </div>
+                                                <th class="text-center align-center">{{ $loop->iteration }}</th>
+                                                <td class="align-center">{{ $section->displayed_name ?? 'N/A' }}</td>
+                                                <td class="align-center">{{ $section->name ?? 'N/A' }}</td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-sm bg-purple">
+                                                            <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>

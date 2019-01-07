@@ -2,8 +2,6 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/width.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/table.css') }}">
 @endpush
 
 @section ('content')
@@ -73,12 +71,22 @@
         
         <div class="row">
             <div class="col-md-12">
-                <div class="mrg10B pull-right">
-                    <div class="btn-group">
-                        <button class="btn bg-purple" data-toggle="collapse" data-target="#search" type=""><i class="fa fa-fw fa-search"></i></button>
-                        <a href="{{ route('users.create') }}" class="btn bg-purple">
-                            <i class="fa fa-fw fa-plus"></i>
-                        </a>
+                <div class="panel panel-borderless">
+                    <div class="panel-body panel-nav">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="">
+                                            <i class="fa fa-fw fa-search"></i> Carian
+                                        </button>
+                                        <a href="{{ route('users.create') }}" class="btn btn-diamond">
+                                            <i class="fa fa-fw fa-plus"></i> Pengguna
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,33 +168,33 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header with-border panel-header-border-blue">
-                        <h3 class="box-title">Senarai Pengguna</h3>
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Senarai Pengguna
                     </div>
 
-                    <div class="box-body">
+                    <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered font-std">
                                 <thead>
-                                    <tr class="tbl-row-init tbl-default">
-                                        <th class="max20">#</th>
-                                        <th>Nama</th>
-                                        <th>No K/P</th>
-                                        <th>Peranan</th>
-                                        <th>Unit/ Seksyen</th>
-                                        <th>Status</th>
-                                        <th>Tindakan</th>
+                                    <tr class="info">
+                                        <th class="max20 text-center">#</th>
+                                        <th class="text-center">Nama</th>
+                                        <th class="text-center">No K/P</th>
+                                        <th class="text-center">Peranan</th>
+                                        <th class="text-center">Unit/ Seksyen</th>
+                                        <th class="text-center">Status</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (!empty($users))
                                         @foreach ($users as $user)
                                             <tr>
-                                                <th>{{ $loop->iteration }}</th>
-                                                <td>{{ $user->name ?? 'N/A' }}</td>
-                                                <td>{{ $user->ic ?? 'N/A' }}</td>
-                                                <td>{{ $user->roles->pluck('displayed_name')->first() }}</td>
+                                                <th class="text-center align-center">{{ $loop->iteration }}</th>
+                                                <td class="align-center">{{ $user->name ?? 'N/A' }}</td>
+                                                <td class="text-center align-center">{{ $user->ic ?? 'N/A' }}</td>
+                                                <td class="align-center">{{ $user->roles->pluck('displayed_name')->first() }}</td>
                                                 <?php 
                                                     $position = '';
 
@@ -198,18 +206,18 @@
                                                         $position = 'N/A';
                                                     }
                                                 ?>
-                                                <td>{{ $position }}</td>
-                                                <td>
+                                                <td class="align-center">{{ $position }}</td>
+                                                <td class="text-center align-center">
                                                     {!! empty($user->deleted_at) ? '<span class="label label-success">Aktif</span>' : '<span class="label label-warning">Tidak Aktif</span>' !!}
                                                 </td>
-                                                <td class="col-md-1">
-                                                    <div class="min90">
+                                                <td class="col-md-1 text-center">
+                                                    <div class="min80">
                                                         {{ Form::open(['url' => route('users.destroy', $user->id), 'method' => 'DELETE']) }}
                                                             <div class="btn-group">
-                                                                <a href="{{ route('users.edit', $user->id) }}" class="btn bg-purple">
+                                                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm bg-purple">
                                                                     <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                 </a>
-                                                                <button class="btn btn-danger" type="submit">
+                                                                <button class="btn btn-sm btn-danger" type="submit">
                                                                     <i class="fa fa-fw fa-trash-o"></i>
                                                                 </button>
                                                             </div>

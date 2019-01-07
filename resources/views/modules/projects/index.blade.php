@@ -77,59 +77,110 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="custom-row" class="table table-bordered">
-                                <thead class="font-p">
+                            <table class="table table-bordered font-std">
+                                <thead>
                                     <tr class="info">
-                                        <th>Jenis Bajet</th>
-                                        <th>Jumlah &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th>#</th>
-                                        <th>Nama Projek</th>
-                                        <th>Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th>Status</th>
+                                        <th class="text-center align-center">#</th>
+                                        <th class="text-center align-center">Nama Projek</th>
+                                        <th class="text-center align-center">Pindah Peruntukan <br> - Dari (RM)</th>
+                                        <th class="text-center align-center">Pindah Peruntukan <br> - Ke (RM)</th>
+                                        <th class="text-center align-center">Anggaran <br> Kos (RM)</th>
+                                        <th class="text-center align-center">Kos Projek <br> (RM)</th>
+                                        <th class="text-center align-center">Jumlah <br> Belanja (RM)</th>
+                                        <th class="text-center align-center">Baki <br> Belanja (RM)</th>
                                         <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (\Auth::user()->hasAnyRole('ku|ks'))
-                                        @if (!empty($projects))
-                                            @foreach ($projects as $key => $data)
-                                                <?php
-                                                    $total_sub_budget = \App\Models\Project::where('lookup_sub_budget_type_id', $data->lookup_sub_budget_type_id)
-                                                        ->sum('estimate_cost');
+                                        @if (!empty($subs))
+                                            @foreach ($subs as $sub)
+                                                <?php 
+                                                    $lists = count($sub->projects()->where('active', 1)->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')->get());
                                                 ?>
 
-                                                <tr>
-                                                    <td>{!! setBudgetTitle($data->sub->code, $data->sub->description) !!}</td>
-                                                    <td>{{ currency($total_sub_budget) }}</td>
-                                                    <td>{{ $projects->perPage() * ($projects->currentPage() - 1) + $loop->iteration }}</td>
-                                                    <td>{{ $data->name }}</td>
-                                                    <td>{{ currency($data->estimate_cost) }}</td>
-                                                    <td> @include ('components._status') </td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            @if (\Auth::user()->hasRole('ku'))
-                                                                <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
-                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                </a>
-                                                                <button class="btn btn-sm btn-danger" type="submit">
-                                                                    <i class="fa fa-fw fa-trash-o"></i>
-                                                                </button>
-                                                            @endif
+                                                @if ($lists > 0)
+                                                    <tr class="danger">
+                                                        <th colspan="9">{!! setBudgetTitle($sub->code, $sub->description) !!}</th>
+                                                    </tr>
 
-                                                            @if (\Auth::user()->hasRole('ks'))
-                                                                @if (\App\Helpers\Status::project_verification($data->status))
-                                                                    <a href="{{ route('info.index', $data->id) }}" class="btn btn-sm bg-purple">
-                                                                        <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                    </a>
-                                                                @else
-                                                                    <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
-                                                                        <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                    </a>
-                                                                @endif
-                                                            @endif
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                    @foreach ($projects as $data)
+                                                        @if ($data->lookup_sub_budget_type_id == $sub->id)
+                                                            <tr>
+                                                                <td class="text-center align-center">
+                                                                    {{ $projects->perPage() * ($projects->currentPage() - 1) + $loop->iteration }}
+                                                                </td>
+                                                                <td class="align-center">
+                                                                    {{ $data->name }}
+                                                                    
+                                                                    @hasrole('ks')
+                                                                        @if (Status::project_application($data->status))
+                                                                            <span class="pull-right">
+                                                                                <i class="fa fa-exclamation-circle font-h5 clr-pink"></i>
+                                                                            </span>
+                                                                        @endif
+                                                                    @endhasrole
+
+                                                                    @hasanyrole('ku|ks')
+                                                                        @if (Status::initial_approved_by_sub($data->status))
+                                                                            <span class="pull-right">
+                                                                                <i class="fa fa-check font-h5 clr-green"></i>
+                                                                            </span>
+                                                                        @endif
+                                                                    @endhasanyrole
+                                                                </td>
+                                                                <?php 
+                                                                    $from_transfer = 0;
+                                                                    $to_transfer = 0;
+
+                                                                    if (!empty($data->bspkTransfers)) {
+                                                                        $from_transfer = $data->bspkTransfers()
+                                                                            ->where('from_project_id', $data->id)
+                                                                            ->where('active', 1)
+                                                                            ->where('bspk_transfers.created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                            ->sum('transfer_amount');
+
+                                                                        $to_transfer = $data->bspkTransfers()
+                                                                            ->where('to_project_id', $data->id)
+                                                                            ->where('active', 1)
+                                                                            ->where('bspk_transfers.created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                            ->sum('transfer_amount');
+                                                                    }
+                                                                ?>
+                                                                <td class="text-right align-center">{{ '-' . currency($from_transfer) }}</td>
+                                                                <td class="text-right align-center">{{ currency($to_transfer) }}</td>
+                                                                <td class="text-right align-center">{{ currency($data->estimate_cost) }}</td>
+                                                                <td class="text-right align-center">{{ currency($data->actual_project_cost) }}</td>
+                                                                <td class="text-right align-center">{{ '0.00' }}</td>
+                                                                <td class="text-right align-center">{{ '0.00' }}</td>
+                                                                <td class="text-center align-center max60">
+                                                                    <div class="btn-group">
+                                                                        @if (\Auth::user()->hasRole('ku'))
+                                                                            <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                                <i class="fa fa-fw fa-folder-open-o"></i>
+                                                                            </a>
+                                                                            <button class="btn btn-sm btn-danger" type="submit">
+                                                                                <i class="fa fa-fw fa-trash-o"></i>
+                                                                            </button>
+                                                                        @endif
+
+                                                                        @if (\Auth::user()->hasRole('ks'))
+                                                                            @if (\App\Helpers\Status::project_verification($data->status))
+                                                                                <a href="{{ route('info.index', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
+                                                                                </a>
+                                                                            @else
+                                                                                <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
+                                                                                </a>
+                                                                            @endif
+                                                                        @endif
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
                                             @endforeach
                                         @endif
                                     @endif
@@ -137,20 +188,26 @@
                                     @if (\Auth::user()->hasRole('sub'))
                                         @if (!empty($projectsForSUB))
                                             @foreach ($projectsForSUB as $data)
-                                                <?php 
-                                                    $total_sub_budget = \App\Models\Project::where('lookup_sub_budget_type_id', $data->lookup_sub_budget_type_id)
-                                                                            ->whereNotIn('status', [1, 3])
-                                                                            ->sum('estimate_cost');
-                                                ?>
-
                                                 <tr>
-                                                    <td>{!! setBudgetTitle($data->budget->code, $data->sub->description) !!}</td>
-                                                    <td>{{ currency($total_sub_budget) }}</td>
-                                                    <td>{{ $projectsForSUB->perPage() * ($projectsForSUB->currentPage() - 1) + $loop->iteration }}</td>
-                                                    <td>{{ $data->name }}</td>
-                                                    <td>{{ currency($data->estimate_cost) }}</td>
-                                                    <td> @include ('components._status') </td>
-                                                    <td>
+                                                    <td class="text-center align-center">
+                                                        {{ $projectsForSUB->perPage() * ($projectsForSUB->currentPage() - 1) + $loop->iteration }}
+                                                    </td>
+                                                    <td class="align-center">
+                                                        {{ $data->name }}
+
+                                                        @if (Status::initial_approved_by_ks($data->status))
+                                                            <span class="pull-right">
+                                                                <i class="fa fa-exclamation-circle font-h5 clr-pink"></i>
+                                                            </span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                    <td class="text-right align-center">{{ currency($data->estimate_cost) }}</td>
+                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                    <td class="text-center align-center max30">
                                                         <div class="btn-group">
                                                             <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
                                                                 <i class="fa fa-fw fa-folder-open-o"></i>
@@ -179,12 +236,12 @@
 @push ('script')
     <script src="{{ asset('adminlte/dist/js/rowspanizer.js') }}"></script>
     <script>
-        $(function () {
-            $("#custom-row").rowspanizer({
-                vertical_align: 'middle',
-                columns: [0, 1]
-            });
-        });
+        // $(function () {
+        //     $("#custom-row").rowspanizer({
+        //         vertical_align: 'middle',
+        //         columns: [0, 1]
+        //     });
+        // });
     </script>
 @endpush
 

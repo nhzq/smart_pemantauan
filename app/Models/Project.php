@@ -171,6 +171,11 @@ class Project extends Model
         return $this->hasOne('App\Models\Certificate');
     }
 
+    public function bspkTransfers()
+    {
+        return $this->belongsToMany('App\Models\BspkTransfer', 'bspk_project', 'project_id', 'bspk_transfer_id');
+    }
+
     /*
      * Reusable method
      */

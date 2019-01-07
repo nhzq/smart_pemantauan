@@ -49,16 +49,17 @@
                             <table class="table table-hover table-bordered">
                                 <thead class="font-p">
                                     <tr class="info">
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Kod</th>
-                                        <th class="text-center">Butiran</th>
-                                        <th class="text-center">Peruntukan &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center" colspan="2">Peruntukan Tambahan &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center">Anggaran Kos &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center">Kos Projek &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center">Jumlah Belanja &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center">Baki Belanja &nbsp;<span class="label bck-diamond">RM</span></th>
-                                        <th class="text-center"></th>
+                                        <th class="text-center align-center">#</th>
+                                        <th class="text-center align-center">Kod</th>
+                                        <th class="text-center align-center">Butiran</th>
+                                        <th class="text-center align-center">Peruntukan <br>(RM)</th>
+                                        <th class="text-center align-center" colspan="2">Peruntukan <br>Tambahan (RM)</th>
+                                        <th class="text-center align-center">Peruntukan <br>Kemaskini (RM)</th>
+                                        <th class="text-center align-center">Anggaran <br>Kos (RM)</th>
+                                        <th class="text-center align-center">Kos Projek <br>(RM)</th>
+                                        <th class="text-center align-center">Jumlah <br>Belanja (RM)</th>
+                                        <th class="text-center align-center">Baki <br>Belanja (RM)</th>
+                                        <th class="text-center align-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody class="font-std">
@@ -78,6 +79,10 @@
                                                                 ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
                                                                 ->sum('amount');
                                                         }
+
+                                                        $total_provision = !empty($provision->amount) ? $provision->amount : 0;
+                                                        $total_additional_budget = !empty($provision->extra_budget) ? $provision->extra_budget : 0;
+                                                        $sum_of_provision = $total_provision + $total_additional_budget;
                                                     }
                                                 ?>
 
@@ -98,7 +103,7 @@
                                                     {{ !empty($provision) ? currency($provision->extra_budget) : '0.00' }}
                                                 </td>
                                                 <td class="text-right align-center">
-                                                    {{ !empty($total_estimate_cost) ? currency($total_estimate_cost) : '0.00' }}
+                                                    {{ currency($sum_of_provision) }}
                                                 </td>
                                                 <td class="text-right align-center">
                                                     {{ '0.00' }}
@@ -109,12 +114,13 @@
                                                 <td class="text-right align-center">
                                                     {{ '0.00' }}
                                                 </td>
-                                                <td>
-                                                    <div class="btn-group-vertical">
-                                                        <a href="{{ route('provisions.edit', $data->id) }}" class="btn btn-sm bg-purple">
-                                                            <i class="fa fa-fw fa-pencil-square-o"></i>
-                                                        </a>
-                                                    </div>
+                                                <td class="text-right align-center">
+                                                    {{ '0.00' }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('provisions.edit', $data->id) }}" class="btn btn-sm bg-purple">
+                                                        <i class="fa fa-fw fa-pencil-square-o"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach

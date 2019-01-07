@@ -15,9 +15,8 @@ class CreateBspkProjectTable extends Migration
     {
         Schema::create('bspk_project', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bspk_transfers_id')->unsigned();
+            $table->integer('bspk_transfer_id')->unsigned();
             $table->integer('project_id')->unsigned();
-            $table->timestamps();
         });
     }
 

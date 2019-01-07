@@ -47,6 +47,61 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <!-- For edit/update -->
+                                @if (!empty($allocation->extra_budget_from) && !empty($allocation->extra_budget_from))
+                                    <hr>
+                                        <div class="text-center"><strong>Peruntukan Tambahan</strong></div>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jenis Peruntukan</label>
+                                                <select id="provision_type" class="form-control" name="provision_type">
+                                                    <option value="0">-- Sila Pilih --</option>
+                                                    <option value="{{ $allocation->extra_budget_from }}" selected>{{ $allocation->extra_budget_from }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah (RM)</label>
+                                                <input class="form-control money-convert" 
+                                                    type="text" 
+                                                    name="additional_provision" 
+                                                    value="{{ $allocation->extra_budget }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    @if(!empty($provision->extra_budget_from))
+                                        <hr>
+                                            <div class="text-center"><strong>Peruntukan Tambahan</strong></div>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Jenis Peruntukan</label>
+                                                    <select id="provision_type" class="form-control" name="provision_type">
+                                                        <option value="0">-- Sila Pilih --</option>
+                                                        <option value="{{ $provision->extra_budget_from }}">{{ $provision->extra_budget_from }}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Jumlah (RM)</label>
+                                                    <input class="form-control money-convert" type="text" name="additional_provision" 
+                                                        value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
                             </div>
 
                             <div class="col-md-2 mrg20B mrg20T pull-right">

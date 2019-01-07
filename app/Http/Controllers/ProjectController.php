@@ -16,6 +16,8 @@ class ProjectController extends Controller
 {
     public function index()
     {
+        $subs = SubBudget::where('lookup_budget_type_id', 2)->get();
+
         $projects = Project::where('active', 1)
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->paginate(20);
@@ -26,6 +28,7 @@ class ProjectController extends Controller
             ->paginate(20);
 
         return view('modules.projects.index', [
+            'subs' => $subs,
             'projects' => $projects,
             'projectsForSUB' => $projectsForSUB
         ]);
@@ -61,7 +64,33 @@ class ProjectController extends Controller
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->sum('estimate_cost');
 
-        $balance = getEstimateCostBalance($total_estimate_cost, $allocation->amount);
+        $from_transfer = 0;
+        $to_transfer = 0;
+        $net_allocation = $allocation->amount ?? 0;
+
+        if (!empty($allocation)) {
+            $from_transfer = $allocation->transfers()
+                ->where('from_sub_type_id', $allocation->lookup_sub_budget_type_id)
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('transfer_amount');
+
+            $to_transfer = $allocation->transfers()
+                ->where('to_sub_type_id', $allocation->lookup_sub_budget_type_id)
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('transfer_amount');
+
+            if ($from_transfer > 0) {
+                $net_allocation = $net_allocation - $from_transfer;
+            }
+
+            if ($to_transfer > 0) {
+                $net_allocation = $net_allocation + $to_transfer;
+            }
+        }
+
+        $balance = getEstimateCostBalance($total_estimate_cost, $net_allocation);
 
         if (!empty($allocation)) {
             if ($estimate_cost <= $balance) {
@@ -180,29 +209,77 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         $approval_date = null;
+        $estimate_cost = removeMaskMoney($request->project_estimate_cost);
 
         if (!empty($request->project_approval_date)) {
             $approval_date = Carbon::createFromFormat('d/m/Y', $request->project_approval_date);
         }
 
-        $project->lookup_budget_type_id = $request->project_budget_type;
-        $project->lookup_sub_budget_type_id = $request->project_sub_budget_type;
-        $project->name = $request->project_name;
-        $project->file_reference_no = $request->project_file_reference;
-        $project->initial_scope = $request->project_scope;
-        $project->initial_concept = $request->project_concept;
-        $project->initial_purpose = $request->project_purpose;
-        $project->estimate_cost = removeMaskMoney($request->project_estimate_cost);
-        $project->approval_date = $approval_date;
-        $project->rmk = $request->project_rmk;
-        $project->market_research = $request->optradio;
-        $project->created_by = \Auth::user()->id;
-        $project->status = Status::project_application();
-        $project->save();
+        $allocation = Allocation::where('lookup_sub_budget_type_id', $request->project_sub_budget_type)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->first();
 
-        return redirect()
-            ->route('projects.index')
-            ->with('success', 'Projek telah berjaya dikemaskini.');
+        $total_estimate_cost = Project::where('lookup_sub_budget_type_id', $request->project_sub_budget_type)
+            ->where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->sum('estimate_cost');
+
+        $from_transfer = 0;
+        $to_transfer = 0;
+        $net_allocation = $allocation->amount ?? 0;
+
+        if (!empty($allocation)) {
+            $from_transfer = $allocation->transfers()
+                ->where('from_sub_type_id', $allocation->lookup_sub_budget_type_id)
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('transfer_amount');
+
+            $to_transfer = $allocation->transfers()
+                ->where('to_sub_type_id', $allocation->lookup_sub_budget_type_id)
+                ->where('active', 1)
+                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                ->sum('transfer_amount');
+
+            if ($from_transfer > 0) {
+                $net_allocation = $net_allocation - $from_transfer;
+            }
+
+            if ($to_transfer > 0) {
+                $net_allocation = $net_allocation + $to_transfer;
+            }
+        }
+
+        $balance = getEstimateCostBalance($total_estimate_cost, $net_allocation + $project->estimate_cost);
+
+        if (!empty($allocation)) {
+            if ($estimate_cost <= $balance) {
+                $project->lookup_budget_type_id = $request->project_budget_type;
+                $project->lookup_sub_budget_type_id = $request->project_sub_budget_type;
+                $project->name = $request->project_name;
+                $project->file_reference_no = $request->project_file_reference;
+                $project->initial_scope = $request->project_scope;
+                $project->initial_concept = $request->project_concept;
+                $project->initial_purpose = $request->project_purpose;
+                $project->estimate_cost = removeMaskMoney($request->project_estimate_cost);
+                $project->approval_date = $approval_date;
+                $project->rmk = $request->project_rmk;
+                $project->market_research = $request->optradio;
+                $project->created_by = \Auth::user()->id;
+                $project->status = Status::project_application();
+                $project->save();
+
+                return redirect()
+                    ->route('projects.index')
+                    ->with('success', 'Projek telah berjaya dikemaskini.');
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Anggaran kos projek ini telah melebihi kos projek yang ditetapkan.');
+        }
     }
 
     public function delete($id)

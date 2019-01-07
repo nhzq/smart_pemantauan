@@ -29,7 +29,9 @@
                                             <select id="project_budget_type" class="form-control" name="project_budget_type">
                                                 <option value="0">-- Sila Pilih --</option>
                                                 @foreach ($budgets as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->code . ' : ' . $data->description }}</option>
+                                                    @if ($data->code == 'B01')
+                                                        <option value="{{ $data->id }}">{{ $data->code . ' : ' . $data->description }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

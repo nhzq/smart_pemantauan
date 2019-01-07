@@ -74,7 +74,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kos Projek Sebenar (RM)</label>
-                                            <input class="form-control money-convert" 
+                                            <input id="actual_cost" class="form-control money-convert" 
                                                 type="text" 
                                                 name="result_actual_project_cost"
                                                 value="{{ currency($project->actual_project_cost) }}"
@@ -85,7 +85,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Peruntukan Semasa (RM)</label>
-                                            <input class="form-control money-convert" type="text" value="{{ currency($project->estimate_cost) }}" readonly>
+                                            <input id="estimate_total_cost" class="form-control money-convert" 
+                                                type="text" 
+                                                value="{{ currency($project->estimate_cost) }}" 
+                                                readonly
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -133,6 +137,16 @@
             });
 
             $('.money-convert').maskMoney();
+
+            $('#actual_cost').on('blur', function () {
+                $estimate = $('#estimate_total_cost').val().replace(/,/g, '');
+                $actual = $('#actual_cost').val().replace(/,/g, '');
+
+                if ($actual > $estimate) {
+                    alert('Kos projek sebenar telah melebihi peruntukan semasa. Sila semak semula jumlah yang dimasukkan.');
+                    $('#actual_cost').val('');
+                }
+            });
         });
     </script>
 @endpush

@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Initial section */
     Route::group(['prefix' => 'initial'], function () {
+        /* Categories based on B01, P01 */
+        Route::get('/categories', 'CategoryController@index')->name('categories.index');
+
         /* Project section */
         Route::resource('/projects', 'ProjectController');
         Route::get('/projects-ajax-create', 'ProjectController@ajaxSubType')->name('projects.create.sub');
@@ -163,10 +166,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/{provision_id}/allocations', 'AllocationController');
 
         /* Transfer section */
-        Route::get('/transfer-list', function () {
-            return view('modules.financial.transfer.index');
-        })->name('transfer.list.index');
-
         Route::group(['prefix' => 'B01'], function () {
             Route::resource('/transfers', 'AllocationTransferController');
             Route::get('/transfers-ajax-sub', 'AllocationTransferController@ajaxType')->name('transfers.create.type');
@@ -176,6 +175,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('/transfers', 'BspkTransferController', [
                 'as' => 'bspk'
             ]);
+
+            Route::get('/transfers-ajax-sub', 'BspkTransferController@ajaxType')->name('bspk.transfers.create.type');
+            Route::get('/transfers-ajax-project', 'BspkTransferController@ajaxProject')->name('bspk.transfers.create.project');
         });
 
         /* Progress Payment section */

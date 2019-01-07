@@ -37,7 +37,7 @@
 
             <!-- Financial section -->
             @hasanyrole ('kw')
-                @if (request()->is('*allocations*'))
+                @if (request()->is('*allocations*') || request()->is('*provisions*') || request()->is('*transfer-list*') || request()->is('*payments*'))
                     <li class="active treeview">
                 @else 
                     <li class="treeview">
@@ -64,7 +64,7 @@
                             </li>
 
                             <li class="{{ request()->is('*transfer*') ? 'active' : '' }}">
-                                <a href="{{ route('transfer.list.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfer*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
+                                <a href="{{ route('transfers.index') }}"><i class="fa fa-circle-o {{ request()->is('*transfer*') ? 'text-aqua' : '' }}"></i> Pindah Peruntukan</a>
                             </li>
 
                             <li class="{{ request()->is('*payments*') ? 'active' : '' }}">
@@ -72,6 +72,15 @@
                             </li>
                         </ul>
                     </li>
+                
+                <!-- Report section -->
+                <li class="">
+                    <a href="">
+                        <i class="fa fa-area-chart"></i> <span>Laporan</span>
+                    </a>
+                </li>
+                <!-- Report end -->
+
             @endhasanyrole
             <!-- Financial end -->
 
