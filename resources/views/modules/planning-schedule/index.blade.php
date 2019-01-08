@@ -59,7 +59,7 @@
                                                 <tr class="danger">
                                                     <th>{{ $loop->iteration }}</th>
                                                     <th colspan="3">{{ $data->activity ?? '' }}</th>
-                                                    <th>
+                                                    <th class="text-center">
                                                         <button type="button" class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-parent-{{ $data->id }}">
                                                             <i class="fa fa-fw fa-pencil-square-o"></i>
                                                         </button>
@@ -86,7 +86,7 @@
                                                             ?>
                                                             <td>{{ $start_date ?? '' }}</td>
                                                             <td>{{ $end_date ?? '' }}</td>
-                                                            <td>
+                                                            <td class="text-center">
                                                                 <button type="button" class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-child-{{ $sub->id }}">
                                                                     <i class="fa fa-fw fa-pencil-square-o"></i>
                                                                 </button>

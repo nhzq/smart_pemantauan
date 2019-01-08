@@ -22,6 +22,11 @@ class ProjectController extends Controller
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->paginate(20);
 
+        $projectsForOfficer = Project::where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->where('appointed_to', \Auth::user()->id)
+            ->paginate(20);
+
         $projectsForSUB = Project::where('active', 1)
             ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
             ->whereNotIn('status', [1, 3])
@@ -30,7 +35,8 @@ class ProjectController extends Controller
         return view('modules.projects.index', [
             'subs' => $subs,
             'projects' => $projects,
-            'projectsForSUB' => $projectsForSUB
+            'projectsForSUB' => $projectsForSUB,
+            'projectsForOfficer' => $projectsForOfficer
         ]);
     }
 

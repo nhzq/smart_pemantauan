@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('ic')->unique();
-            $table->integer('lookup_department_id')->unsigned();
+            $table->integer('lookup_department_id')->unsigned()->nullable();
             $table->integer('lookup_section_id')->unsigned()->nullable();
             $table->integer('lookup_unit_id')->unsigned()->nullable();
             $table->string('password');

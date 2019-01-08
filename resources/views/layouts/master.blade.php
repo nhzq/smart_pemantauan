@@ -10,8 +10,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.0/css/ionicons.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/css/AdminLTE.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/css/skins/skin-blue.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/plugin/morris/morris.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/plugin/jvectormap/jquery-jvectormap.css') }}">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
@@ -20,6 +19,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/spacing.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/nhzq.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/css/AdminLTE.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/css/skins/skin-blue.min.css">
 
         @stack ('css')
         
@@ -72,10 +73,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/pages/dashboard.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/adminlte.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/demo.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.5/js/pages/dashboard.js"></script>
-
 
         {{-- @foreach ($assets['js'] as $js)
             <script src="{{ asset('adminlte/' . $js) }}"></script>

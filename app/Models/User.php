@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\LookupUnit', 'lookup_unit_id');
     }
 
+    public function appointedProject()
+    {
+        return $this->hasMany('App\Models\Project', 'appointed_to');
+    }
+
     /*
      * Reusable method
      */

@@ -45,6 +45,7 @@ class CreateProjectsTable extends Migration
             $table->string('project_status')->nullable();
             $table->integer('status')->unsigned()->nullable();
             $table->string('year')->nullable();
+            $table->integer('appointed_to')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('active')->unsigned()->nullable();

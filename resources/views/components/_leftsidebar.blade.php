@@ -2,7 +2,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
-        <div class="user-panel">
+        {{-- <div class="user-panel">
             <div class="pull-left image">
                 <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             </div>
@@ -10,7 +10,7 @@
                 <p>{{ \Auth::user()->name }}</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
-        </div>
+        </div> --}}
         <!-- search form -->
         {{-- <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -85,7 +85,7 @@
             <!-- Financial end -->
 
             <!-- Project section -->
-            @hasanyrole ('ku|ks|sub')
+            @hasanyrole ('ku|ks|sub|unisel|ssdu')
                 <li class="{{ request()->is('projects*') ? 'active' : '' }}">
                     <a href="{{ route('projects.index') }}">
                         <i class="fa fa-briefcase"></i> <span>Projek</span>
@@ -93,6 +93,16 @@
                 </li>
             @endhasanyrole
             <!-- End Project -->
+
+            <!-- Add Unisel/SSDU section -->
+            @hasanyrole ('ks')
+                <li class="{{ request()->is('officers*') ? 'active' : '' }}">
+                    <a href="{{ route('officers.index') }}">
+                        <i class="fa fa-user-plus"></i> <span>Unisel/SSDU</span>
+                    </a>
+                </li>
+            @endhasanyrole
+            <!-- Add Unisel/SSDU end -->
 
             <!-- Reviews -->
             @hasanyrole ('ketua-seksyen|ketua-jabatan-bahagian-teknologi-maklumat')

@@ -204,4 +204,7 @@ Route::group(['middleware' => 'auth'], function () {
         /* Section section */
         Route::resource('/sections', 'LookupSectionController');
     });
+
+    /* Unisel SSDU section */
+    Route::resource('/officers', 'OfficerController');
 });

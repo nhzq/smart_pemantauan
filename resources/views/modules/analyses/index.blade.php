@@ -58,7 +58,7 @@
                                                 <td class="text-center">{{ $data->total ?? '' }}</td>
                                                 <td>
                                                     {{ Form::open(['url' => route('analyses.destroy', [$project->id, $data->id]), 'method' => 'delete']) }}
-                                                        <div class="min50">
+                                                        <div class="min80">
                                                             <div class="btn-group">
                                                                 <a href="{{ route('analyses.edit', [$project->id, $data->id]) }}" class="btn btn-sm bg-purple">
                                                                     <i class="fa fa-fw fa-pencil-square-o"></i>

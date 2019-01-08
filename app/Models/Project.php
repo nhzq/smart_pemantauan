@@ -48,6 +48,7 @@ class Project extends Model
         'project_status',
         'status',
         'year',
+        'appointed_to',
         'active',
         'created_by',
         'updated_by'

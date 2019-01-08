@@ -17,7 +17,9 @@ class RoleTableSeeder extends Seeder
             'Ketua Unit',
             'Ketua Seksyen',
             'Ketua Jabatan Bahagian Teknologi Maklumat',
-            'Kewangan'
+            'Kewangan',
+            'Unisel',
+            'SSDU'
         ];
 
         $roles = [
@@ -25,7 +27,9 @@ class RoleTableSeeder extends Seeder
             'ku',
             'ks',
             'sub',
-            'kw'
+            'kw',
+            'unisel',
+            'ssdu'
         ];
 
         foreach (array_combine($roles, $names) as $role => $name) {

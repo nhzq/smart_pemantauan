@@ -153,7 +153,7 @@
                                                                 <td class="text-right align-center">{{ currency($data->actual_project_cost) }}</td>
                                                                 <td class="text-right align-center">{{ '0.00' }}</td>
                                                                 <td class="text-right align-center">{{ '0.00' }}</td>
-                                                                <td class="text-center align-center max60">
+                                                                <td class="text-center align-center min90">
                                                                     <div class="btn-group">
                                                                         @if (\Auth::user()->hasRole('ku'))
                                                                             <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
@@ -207,7 +207,7 @@
                                                     <td class="text-right align-center">{{ '0.00' }}</td>
                                                     <td class="text-right align-center">{{ '0.00' }}</td>
                                                     <td class="text-right align-center">{{ '0.00' }}</td>
-                                                    <td class="text-center align-center max30">
+                                                    <td class="text-center align-center max60">
                                                         <div class="btn-group">
                                                             <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
                                                                 <i class="fa fa-fw fa-folder-open-o"></i>
@@ -216,6 +216,76 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @endif
+                                    @endif
+
+                                    @if (\Auth::user()->hasAnyRole('ssdu|unisel'))
+                                        @if (!empty($projectsForOfficer))
+                                            @if (!empty($subs))
+                                                @foreach ($subs as $sub)
+                                                    <?php 
+                                                        $countProjects = $sub->projects()
+                                                            ->where('active', 1)
+                                                            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                            ->where('appointed_to', \Auth::user()->id)
+                                                            ->get();
+
+                                                        $lists = count($countProjects);
+                                                    ?>
+
+                                                    @if ($lists > 0)
+                                                        <tr class="danger">
+                                                            <th colspan="9">{!! setBudgetTitle($sub->code, $sub->description) !!}</th>
+                                                        </tr>
+
+                                                        @foreach ($projectsForOfficer as $data)
+                                                            @if ($data->lookup_sub_budget_type_id == $sub->id)
+                                                                <tr>
+                                                                    <td class="text-center align-center">
+                                                                        {{ $projects->perPage() * ($projects->currentPage() - 1) + $loop->iteration }}
+                                                                    </td>
+                                                                    <td class="align-center">{{ $data->name }}</td>
+
+                                                                    <?php 
+                                                                        $from_transfer = 0;
+                                                                        $to_transfer = 0;
+
+                                                                        if (!empty($data->bspkTransfers)) {
+                                                                            $from_transfer = $data->bspkTransfers()
+                                                                                ->where('from_project_id', $data->id)
+                                                                                ->where('active', 1)
+                                                                                ->where('bspk_transfers.created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                                ->sum('transfer_amount');
+
+                                                                            $to_transfer = $data->bspkTransfers()
+                                                                                ->where('to_project_id', $data->id)
+                                                                                ->where('active', 1)
+                                                                                ->where('bspk_transfers.created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                                ->sum('transfer_amount');
+                                                                        }
+                                                                    ?>
+                                                                    <td class="text-right align-center">{{ '-' . currency($from_transfer) }}</td>
+                                                                    <td class="text-right align-center">{{ currency($to_transfer) }}</td>
+                                                                    <td class="text-right align-center">{{ currency($data->estimate_cost) }}</td>
+                                                                    <td class="text-right align-center">{{ currency($data->actual_project_cost) }}</td>
+                                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                                    <td class="text-right align-center">{{ '0.00' }}</td>
+                                                                    <td class="text-center align-center max60">
+                                                                        <div class="btn-group">
+                                                                            <a href="{{ route('projects.show', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                                <i class="fa fa-fw fa-folder-open-o"></i>
+                                                                            </a>
+                                                                            <button class="btn btn-sm btn-danger" type="submit">
+                                                                                <i class="fa fa-fw fa-trash-o"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            @endif
                                         @endif
                                     @endif
                                 </tbody>
