@@ -86,42 +86,60 @@
                                                     }
                                                 ?>
 
-                                                <td class="text-center align-center">{{ $loop->iteration }}</td>
-                                                <td class="text-cente align-center">{{ $data->code ?? '-' }}</td>
-                                                <td class="align-center">
+                                                <td rowspan="2" class="text-center align-center">{{ $loop->iteration }}</td>
+                                                <td rowspan="2" class="text-cente align-center">{{ $data->code ?? '-' }}</td>
+                                                <td rowspan="2" class="align-center">
                                                     <a href="{{ !empty($provision) ? route('allocations.index', $provision->id) : '' }}">
                                                         {{ $data->description ?? '' }}
                                                     </a>
                                                 </td>
-                                                <td class="text-right align-center">
+                                                <td rowspan="2" class="text-right align-center">
                                                     {{ !empty($provision) ? currency($provision->amount) : '0.00' }}
                                                 </td>
-                                                <td class="align-center">
-                                                    {{ $provision->extra_budget_from ?? '' }}
-                                                </td>
-                                                <td class="text-right align-center">
-                                                    {{ !empty($provision) ? currency($provision->extra_budget) : '0.00' }}
-                                                </td>
-                                                <td class="text-right align-center">
+                                                @if (!empty($provision->id) && !empty($addProv->where('provision_id', $provision->id)[0]->extra_budget_from))
+                                                    <td class="align-center">
+                                                        {{ !empty($provision->id) ? $addProv->where('provision_id', $provision->id)[0]->extra_budget_from : '' }}
+                                                    </td>
+                                                    <td class="text-right align-center">
+                                                        {{ !empty($provision->id) ? currency($addProv->where('provision_id', $provision->id)[0]->extra_budget) : '' }}
+                                                    </td>
+                                                @else
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                @endif
+                                                <td rowspan="2" class="text-right align-center">
                                                     {{ currency($sum_of_provision) }}
                                                 </td>
-                                                <td class="text-right align-center">
+                                                <td rowspan="2" class="text-right align-center">
                                                     {{ '0.00' }}
                                                 </td>
-                                                <td class="text-right align-center">
+                                                <td rowspan="2" class="text-right align-center">
                                                     {{ '0.00' }}
                                                 </td>
-                                                <td class="text-right align-center">
+                                                <td rowspan="2" class="text-right align-center">
                                                     {{ '0.00' }}
                                                 </td>
-                                                <td class="text-right align-center">
+                                                <td rowspan="2" class="text-right align-center">
                                                     {{ '0.00' }}
                                                 </td>
-                                                <td class="text-center">
+                                                <td rowspan="2" class="text-center align-center">
                                                     <a href="{{ route('provisions.edit', $data->id) }}" class="btn btn-sm bg-purple">
                                                         <i class="fa fa-fw fa-pencil-square-o"></i>
                                                     </a>
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                @if (!empty($provision->id) && !empty($addProv->where('provision_id', $provision->id)[1]->extra_budget_from))
+                                                    <td class="align-center">
+                                                        {{ !empty($provision->id) ? $addProv->where('provision_id', $provision->id)[1]->extra_budget_from : 'N/A' }}
+                                                    </td>
+                                                    <td class="text-right align-center">
+                                                        {{ !empty($provision->id) ? currency($addProv->where('provision_id', $provision->id)[1]->extra_budget) : '' }}
+                                                    </td>
+                                                @else
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     @endif

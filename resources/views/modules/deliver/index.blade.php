@@ -1,7 +1,7 @@
 @extends ('layouts.master')
 
 @push ('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/nhzq.css') }}">
 @endpush
 
 @section ('content')

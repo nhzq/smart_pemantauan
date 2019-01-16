@@ -130,6 +130,14 @@
     font-weight: 600;
 }
 
+.panel-maroon {
+    border-color: #9b0004 !important;
+    background-color: #9b0004 !important; 
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 600;
+}
+
 .panel-lime {
     border-color: #90ca4b !important;
     background-color: #90ca4b !important; 

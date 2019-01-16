@@ -25,6 +25,9 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
+    /* Mail section */
+    Route::get('/contract-ends/{project_id}', 'MailController@contractEnd')->name('notify.contract.end');
+
     /* Initial section */
     Route::group(['prefix' => 'initial'], function () {
         /* Categories based on B01, P01 */

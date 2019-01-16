@@ -19,6 +19,25 @@
 
             <div class="col-md-9">
                 <div class="panel panel-borderless">
+                    <div class="panel-body panel-nav">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if (!empty($project->contractorAppointment))
+                                    @if ($project->contractorAppointment->contract_end_date > \Carbon\Carbon::now()->subMonth(4))
+                                        <div class="pull-left">
+                                            <div class="btn-group">
+                                                <a href="{{ route('notify.contract.end', $project->id) }}" class="btn btn-danger">
+                                                    <i class="fa fa-fw fa-plus"></i> Notifikasi Kontrak
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">
                         Maklumat Projek
                     </div>

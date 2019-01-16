@@ -6,15 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Provision;
 use App\Models\Allocation;
 use App\Models\LookupBudgetType as Budget;
+use App\Models\AdditionalProvision as AddProv;
+use Illuminate\Support\Facades\DB;
 
 class ProvisionController extends Controller
 {
     public function index()
     {
         $lists = Budget::all();
+        $addProv = AddProv::where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->get();
 
         return view('modules.financial.provision.index', [
-            'lists' => $lists
+            'lists' => $lists,
+            'addProv' => $addProv
         ]);
     }
 
@@ -51,12 +57,26 @@ class ProvisionController extends Controller
     {
         $provision = Provision::find($provision);
 
-        $provision->lookup_budget_type_id = $request->budget_type;
-        $provision->amount = removeMaskMoney($request->budget_allocation);
-        $provision->extra_budget = !empty($request->additional_provision) ? removeMaskMoney($request->additional_provision) : null;
-        $provision->extra_budget_from = !empty($request->allocation_type) ? $request->allocation_type : null;
-        $provision->updated_by = \Auth::user()->id;
-        $provision->save();
+        DB::transaction(function () use ($request, $provision) {
+            $provision->lookup_budget_type_id = $request->budget_type;
+            $provision->amount = removeMaskMoney($request->budget_allocation);
+            $provision->save();
+
+            if (!empty($request->allocation_type) && is_array($request->allocation_type)) {
+                if (!empty($provision->additionals)) {
+                    $provision->additionals()->delete();
+                }
+
+                foreach ($request->allocation_type as $key => $type) {
+                    $provision->additionals()->create([
+                        'extra_budget_from' => $type,
+                        'extra_budget' => removeMaskMoney($request->additional_provision[$key]),
+                        'created_by' => \Auth::user()->id,
+                        'active' => 1
+                    ]);
+                }
+            }
+        });
 
         return redirect()
             ->route('provisions.index')

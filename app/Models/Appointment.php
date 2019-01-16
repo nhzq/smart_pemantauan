@@ -24,6 +24,7 @@ class Appointment extends Model
         'mof_end_date',
         'company_name',
         'company_address',
+        'company_email',
         'company_tel',
         'company_fax',
         'contract_start_date',

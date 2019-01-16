@@ -226,7 +226,18 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input class="form-control" 
+                                                        type="email" 
+                                                        name="contractor_company_email" 
+                                                        value="{{ $project->contractorAppointment->company_email ?? '' }}"
+                                                    >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>No Telefon</label>
                                                     <input class="form-control" 
@@ -237,7 +248,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>No Fax</label>
                                                     <input class="form-control" 

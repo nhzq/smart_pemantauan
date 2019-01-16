@@ -30,6 +30,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('company_name')->nullable();
             $table->text('company_address')->nullable();
             $table->string('company_tel')->nullable();
+            $table->string('company_email')->nullable();
             $table->string('company_fax')->nullable();
             $table->date('contract_start_date')->nullable();
             $table->date('contract_end_date')->nullable();

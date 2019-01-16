@@ -103,6 +103,7 @@ class ContractorController extends Controller
             $project->contractorAppointment->mof_end_date = $contractor_mof_end_date;
             $project->contractorAppointment->company_name = $request->contractor_company_name;
             $project->contractorAppointment->company_address = $request->contractor_company_address;
+            $project->contractorAppointment->company_email = $request->contractor_company_email;
             $project->contractorAppointment->company_tel = $request->contractor_company_tel;
             $project->contractorAppointment->company_fax = $request->contractor_company_fax;
             $project->contractorAppointment->updated_by = \Auth::user()->id;

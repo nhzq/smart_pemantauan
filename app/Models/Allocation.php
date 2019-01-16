@@ -47,4 +47,9 @@ class Allocation extends Model
     {
         return $this->hasMany('App\Models\Project');
     }
+
+    public function additionals()
+    {
+        return $this->hasMany('App\Models\AdditionalAllocation', 'allocation_id');
+    }
 }

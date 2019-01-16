@@ -67,6 +67,23 @@ if (!function_exists('getList')) {
     }
 }
 
+if (!function_exists('getAdditionalBudgetList')) {
+    function getAdditionalBudgetList() {
+        $types = [
+            'Dasar Baru',
+            'One Off'
+        ];
+
+        $output = '';
+
+        foreach ($types as $type) {
+            $output .= '<option value="' .  $type . '" listname="' . $type . '">' . $type . '</option>';
+        }
+
+        return $output;
+    }
+}
+
 if (!function_exists('getEstimateCostBalance')) {
     function getEstimateCostBalance($estimation, $allocation) {
         if (!empty($estimation)) {

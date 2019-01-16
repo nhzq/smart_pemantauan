@@ -60,11 +60,11 @@
                                 <tr>
                                     <?php 
                                         $total_provision = !empty($provision->sum('amount')) ? $provision->sum('amount') : 0;
-                                        $total_additional_budget = !empty($provision->sum('extra_budget')) ? $provision->sum('extra_budget') : 0;
+                                        $total_additional_budget = !empty($provision->additionals()) ? $provision->additionals()->sum('extra_budget') : 0;
                                         $sum_of_provision = $total_provision + $total_additional_budget;
                                     ?>
                                     <td class="text-center">{{ currency($provision->sum('amount')) }}</td>
-                                    <td class="text-center">{{ currency($provision->sum('extra_budget')) }}</td>
+                                    <td class="text-center">{{ !empty($provision->additionals()) ? currency($provision->additionals()->sum('extra_budget')) : '' }}</td>
                                     <th class="text-center">{{ currency($sum_of_provision) }}</th>
                                 </tr>
                             </table>

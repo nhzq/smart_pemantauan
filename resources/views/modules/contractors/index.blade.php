@@ -131,6 +131,10 @@
                                         <td>{!! $project->contractorAppointment->company_address ?? '' !!}</td>
                                     </tr>
                                     <tr>
+                                        <th class="col-md-3 min100">Email</th>
+                                        <td>{{ $project->contractorAppointment->company_email ?? '' }}</td>
+                                    </tr>
+                                    <tr>
                                         <th class="col-md-3 min100">No Telefon</th>
                                         <td>{{ $project->contractorAppointment->company_tel ?? '' }}</td>
                                     </tr>

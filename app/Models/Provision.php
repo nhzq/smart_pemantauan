@@ -28,4 +28,9 @@ class Provision extends Model
     {
         return $this->hasMany('App\Models\Allocation');
     }
+
+    public function additionals()
+    {
+        return $this->hasMany('App\Models\AdditionalProvision');
+    }
 }
