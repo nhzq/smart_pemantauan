@@ -82,6 +82,7 @@
                                     <tr class="info">
                                         <th class="text-center align-center">#</th>
                                         <th class="text-center align-center">Nama Projek</th>
+                                        <th class="text-center align-center">Status</th>
                                         <th class="text-center align-center">Pindah Peruntukan <br> - Dari (RM)</th>
                                         <th class="text-center align-center">Pindah Peruntukan <br> - Ke (RM)</th>
                                         <th class="text-center align-center">Anggaran <br> Kos (RM)</th>
@@ -95,13 +96,27 @@
                                     @if (\Auth::user()->hasAnyRole('ku|ks'))
                                         @if (!empty($subs))
                                             @foreach ($subs as $sub)
-                                                <?php 
-                                                    $lists = count($sub->projects()->where('active', 1)->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')->get());
+                                                <?php
+                                                    if (\Auth::user()->hasRole('ks')) {
+                                                        $lists = count($sub->projects()
+                                                            ->where('active', 1)
+                                                            ->where('section_id', \Auth::user()->lookup_section_id)
+                                                            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                            ->get());
+                                                    } 
+
+                                                    if (\Auth::user()->hasRole('ku')){
+                                                        $lists = count($sub->projects()
+                                                            ->where('active', 1)
+                                                            ->where('unit_id', \Auth::user()->lookup_unit_id)
+                                                            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                            ->get());
+                                                    }
                                                 ?>
 
                                                 @if ($lists > 0)
                                                     <tr class="danger">
-                                                        <th colspan="9">{!! setBudgetTitle($sub->code, $sub->description) !!}</th>
+                                                        <th colspan="10">{!! setBudgetTitle($sub->code, $sub->description) !!}</th>
                                                     </tr>
 
                                                     @foreach ($projects as $data)
@@ -147,6 +162,7 @@
                                                                             ->sum('transfer_amount');
                                                                     }
                                                                 ?>
+                                                                <td class="text-right align-center">&nbsp;</td>
                                                                 <td class="text-right align-center">{{ '-' . currency($from_transfer) }}</td>
                                                                 <td class="text-right align-center">{{ currency($to_transfer) }}</td>
                                                                 <td class="text-right align-center">{{ currency($data->estimate_cost) }}</td>

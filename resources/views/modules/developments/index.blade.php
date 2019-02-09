@@ -18,12 +18,12 @@
             @include ('components._menu')
 
             <div class="col-md-9">
-                <div class="panel panel-borderless">
-                    <div class="panel-body panel-nav">
-                        <div class="row">
-                            <div class="col-md-12">
-                                @if (!empty($project->contractorAppointment))
-                                    @if ($project->contractorAppointment->contract_end_date > \Carbon\Carbon::now()->subMonth(4))
+                @if (!empty($project->contractorAppointment))
+                    @if ($project->contractorAppointment->contract_end_date > \Carbon\Carbon::now()->subMonth(4))
+                        <div class="panel panel-borderless">
+                            <div class="panel-body panel-nav">
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="pull-left">
                                             <div class="btn-group">
                                                 <a href="{{ route('notify.contract.end', $project->id) }}" class="btn btn-danger">
@@ -31,12 +31,12 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    @endif
-                                @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    @endif
+                @endif
                 <div class="panel panel-borderless">
                     <div class="panel-heading panel-dark">
                         Maklumat Projek
@@ -57,8 +57,12 @@
                                         <td>{{ $project->file_reference_no ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="col-md-3 min100">Skop/Konsep/Tujuan</th>
-                                        <td>{!! $project->concept ?? 'N/A' !!}</td>
+                                        <th class="col-md-3 min100">Tujuan</th>
+                                        <td>{!! $project->initial_purpose ?? 'N/A' !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-3 min100">Skop</th>
+                                        <td>{!! $project->initial_scope ?? 'N/A' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Anggaran Kos (RM)</th>

@@ -15,11 +15,11 @@ class LookupSectionTableSeeder extends Seeder
         $inserts = [
             [
                 'name' => 'ks-1',
-                'displayed_name' => 'Kumpulan Sub Seksyen 1',
+                'displayed_name' => 'Seksyen Operasi, Rangkaian, dan Keselamatan',
             ],
             [
                 'name' => 'ks-2',
-                'displayed_name' => 'Kumpulan Sub Seksyen 2',
+                'displayed_name' => 'Seksyen Strategik dan Maklumat',
             ]
         ];
         

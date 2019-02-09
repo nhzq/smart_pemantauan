@@ -77,6 +77,8 @@
                                             <td class="text-center" colspan="2"></td>
                                         </tr>
                                     </table>
+                                    
+                                    <hr>
 
                                     <table class="table table-hover table-bordered font-std">
                                         <tr class="info">
@@ -92,9 +94,9 @@
                                         @if (!empty($project->interims))
                                             @foreach ($project->interims as $data)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ ucwords($data->payment_type) ?? '' }}</td>
-                                                    <td>{{ $data->payment_no ?? '' }}</td>
+                                                    <td class="align-center">{{ $loop->iteration }}</td>
+                                                    <td class="align-center">{{ ucwords($data->payment_type) ?? '' }}</td>
+                                                    <td class="align-center">{{ $data->payment_no ?? '' }}</td>
 
                                                     <?php 
                                                         $payment_date = '';
@@ -108,9 +110,9 @@
                                                             $amount = currency($data->amount);
                                                         }
                                                     ?>
-                                                    <td>{{ $payment_date }}</td>
-                                                    <td class="text-right">{{ $amount }}</td>
-                                                    <td>{{ $data->description ?? '' }}</td>
+                                                    <td class="align-center">{{ $payment_date }}</td>
+                                                    <td class="text-right align-center">{{ $amount }}</td>
+                                                    <td class="align-center">{{ $data->description ?? '' }}</td>
 
                                                     <?php 
                                                         $result = '0';
@@ -121,7 +123,7 @@
                                                         }
 
                                                     ?>
-                                                    <td>{{ number_format($result, 2, '.', '') . '%' }}</td>
+                                                    <td class="align-center">{{ number_format($result, 2, '.', '') . '%' }}</td>
                                                     <td class="text-center align-center">
                                                         @if (empty($data->status))
                                                             <div class="btn-group-vertical">
@@ -141,6 +143,129 @@
                                                 </tr>
                                             @endforeach
                                         @endif
+                                    </table>
+
+                                    <hr>
+                                    
+                                    <?php 
+                                        $upload_files = [
+                                            'Surat Perjanjian', 'Senarai Semak', 'Kertas Cadangan'
+                                        ];
+
+                                        $i = 1;
+                                    ?>
+                                    <table class="table table-hover table-bordered font-std">
+                                        <tr class="info">
+                                            <th class="col-sm-1 text-center">#</th>
+                                            <th class="col-sm-2">Jenis</th>
+                                            <th class="col-sm-8">Fail</th>
+                                            <th class="col-sm-1 min100">&nbsp;</th>
+                                        </tr>
+
+                                        @foreach ($upload_files as $key => $data)
+                                            <tr>
+                                                <td class="text-center align-center">{{ $i }}</td>
+                                                <td class="align-center">{{ $data }}</td>
+
+                                                @if (!empty($project->interim_docs))
+                                                    <td>
+                                                        @foreach ($project->interim_docs as $doc)
+                                                            @if ($doc->category == strtolower(str_replace(' ', '-', $data)))
+                                                                <a href="{{ url('storage/projects/' . $project->id . '/interims/' . $doc->file_name) }}">
+                                                                    <small class="label bg-maroon"><i class="fa fa-download"></i></small> &nbsp;
+                                                                    {{ $doc->original_name ?? '' }}
+                                                                </a>
+                                                                <br>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endif
+
+                                                <td class="align-center">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm bg-purple" data-toggle="modal" data-target="#modal-default-{{ $key }}">
+                                                            <i class="fa fa-fw fa-plus"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-update-{{ $key }}">
+                                                            <i class="fa fa-fw fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <div class="modal fade" id="modal-default-{{ $key }}">
+                                                <div class="modal-dialog">
+                                                    {{ Form::open([
+                                                        'url' => route('interims.upload', $project->id), 
+                                                        'method' => 'POST', 
+                                                        'enctype' => 'multipart/form-data']) 
+                                                    }}
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title">Muat Naik Dokumen {{ $data }}</h4>
+                                                            </div>
+
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Minit Mesyuarat</label>
+                                                                    <input type="file" name="upload_files[]" class="form-control" multiple>
+                                                                </div>
+                                                            </div>
+
+                                                            <input type="hidden" name="file_type" value="{{ $data }}">
+
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                            </div>
+                                                        </div>
+                                                    {{ Form::close() }}
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="modal-update-{{ $key }}">
+                                                <div class="modal-dialog">
+                                                    {{ Form::open([
+                                                        'url' => route('interims.delete', $project->id), 
+                                                        'method' => 'POST',
+                                                    ]) 
+                                                    }}
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title">Kemaskini Dokumen {{ $data }}</h4>
+                                                            </div>
+
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Senarai Dokumen {{ $data }}</label>
+                                                                    <br>
+                                                                    @if (!empty($project->interim_docs))
+                                                                        @foreach ($project->interim_docs as $doc)
+                                                                            @if ($doc->category == strtolower(str_replace(' ', '-', $data)))
+                                                                                <input type="checkbox" name="file_list[]" value="{{ $doc->id ?? '' }}">
+                                                                                    &nbsp; &nbsp; {{ $doc->original_name ?? '' }}
+                                                                                <br>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                            </div>
+                                                        </div>
+                                                    {{ Form::close() }}
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                            </div>
+
+                                            <?php $i++; ?>
+                                        @endforeach
                                     </table>
                                 </div>
                             </div>

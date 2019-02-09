@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\InterimDocument; 
 
 class InterimController extends Controller
 {
@@ -121,5 +122,51 @@ class InterimController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Maklumat pembayaran kontrak telah pun di kemaskini untuk Unit Kewangan.');
+    }
+
+    public function upload($project_id, Request $request)
+    {
+        $project = Project::find($project_id);
+
+        if ($request->hasFile('upload_files')) {
+            foreach ($request->upload_files as $data) {
+                if (!empty($data)) {
+                    $category = '';
+
+                    if (!empty($request->file_type)) {
+                        $category = strtolower(str_replace(' ', '-', $request->file_type));
+                    }
+
+                    $doc_new_name = time() . str_replace(' ', '-', $data->getClientOriginalName());
+                    $data->storeAs('/public/projects/' . $project->id . '/interims/', $doc_new_name);
+                    $project->interim_docs()->create([
+                        'project_id' => $project->id,
+                        'category' => $category,
+                        'file_name' => $doc_new_name,
+                        'original_name' => $data->getClientOriginalName(),
+                        'mime_type' => $data->getMimeType(),
+                        'size' => $data->getSize()
+                    ]);
+                }
+            }
+        }
+
+        return redirect()
+            ->back()
+            ->with('success', 'Fail telah berjaya dimuat naik.');
+    }
+
+    public function delete($project_id, Request $request)
+    {
+        if (!empty($request->file_list)) {
+            foreach ($request->file_list as $list) {
+                $doc = InterimDocument::where('id', $list)->first();
+                $doc->delete();
+            }
+
+            return redirect()
+                ->back()
+                ->with('success', 'Fail telah berjaya dikemaskini.');
+        }
     }
 }

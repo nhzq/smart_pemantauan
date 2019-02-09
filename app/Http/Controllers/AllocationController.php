@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Provision;
 use App\Models\LookupBudgetType as Budget;
+use App\Models\AdditionalAllocation as AddAllocation;
+use Illuminate\Support\Facades\DB;
 
 class AllocationController extends Controller
 {
     public function index($provision_id)
     {
         $provision = Provision::find($provision_id);
+        $addAllocation = AddAllocation::where('active', 1)
+            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+            ->get();
 
         return view('modules.financial.allocation.index', [
             'provision' => $provision,
+            'addAllocation' => $addAllocation
         ]);
     }
 
@@ -122,30 +128,41 @@ class AllocationController extends Controller
                 ->with('error', 'Jumlah peruntukan baru telah melebihi peruntukan yang ditetapkan.');
         }
 
-        $provision_extra_budget = !empty($provision->extra_budget) ? $provision->extra_budget : 0;
-        $sum_of_extra_budget = $provision->allocations()
-            ->where('active', 1)
-            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-            ->sum('extra_budget');
+        // UTK EXTRA BUDGET
+        $i = 0;
+        foreach ($request->allocation_type as $type) {
+            if ($type != $allocation->additionals[0]->extra_budget_from) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Jumlah peruntukan tambahan yang dipilih tidak ditetapkan lagi. Sila semak semula maklumat.');
+            }
 
-        $get_sum = $sum_of_extra_budget ?? 0;
-        $get_request = removeMaskMoney($request->additional_provision) ?? 0;
-        $get_current = $allocation->extra_budget ?? 0;
-        $get_net = $get_sum - $get_current + $get_request;
-
-        if ($get_net > $provision_extra_budget) {
-            return redirect()
-                ->back()
-                ->with('error', 'Jumlah peruntukan baru telah melebihi peruntukan yang ditetapkan.');
+            $i++;
         }
+        
+        // if exist, check jumlah request tak lebih dari net total peruntukan tambahan
 
-        $allocation->lookup_sub_budget_type_id = $request->budget_sub;
-        $allocation->amount = removeMaskMoney($request->budget_allocation);
-        $allocation->extra_budget = removeMaskMoney($request->additional_provision);
-        $allocation->extra_budget_from = $request->provision_type;
-        $allocation->extra_budget_date = \Carbon\Carbon::now();
-        $allocation->updated_by = \Auth::user()->id;
-        $allocation->save();
+        DB::transaction(function () use ($request, $allocation) {
+            $allocation->lookup_sub_budget_type_id = $request->budget_sub;
+            $allocation->amount = removeMaskMoney($request->budget_allocation);
+            $allocation->updated_by = \Auth::user()->id;
+            $allocation->save();
+
+            if (!empty($request->allocation_type) && is_array($request->allocation_type)) {
+                if (!empty($allocation->additionals)) {
+                    $allocation->additionals()->delete();
+                }
+
+                foreach ($request->allocation_type as $key => $type) {
+                    $allocation->additionals()->create([
+                        'extra_budget_from' => $type,
+                        'extra_budget' => removeMaskMoney($request->additional_provision[$key]),
+                        'created_by' => \Auth::user()->id,
+                        'active' => 1
+                    ]);
+                }
+            }
+        });
 
         return redirect()
             ->route('allocations.index', $provision->id)

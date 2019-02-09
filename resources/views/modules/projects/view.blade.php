@@ -60,17 +60,17 @@
                                                 <td>{{ $project->file_reference_no ?? 'N/A' }}</td>
                                             </tr>
                                             <tr>
-                                                <th class="col-md-3 min100">Skop</th>
-                                                <td>{!! $project->initial_scope ?? 'N/A' !!}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="col-md-3 min100">Konsep</th>
-                                                <td>{!! $project->initial_concept ?? 'N/A' !!}</td>
-                                            </tr>
-                                            <tr>
                                                 <th class="col-md-3 min100">Tujuan</th>
                                                 <td>{!! $project->initial_purpose ?? 'N/A' !!}</td>
                                             </tr>
+                                            <tr>
+                                                <th class="col-md-3 min100">Skop</th>
+                                                <td>{!! $project->initial_scope ?? 'N/A' !!}</td>
+                                            </tr>
+                                            {{-- <tr>
+                                                <th class="col-md-3 min100">Konsep</th>
+                                                <td>{!! $project->initial_concept ?? 'N/A' !!}</td>
+                                            </tr> --}}
                                             <tr>
                                                 <th class="col-md-3 min100">Anggaran Kos (RM)</th>
                                                 <td>{{ currency($project->estimate_cost) ?? '0.00' }}</td>

@@ -75,12 +75,12 @@
                                 <thead class="font-p">
                                     <tr class="info">
                                         <th class="text-center align-center">#</th>
-                                        <th class="text-center align-center">Kod</th>
+                                        <th class="text-center align-center">Objek <br>Sebagai</th>
                                         <th class="text-center align-center">Butiran</th>
                                         <th class="text-center align-center">Peruntukan <br>(RM)</th>
                                         <th class="text-center align-center" colspan="2">Peruntukan <br>Tambahan (RM)</th>
-                                        <th class="text-center align-center">Pindah Peruntukan <br>- Daripada (RM)</th>
-                                        <th class="text-center align-center">Pindah Peruntukan <br>- Ke (RM)</th>
+                                        {{-- <th class="text-center align-center">Pindah Peruntukan <br>- Daripada (RM)</th>
+                                        <th class="text-center align-center">Pindah Peruntukan <br>- Ke (RM)</th> --}}
                                         <th class="text-center align-center">Peruntukan <br>Kemaskini (RM)</th>
                                         <th class="text-center align-center">Anggaran <br>Kos (RM)</th>
                                         <th class="text-center align-center">Kos Projek <br>(RM)</th>
@@ -93,12 +93,17 @@
                                     @if (!empty($provision))
                                         @foreach ($provision->allocations as $data)
                                             <tr>
-                                                <td class="text-center align-center">{{ $loop->iteration }}</td>
-                                                <td class="text-center align-center">{{ $data->sub->code ?? '' }}</td>
-                                                <td class="align-center">{{ $data->sub->description ?? '' }}</td>
-                                                <td class="align-center text-right">{{ currency($data->amount) }}</td>
-                                                <td class="align-center text-right">{{ $data->extra_budget_from ?? '' }}</td>
-                                                <td class="align-center text-right">{{ currency($data->extra_budget) }}</td>
+                                                <td rowspan="2" class="text-center align-center">{{ $loop->iteration }}</td>
+                                                <td rowspan="2" class="text-center align-center">{{ $data->sub->code ?? '' }}</td>
+                                                <td rowspan="2" class="align-center">{{ $data->sub->description ?? '' }}</td>
+                                                <td rowspan="2" class="align-center text-right">{{ currency($data->amount) }}</td>
+                                                @if (!empty($addAllocation->where('allocation_id', $data->id)[0]->extra_budget_from))
+                                                    <td class="align-center text-right">{{ $addAllocation->where('allocation_id', $data->id)[0]->extra_budget_from }}</td>
+                                                    <td class="align-center text-right">{{ currency($addAllocation->where('allocation_id', $data->id)[0]->extra_budget) }}</td>
+                                                @else
+                                                    <td>&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                @endif
 
                                                 <?php 
                                                     $from_transfer = 0;
@@ -118,8 +123,8 @@
                                                             ->sum('transfer_amount');
                                                     }
                                                 ?>
-                                                <td class="align-center text-right">{{ '-' . currency($from_transfer) }}</td>
-                                                <td class="align-center text-right">{{ currency($to_transfer) }}</td>
+                                                {{-- <td rowspan="2" class="align-center text-right">{{ '-' . currency($from_transfer) }}</td> --}}
+                                                {{-- <td rowspan="2" class="align-center text-right">{{ currency($to_transfer) }}</td> --}}
 
                                                 <?php 
                                                     $extra = !empty($data->extra_budget) ? $data->extra_budget : 0;
@@ -133,18 +138,22 @@
                                                         $sum_of_allocation = $sum_of_allocation + removeMaskMoney($to_transfer);
                                                     }
                                                 ?>
-                                                <td class="align-center text-right">{{ currency($sum_of_allocation) }}</td>
-                                                <td class="align-center text-right">{{ currency($data->projects()->sum('estimate_cost')) }}</td>
-                                                <td class="align-center text-right">{{ '0.00' }}</td>
-                                                <td class="align-center text-right">{{ '0.00' }}</td>
-                                                <td class="align-center text-right">{{ '0.00' }}</td>
-                                                <td class="text-center">
+                                                <td rowspan="2" class="align-center text-right">{{ currency($sum_of_allocation) }}</td>
+                                                <td rowspan="2" class="align-center text-right">{{ currency($data->projects()->sum('estimate_cost')) }}</td>
+                                                <td rowspan="2" class="align-center text-right">{{ '0.00' }}</td>
+                                                <td rowspan="2" class="align-center text-right">{{ '0.00' }}</td>
+                                                <td rowspan="2" class="align-center text-right">{{ '0.00' }}</td>
+                                                <td rowspan="2" class="text-center align-center">
                                                     <div class="btn-group-vertical">
                                                         <a href="{{ route('allocations.edit', [$provision->id, $data->id]) }}" class="btn btn-sm bg-purple">
                                                             <i class="fa fa-fw fa-pencil-square-o"></i>
                                                         </a>
                                                     </div>
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-center">&nbsp;</td>
+                                                <td class="align-center">&nbsp;</td>
                                             </tr>
 
                                             <?php 
@@ -157,11 +166,11 @@
 
                                         @if (count($provision->allocations) > 0)
                                             <tr class="warning">
-                                                <td colspan="3" class="text-center font-h6">Jumlah Keseluruhan</td>
+                                                <td colspan="2" class="text-center font-h6">Jumlah Keseluruhan</td>
                                                 <td class="text-right font-h6">
                                                     {{ !empty(array_sum($group_of_allocation)) ? currency(array_sum($group_of_allocation)) : '' }}
                                                 </td>
-                                                <td colspan="2" class="text-right">
+                                                <td class="text-right">
                                                     {{ !empty(array_sum($group_of_extra)) ? currency(array_sum($group_of_extra)) : '' }}
                                                 </td>
                                                 <td colspan="2">&nbsp;</td>

@@ -15,6 +15,8 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('section_id')->unsigned()->nullable();
+            $table->integer('unit_id')->unsigned()->nullable();
             $table->integer('allocation_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('file_reference_no')->nullable();

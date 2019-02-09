@@ -40,7 +40,11 @@
 
             .sidebar-toggle-maroon:hover {
                 color: #ffffff !important;
-                background: #721213  !important;
+                background: #721213 !important;
+            }
+
+            .sidebar-menu > li.active > a {
+                border-left-color: #222D32 !important;
             }
         </style>
     </head>

@@ -6,76 +6,98 @@
 
     <!-- Main content -->
     <section class="content">
-        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-borderless">
+                    <div class="panel-heading panel-dark">
+                        Senarai Peruntukan
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>1</h3>      
+                                        <p>Senarai Projek</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>1</h3>      
+                                        <p>Senarai Projek</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>1</h3>      
+                                        <p>Senarai Projek</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>1</h3>      
+                                        <p>Senarai Projek</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>1</h3>      
+                                        <p>Senarai Projek</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>1</h3>      
+                                        <p>Senarai Projek</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="row">
             <div class="col-lg-6 col-xs-12">
-                <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        @if (count(\App\Models\Project::all()) > 0)
-                            <h3></h3>
-                        @else
-                            <h3>RM 0.00</h3>         
-                        @endif
-
-                        <p>Total Budget</p>
+                        <h3>1</h3>      
+                        <p>Senarai Projek</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
+
             <div class="col-lg-6 col-xs-12">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        @if (count(\App\Models\Project::all()) > 0)
-                            <h3></h3>
-                        @else
-                            <h3>RM 0.00</h3>         
-                        @endif
-
-                        <p></p>
+                        <h3>1</h3>      
+                        <p>Senarai Kelulusan Projek</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
-            {{-- <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>44</h3>
-
-                        <p>User Registrations</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> --}}
-            <!-- ./col -->
-        {{--     <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>65</h3>
-
-                        <p>Unique Visitors</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> --}}
-            <!-- ./col -->
         </div>
 
         @include ('components._flashes')

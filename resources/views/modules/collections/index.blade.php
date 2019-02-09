@@ -38,8 +38,12 @@
                                         <td>{{ $project->file_reference_no ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="col-md-3 min100">Skop/Konsep/Tujuan</th>
-                                        <td>{!! $project->concept ?? 'N/A' !!}</td>
+                                        <th class="col-md-3 min100">Tujuan</th>
+                                        <td>{!! $project->initial_purpose ?? 'N/A' !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-md-3 min100">Skop</th>
+                                        <td>{!! $project->initial_scope ?? 'N/A' !!}</td>
                                     </tr>
                                     <tr>
                                         <th class="col-md-3 min100">Anggaran Kos (RM)</th>

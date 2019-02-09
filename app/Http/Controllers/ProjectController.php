@@ -103,12 +103,14 @@ class ProjectController extends Controller
                 DB::transaction(function () use ($request, $allocation) {
                     $project = Project::create([
                         'allocation_id' => $allocation->id,
+                        'section_id' => $this->getSection(),
+                        'unit_id' => $this->getUnit(),
                         'lookup_budget_type_id' => $request->project_budget_type,
                         'lookup_sub_budget_type_id' => $request->project_sub_budget_type,
                         'name' => $request->project_name,
                         'file_reference_no' => $request->project_file_reference,
                         'initial_scope' => $request->project_scope,
-                        'initial_concept' => $request->project_concept,
+                        // 'initial_concept' => $request->project_concept,
                         'initial_purpose' => $request->project_purpose,
                         'estimate_cost' => removeMaskMoney($request->project_estimate_cost),
                         'approval_date' => setDateValue($request->project_approval_date, Carbon::createFromFormat('d/m/Y', $request->project_approval_date)),
@@ -262,11 +264,13 @@ class ProjectController extends Controller
         if (!empty($allocation)) {
             if ($estimate_cost <= $balance) {
                 $project->lookup_budget_type_id = $request->project_budget_type;
+                $project->section_id = $this->getSection();
+                $project->unit_id = $this->getUnit();
                 $project->lookup_sub_budget_type_id = $request->project_sub_budget_type;
                 $project->name = $request->project_name;
                 $project->file_reference_no = $request->project_file_reference;
                 $project->initial_scope = $request->project_scope;
-                $project->initial_concept = $request->project_concept;
+                // $project->initial_concept = $request->project_concept;
                 $project->initial_purpose = $request->project_purpose;
                 $project->estimate_cost = removeMaskMoney($request->project_estimate_cost);
                 $project->approval_date = $approval_date;
@@ -291,5 +295,27 @@ class ProjectController extends Controller
     public function delete($id)
     {
         //
+    }
+
+    public function getSection()
+    {
+        $user_section = null;
+
+        if (!empty(\Auth::user()->unit->lookup_section_id)) {
+            $user_section = \Auth::user()->unit->lookup_section_id;
+        }
+
+        return $user_section;
+    }
+
+    public function getUnit()
+    {
+        $user_unit = null;
+
+        if (!empty(\Auth::user()->lookup_unit_id)) {
+            $user_unit = \Auth::user()->lookup_unit_id;
+        }
+
+        return $user_unit;
     }
 }

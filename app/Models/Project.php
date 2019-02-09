@@ -19,6 +19,8 @@ class Project extends Model
     
     protected $fillable = [
         'allocation_id',
+        'section_id',
+        'unit_id',
         'lookup_budget_type_id', 
         'lookup_sub_budget_type_id', 
         'name', 
@@ -175,6 +177,11 @@ class Project extends Model
     public function bspkTransfers()
     {
         return $this->belongsToMany('App\Models\BspkTransfer', 'bspk_project', 'project_id', 'bspk_transfer_id');
+    }
+
+    public function interim_docs()
+    {
+        return $this->hasMany('App\Models\InterimDocument', 'project_id');
     }
 
     /*

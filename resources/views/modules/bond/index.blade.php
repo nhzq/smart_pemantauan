@@ -64,6 +64,58 @@
                                             ?>
                                             <td>{{ $total_payment }}</td>
                                         </tr>
+                                        <tr>
+                                            <?php 
+                                                $bond_value = '';
+
+                                                if (!empty($project->bond->bond_value)) {
+                                                    $bond_value = currency($project->bond->bond_value);
+                                                }
+                                            ?>
+                                            <th class="col-md-5">Nilai Bond (RM)</th>
+                                            <td>{{ $bond_value }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Nama Bank</th>
+                                            <td>{{ !empty($project->bond->bank_name) ? $project->bond->bank_name : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Tarikh Awal</th>
+                                            <?php 
+                                                $start_date = null;
+
+                                                if (!empty($project->bond->start_date)) {
+                                                    $start_date = $project->bond->start_date->format('d/m/Y');
+                                                }
+                                            ?>
+                                            <td>{{ $start_date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Tarikh Akhir</th>
+                                            <?php 
+                                                $end_date = null;
+
+                                                if (!empty($project->bond->end_date)) {
+                                                    $end_date = $project->bond->end_date->format('d/m/Y');
+                                                }
+                                            ?>
+                                            <td>{{ $end_date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Tempoh Bond</th>
+                                            <?php
+                                                $diff = 0;
+
+                                                if (!empty($project->bond->end_date) && !empty($project->bond->start_date)) {
+                                                    $diff = $project->bond->end_date->diffInDays($project->bond->start_date);
+                                                }
+                                            ?>
+                                            <td>{{ $diff }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-5">Catatan</th>
+                                            <td>{!! $project->bond->notes ?? '' !!}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

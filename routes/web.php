@@ -137,6 +137,8 @@ Route::group(['middleware' => 'auth'], function () {
         /* Interim section */
         Route::resource('/{project_id}/interims', 'InterimController');
         Route::get('/{project_id}/interims/{interim_id}/notify', 'InterimController@notify')->name('interims.notify');
+        Route::post('/{project_id}/interims/upload_file', 'InterimController@upload')->name('interims.upload');
+        Route::post('/{project_id}/interims/delete_file', 'InterimController@delete')->name('interims.delete');
 
         /* Bond section */
         Route::resource('/{project_id}/bond', 'BondController');

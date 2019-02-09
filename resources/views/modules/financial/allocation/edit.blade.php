@@ -53,30 +53,63 @@
                                     <hr>
                                         <div class="text-center"><strong>Peruntukan Tambahan</strong></div>
                                     <hr>
-
+                                    
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Jenis Peruntukan</label>
-                                                <select id="provision_type" class="form-control" name="provision_type">
-                                                    <option value="0">-- Sila Pilih --</option>
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-bordered" id="item_table">
+                                                    <tr class="info">
+                                                        <th style="vertical-align: middle;">Jenis Peruntukan</th>
+                                                        <th style="vertical-align: middle;">Jumlah (RM)</th>
+                                                        <th class="col-sm-1 text-center">
+                                                            <button type="button" name="add" class="btn btn-diamond btn-sm add"><span class="glyphicon glyphicon-plus"></span></button>
+                                                        </th>
+                                                    </tr>
 
-                                                    @foreach ($provision->additionals as $additional)
-                                                        <option value="{{ $additional->extra_budget_from }}">{{ $additional->extra_budget_from }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                                    @if (!empty($allocation->additionals))
+                                                        @foreach ($allocation->additionals as $data)
+                                                            <tr>
+                                                                <td>
+                                                                    <?php
+                                                                        $types = [
+                                                                            'Dasar Baru',
+                                                                            'One Off'
+                                                                        ];
+                                                                    ?>
+                                                                    <select id="provision_type" class="form-control" name="allocation_type[]">
+                                                                        <option value="0">-- Sila Pilih --</option>
+                                                                        @foreach ($types as $type)
+                                                                            <?php 
+                                                                                $selected = '';
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Jumlah (RM)</label>
-                                                <input class="form-control money-convert" type="text" name="additional_provision" 
-                                                    value="">
+                                                                                if ($data->extra_budget_from == $type) {
+                                                                                    $selected = 'selected';
+                                                                                }
+                                                                            ?>
+                                                                            <option value="{{ $type }}" {{ $selected }}>{{ $type }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control money-convert"
+                                                                        name="additional_provision[]" 
+                                                                        value="{{ currency($data->extra_budget) }}"
+                                                                    />
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <button type="button" name="remove" class="btn btn-danger btn-sm remove">
+                                                                        <span class="glyphicon glyphicon-minus"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 @endif
+                                
                             </div>
 
                             <div class="col-md-2 mrg20B mrg20T pull-right">
@@ -143,6 +176,35 @@
         </div>
     @endif
 @endif --}}
+
+{{-- @if (!empty($provision->additionals))
+    <hr>
+        <div class="text-center"><strong>Peruntukan Tambahan</strong></div>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Jenis Peruntukan</label>
+                <select id="provision_type" class="form-control" name="provision_type">
+                    <option value="0">-- Sila Pilih --</option>
+
+                    @foreach ($provision->additionals as $additional)
+                        <option value="{{ $additional->extra_budget_from }}">{{ $additional->extra_budget_from }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Jumlah (RM)</label>
+                <input class="form-control money-convert" type="text" name="additional_provision" 
+                    value="">
+            </div>
+        </div>
+    </div>
+@endif --}}
     <!-- /.content -->
 @endsection
 
@@ -151,6 +213,33 @@
     <script type="text/javascript">
         $(function () {
             $('.money-convert').maskMoney();
+
+            var max = 2;
+            var x = 1;
+
+            $(document).on('click', '.add', function () {
+                if (x <= max) {
+                    var html = '';
+
+                    html += '<tr>';
+                    html += '<td>';
+                    html += '<select id="provision_type" class="form-control" name="allocation_type[]">';
+                    html += '<option value="0">-- Sila Pilih --</option><?php echo getAdditionalBudgetList(); ?>';
+                    html += '</select>';
+                    html += '</td>';
+                    html += '<td><input type="text" name="additional_provision[]" class="form-control money-convert" /></td>';
+                    html += '<td class="text-center"><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
+
+                    $('#item_table').append(html);
+                    $('#item_table').find('.money-convert').maskMoney();
+
+                    x++;
+                }
+            });
+
+            $(document).on('click', '.remove', function() {
+                $(this).closest('tr').remove();
+            });
         });
     </script>
 @endpush

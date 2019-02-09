@@ -27,7 +27,7 @@
                                             <label>Jenis Bayaran</label>
                                             <?php 
                                                 $types = [
-                                                    'insuran', 'interim', 'bank' 
+                                                    'interim', 'bond'
                                                 ];
                                             ?>
                                             <select class="form-control" name="payment_type">

@@ -50,7 +50,7 @@
                                 <thead class="font-p">
                                     <tr class="info">
                                         <th class="text-center align-center">#</th>
-                                        <th class="text-center align-center">Kod</th>
+                                        <th class="text-center align-center">Objek <br>Sebagai</th>
                                         <th class="text-center align-center">Butiran</th>
                                         <th class="text-center align-center">Peruntukan <br>(RM)</th>
                                         <th class="text-center align-center" colspan="2">Peruntukan <br>Tambahan (RM)</th>
