@@ -47,6 +47,18 @@
             <span class="label label-warning">Perlu Semakan</span>
         @endif
     @endif
+
+    {{-- @if (\App\Helpers\Status::planning_approved_by_ks($data->status))
+        @if (\Auth::user()->hasRole('ku'))
+            <span class="label label-success">Projek Diterima KS</span>
+        @endif
+    @endif
+
+    @if (\App\Helpers\Status::planning_rejected_by_ks($data->status))
+        @if (\Auth::user()->hasRole('ku'))
+            <span class="label label-danger">Projek Ditolak KS</span>
+        @endif
+    @endif --}}
 @endif
 
 @if (Route::current()->getName() == 'planning.reviews.index')

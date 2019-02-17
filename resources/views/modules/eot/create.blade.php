@@ -20,24 +20,43 @@
                     </div>
 
                     <div class="panel-body">
-                        {{ Form::open(['url' => route('eot.store', $project->id) , 'method' => 'POST']) }}
+                        {{ Form::open(['url' => route('eot.store', $project->id) , 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Tarikh Permohonan</label>
+                                            <input class="form-control pickdate" type="text" name="application_date">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Tarikh Kelulusan EOT</label>
+                                            <input class="form-control pickdate" type="text" name="eot_approval_date">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Tarikh Lanjut Tempoh</label>
+                                            <input class="form-control pickdate" type="text" name="extension_date">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Tarikh dari SST Mula</label>
-                                            <input class="form-control" 
-                                                type="text" 
-                                                value="{{ !empty($project->contractorAppointment->sst) ? $project->contractorAppointment->sst->format('d/m/Y') : '' }}" 
-                                                readonly
-                                            >
+                                            <label>Surat EOT</label>
+                                            <input class="form-control" type="file" name="eot_doc[]" multiple>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Tarikh Lanjutan Tempoh Akhir</label>
-                                            <input class="form-control pickdate" type="text" name="extend_date">
+                                            <label>Perjanjian Tambahan</label>
+                                            <input class="form-control" type="file" name="agreement_doc[]" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -45,8 +64,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Sebab-sebab</label>
-                                            <textarea class="form-control texteditor" name="reasons" cols="30" rows="5"></textarea>
+                                            <label>Klausa Perlanjutan (Bulan)</label>
+                                            <textarea class="form-control texteditor" name="clause" cols="30" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -54,8 +73,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Tindakan Diambil</label>
-                                            <textarea class="form-control texteditor" name="action_taken" cols="30" rows="5"></textarea>
+                                            <label>Catatan</label>
+                                            <textarea class="form-control texteditor" name="remarks" cols="30" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>

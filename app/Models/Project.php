@@ -184,6 +184,11 @@ class Project extends Model
         return $this->hasMany('App\Models\InterimDocument', 'project_id');
     }
 
+    public function eot_docs()
+    {
+        return $this->hasMany('App\Models\EotDocument', 'project_id');
+    }
+
     /*
      * Reusable method
      */

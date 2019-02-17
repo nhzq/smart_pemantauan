@@ -89,6 +89,7 @@
                                             <th class="text-center">Jumlah Bayaran (RM)</th>
                                             <th class="text-center">Tujuan Bayaran</th>
                                             <th class="text-center">Peratus Bayaran</th>
+                                            <th class="text-center">Status Bayaran</th>
                                             <th></th>
                                         </tr>
                                         @if (!empty($project->interims))
@@ -121,9 +122,23 @@
                                                         if (!empty($total_cost) && !empty($data->amount)) {
                                                             $result = ($data->amount/$total_cost) * 100;
                                                         }
-
                                                     ?>
-                                                    <td class="align-center">{{ number_format($result, 2, '.', '') . '%' }}</td>
+                                                    <td class="text-right align-center">{{ number_format($result, 2, '.', '') . '%' }}</td>
+                                                    <td>
+                                                        @if (!empty($data->status))
+                                                            @if ($data->status == 1)
+                                                                <div class="text-center">
+                                                                    <span class="label label-default">Dalam Proses</span>
+                                                                </div>
+                                                            @endif
+
+                                                            @if ($data->status == 2)
+                                                                <div class="text-center">
+                                                                    <span class="label label-success">Telah Dibayar</span>
+                                                                </div>
+                                                            @endif 
+                                                        @endif
+                                                    </td>
                                                     <td class="text-center align-center">
                                                         @if (empty($data->status))
                                                             <div class="btn-group-vertical">

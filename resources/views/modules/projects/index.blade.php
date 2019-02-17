@@ -82,7 +82,6 @@
                                     <tr class="info">
                                         <th class="text-center align-center">#</th>
                                         <th class="text-center align-center">Nama Projek</th>
-                                        <th class="text-center align-center">Status</th>
                                         <th class="text-center align-center">Pindah Peruntukan <br> - Dari (RM)</th>
                                         <th class="text-center align-center">Pindah Peruntukan <br> - Ke (RM)</th>
                                         <th class="text-center align-center">Anggaran <br> Kos (RM)</th>
@@ -128,21 +127,9 @@
                                                                 <td class="align-center">
                                                                     {{ $data->name }}
                                                                     
-                                                                    @hasrole('ks')
-                                                                        @if (Status::project_application($data->status))
-                                                                            <span class="pull-right">
-                                                                                <i class="fa fa-exclamation-circle font-h5 clr-pink"></i>
-                                                                            </span>
-                                                                        @endif
-                                                                    @endhasrole
-
-                                                                    @hasanyrole('ku|ks')
-                                                                        @if (Status::initial_approved_by_sub($data->status))
-                                                                            <span class="pull-right">
-                                                                                <i class="fa fa-check font-h5 clr-green"></i>
-                                                                            </span>
-                                                                        @endif
-                                                                    @endhasanyrole
+                                                                    <div class="pull-right">
+                                                                        @include ('components._status')
+                                                                    </div>
                                                                 </td>
                                                                 <?php 
                                                                     $from_transfer = 0;
@@ -162,7 +149,6 @@
                                                                             ->sum('transfer_amount');
                                                                     }
                                                                 ?>
-                                                                <td class="text-right align-center">&nbsp;</td>
                                                                 <td class="text-right align-center">{{ '-' . currency($from_transfer) }}</td>
                                                                 <td class="text-right align-center">{{ currency($to_transfer) }}</td>
                                                                 <td class="text-right align-center">{{ currency($data->estimate_cost) }}</td>
@@ -211,11 +197,9 @@
                                                     <td class="align-center">
                                                         {{ $data->name }}
 
-                                                        @if (Status::initial_approved_by_ks($data->status))
-                                                            <span class="pull-right">
-                                                                <i class="fa fa-exclamation-circle font-h5 clr-pink"></i>
-                                                            </span>
-                                                        @endif
+                                                        <div class="pull-right">
+                                                            @include ('components._status')
+                                                        </div>
                                                     </td>
                                                     <td class="text-right align-center">{{ '0.00' }}</td>
                                                     <td class="text-right align-center">{{ '0.00' }}</td>

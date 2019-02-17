@@ -139,10 +139,10 @@
             $('.money-convert').maskMoney();
 
             $('#actual_cost').on('blur', function () {
-                $estimate = $('#estimate_total_cost').val().replace(/,/g, '');
-                $actual = $('#actual_cost').val().replace(/,/g, '');
+                var estimate = $('#estimate_total_cost').val().replace(/,/g, '');
+                var actual = $('#actual_cost').val().replace(/,/g, '');
 
-                if ($actual > $estimate) {
+                if (parseFloat(actual) > parseFloat(estimate)) {
                     alert('Kos projek sebenar telah melebihi peruntukan semasa. Sila semak semula jumlah yang dimasukkan.');
                     $('#actual_cost').val('');
                 }

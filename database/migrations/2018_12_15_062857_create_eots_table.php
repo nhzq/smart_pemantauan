@@ -16,9 +16,11 @@ class CreateEotsTable extends Migration
         Schema::create('eots', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('project_id')->unsigned()->nullable();
-            $table->date('extend_date')->nullable();
-            $table->text('reason')->nullable();
-            $table->text('action')->nullable();
+            $table->date('application_date')->nullable();
+            $table->date('eot_approval_date')->nullable();
+            $table->date('extension_date')->nullable();
+            $table->text('clause')->nullable();
+            $table->text('remarks')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('active')->unsigned()->nullable();

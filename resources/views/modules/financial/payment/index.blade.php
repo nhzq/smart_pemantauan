@@ -2,6 +2,7 @@
 
 @push ('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/dist/css/nhzq.css') }}">
 @endpush
 
 @section ('content')
@@ -73,13 +74,11 @@
                                                         <td class="text-center align-center">Selesai Pembayaran</td>
                                                     @endif
                                                     
-                                                    <td>
+                                                    <td class="max10 text-center">
                                                         <div class="btn-group">
-                                                            @if (count($data->interims->where('active', 1)->where('status', 1)) > 0)
-                                                                <a href="{{ route('payments.list', $data->id) }}" class="btn btn-sm bg-purple">
-                                                                    <i class="fa fa-fw fa-folder-open-o"></i>
-                                                                </a>
-                                                            @endif
+                                                            <a href="{{ route('payments.list', $data->id) }}" class="btn btn-sm bg-purple">
+                                                                <i class="fa fa-fw fa-folder-open-o"></i>
+                                                            </a>
                                                         </div>
                                                     </td>
                                                 </tr>

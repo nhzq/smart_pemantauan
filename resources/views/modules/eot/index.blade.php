@@ -40,44 +40,50 @@
                     <div class="col-md-12">
                         <div class="panel panel-borderless">
                             <div class="panel-heading panel-dark">
-                                Lanjutan Masa (EOT)
+                                Butiran Kontrak
                             </div>
                             <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered font-std">
-                                        <tr class="info">
-                                            <th class="text-center align-center">#</th>
-                                            <th class="text-center align-center">Tarikh dari SST mula</th>
-                                            <th class="text-center align-center">Tarikh Lanjutan Tempoh Akhir</th>
-                                            <th class="text-center align-center">Sebab-sebab</th>
-                                            <th class="text-center align-center">Tindakan</th>
-                                        </tr>
-                                        <tr>
-                                            @if(!empty($project->eots))
-                                                @foreach ($project->eots as $data)
-                                                    <?php 
-                                                        $sst_start = '';
-                                                        $extend_date = '';
-
-                                                        if (!empty($project->contractorAppointment->sst)) {
-                                                            $sst_start = $project->contractorAppointment->sst->format('d/m/Y');
-                                                        }
-
-                                                        if (!empty($data->extend_date)) {
-                                                            $extend_date = $data->extend_date->format('d/m/Y');
-                                                        }
-                                                    ?>
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $sst_start }}</td>
-                                                        <td>{{ $extend_date }}</td>
-                                                        <td>{!! $data->reason ?? '' !!}</td>
-                                                        <td>{!! $data->action ?? '' !!}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tr>
-                                    </table>
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered font-std">
+                                            <tr class="info">
+                                                <th class="col-md-3">&nbsp;</th>
+                                                <th>Maklumat</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Tarikh Permohonan</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Tarikh Kelulusan EOT</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Tarikh Lanjut Tempoh</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Tempoh Lanjutan Baru Diluluskan</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Klausa Perlanjutan (Bulan)</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Surat EOT</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Perjanjian Tambahan</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="col-md-5">Catatan</th>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
