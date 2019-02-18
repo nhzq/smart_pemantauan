@@ -32,15 +32,27 @@ class EotController extends Controller
 
         if (!empty($project)) {
             DB::transaction(function () use ($request, $project) {
-                $project->eots()->create([
-                    'application_date' => setDateValue($request->application_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->application_date)),
-                    'eot_approval_date' => setDateValue($request->eot_approval_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->eot_approval_date)),
-                    'extension_date' => setDateValue($request->extension_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->extension_date)),
-                    'clause' => $request->clause,
-                    'remarks' => $request->remarks,
-                    'created_by' => \Auth::user()->id,
-                    'active' => 1
-                ]);
+                $update = $project->eots->first();
+
+                if (!empty($update)) {
+                    $update->application_date = setDateValue($request->application_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->application_date));
+                    $update->eot_approval_date = setDateValue($request->eot_approval_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->eot_approval_date));
+                    $update->extension_date = setDateValue($request->extension_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->extension_date));
+                    $update->clause = $request->clause;
+                    $update->remarks = $request->remarks;
+                    $update->updated_by = \Auth::user()->id;
+                    $update->save();
+                } else {
+                    $project->eots()->create([
+                        'application_date' => setDateValue($request->application_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->application_date)),
+                        'eot_approval_date' => setDateValue($request->eot_approval_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->eot_approval_date)),
+                        'extension_date' => setDateValue($request->extension_date, \Carbon\Carbon::createFromFormat('d/m/Y', $request->extension_date)),
+                        'clause' => $request->clause,
+                        'remarks' => $request->remarks,
+                        'created_by' => \Auth::user()->id,
+                        'active' => 1
+                    ]);
+                }
 
                 if ($request->hasFile('eot_doc')) {
                     foreach ($request->eot_doc as $data) {

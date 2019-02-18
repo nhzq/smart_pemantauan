@@ -42,6 +42,24 @@
                             <div class="panel-heading panel-dark">
                                 Butiran Kontrak
                             </div>
+
+                            <?php 
+                                $eot = null; 
+                                $eot_doc = null;
+                                $contract_start = null;
+
+                                if (!empty($project->eots->first())) {
+                                    $eot = $project->eots->first();
+                                }
+
+                                if (!empty($project->eot_docs)) {
+                                    $eot_doc = $project->eot_docs;
+                                }
+
+                                if (!empty($project->contractorAppointment)) {
+                                    $contract_start = $project->contractorAppointment->contract_start_date;
+                                }
+                            ?>
                             <div class="panel-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -52,35 +70,55 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tarikh Permohonan</th>
-                                                <td></td>
+                                                <td>{{ !empty($eot) ? $eot->application_date->format('d/m/Y') : '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tarikh Kelulusan EOT</th>
-                                                <td></td>
+                                                <td>{{ !empty($eot) ? $eot->eot_approval_date->format('d/m/Y') : '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tarikh Lanjut Tempoh</th>
-                                                <td></td>
+                                                <td>{{ !empty($eot) ? $eot->extension_date->format('d/m/Y') : '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Tempoh Lanjutan Baru Diluluskan</th>
-                                                <td></td>
+                                                <td>{{ !empty($eot) ? $eot->extension_date->diffInDays($contract_start) . ' hari' : '' }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Klausa Perlanjutan (Bulan)</th>
-                                                <td></td>
+                                                <td>{!! !empty($eot) ? $eot->clause : '' !!}</td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Surat EOT</th>
-                                                <td></td>
+                                                <td>
+                                                    @if (count($project->eot_docs->where('category', 'surat-eot')) > 0)
+                                                        @foreach ($project->eot_docs->where('category', 'surat-eot') as $data)
+                                                            <a href="{{ url('storage/projects/' . $project->id . '/eot/surat-eot/' . $data->file_name) }}">
+                                                                <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                &nbsp; {{ $data->original_name }}
+                                                            </a>
+                                                            </br>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Perjanjian Tambahan</th>
-                                                <td></td>
+                                                <td>
+                                                    @if (count($project->eot_docs->where('category', 'perjanjian')) > 0)
+                                                        @foreach ($project->eot_docs->where('category', 'perjanjian') as $data)
+                                                            <a href="{{ url('storage/projects/' . $project->id . '/eot/perjanjian/' . $data->file_name) }}">
+                                                                <small class="label bg-maroon"><i class="fa fa-download"></i></small>
+                                                                &nbsp; {{ $data->original_name }}
+                                                            </a>
+                                                            </br>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-md-5">Catatan</th>
-                                                <td></td>
+                                                <td>{!! !empty($eot) ? $eot->remarks : '' !!}</td>
                                             </tr>
                                         </table>
                                     </div>
