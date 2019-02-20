@@ -22,7 +22,11 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         <select class="form-control">
-                                            <option>2018</option>
+                                            <option>-- Sila Pilih --</option>
+
+                                            <?php for ($x = \Carbon\Carbon::now()->year; $x >= 2018; $x--) { ?>
+                                                <option value="{{ $x }}">{{ $x }}</option>
+                                            <?php }; ?>
                                         </select>
                                     </div>
                                 </div>
