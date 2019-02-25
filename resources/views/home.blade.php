@@ -33,18 +33,25 @@
                                         <?php 
                                             $estimate_cost = 0;
                                             $net = 0;
+                                            $percent = 0;
 
                                             if (!empty($allocation->projects()->sum('estimate_cost'))) {
                                                 $estimate_cost = $allocation->projects()->sum('estimate_cost');
 
                                                 $net = $allocation->amount - $estimate_cost;
                                             }
+
+                                            if (!empty($allocation->amount)) {
+                                                if ($estimate_cost !== 0) {
+                                                    $percent = $estimate_cost / $allocation->amount * 100;
+                                                }
+                                            }
                                         ?>
                                         <tr>
                                             <td>{{ !empty($allocation->sub) ? $allocation->sub->description : '' }}</td>
                                             <th class="text-right">{{ currency($allocation->amount) }}</th>
                                             <th class="text-right">{{ currency($net) }}</th>
-                                            <th class="text-center">{{ !empty($allocation->amount) ? $estimate_cost / $allocation->amount * 100 . '%' : '0 %' }}</th>
+                                            <th class="text-center">{{ $percent . '%'  }}</th>
                                         </tr>
                                     @endforeach
                                 @endif
