@@ -28,6 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* Mail section */
     Route::get('/contract-ends/{project_id}', 'MailController@contractEnd')->name('notify.contract.end');
 
+    /* Search */
+    Route::get('/search', 'SearchController@project')->name('search.project');
+
     /* Initial section */
     Route::group(['prefix' => 'initial'], function () {
         /* Categories based on B01, P01 */

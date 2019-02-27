@@ -18,19 +18,6 @@
                     <div class="panel-body panel-nav">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-sm-2" style="padding-left: 0;">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <select class="form-control">
-                                            <option>-- Sila Pilih --</option>
-
-                                            <?php for ($x = \Carbon\Carbon::now()->year; $x >= 2018; $x--) { ?>
-                                                <option value="{{ $x }}">{{ $x }}</option>
-                                            <?php }; ?>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="pull-right">
                                     <div class="btn-group">
                                         <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="button"><i class="fa fa-fw fa-search"></i> Carian</button>
@@ -49,15 +36,35 @@
                             <div id="search" class="collapse">
                                 <hr>
 
-                                {{ Form::open(['url' => route('projects.index'), 'method' => 'GET']) }}
+                                {{ Form::open(['url' => route('search.project'), 'method' => 'GET']) }}
                                     <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Nama Projek</label>
-                                                    <input class="form-control" type="text" name="Search_name" placeholder="Nama Projek">
-                                                </div>
+                                        <div class="col-sm-4">
+                                            <label>Tahun</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <select class="form-control" name="search_year">
+                                                    <option value="0">-- Sila Pilih --</option>
+
+                                                    <?php for ($x = \Carbon\Carbon::now()->year; $x >= 2018; $x--) { ?>
+                                                        <option value="{{ $x }}">{{ $x }}</option>
+                                                    <?php }; ?>
+                                                </select>
                                             </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Nama Projek</label>
+                                                <input class="form-control" type="text" name="search_name" placeholder="Nama Projek">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label>Objek Sebagai</label>
+                                            <select class="form-control">
+                                                <option>-- Sila Pilih --</option>
+                                                <option value=""></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2 mrg20B pull-right">
@@ -101,19 +108,35 @@
                                             @foreach ($subs as $sub)
                                                 <?php
                                                     if (\Auth::user()->hasRole('ks')) {
-                                                        $lists = count($sub->projects()
-                                                            ->where('active', 1)
-                                                            ->where('section_id', \Auth::user()->lookup_section_id)
-                                                            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-                                                            ->get());
+                                                        if (Route::current()->getName() == 'search.project') {
+                                                            $lists = count($sub->projects()
+                                                                ->where('active', 1)
+                                                                ->where('section_id', \Auth::user()->lookup_section_id)
+                                                                ->where('created_at', 'LIKE', '%' . $request_year . '%')
+                                                                ->get());
+                                                        } else {
+                                                            $lists = count($sub->projects()
+                                                                ->where('active', 1)
+                                                                ->where('section_id', \Auth::user()->lookup_section_id)
+                                                                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                ->get());
+                                                        }
                                                     } 
 
                                                     if (\Auth::user()->hasRole('ku')){
-                                                        $lists = count($sub->projects()
-                                                            ->where('active', 1)
-                                                            ->where('unit_id', \Auth::user()->lookup_unit_id)
-                                                            ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
-                                                            ->get());
+                                                        if (Route::current()->getName() == 'search.project') {
+                                                            $lists = count($sub->projects()
+                                                                ->where('active', 1)
+                                                                ->where('unit_id', \Auth::user()->lookup_unit_id)
+                                                                ->where('created_at', 'LIKE', '%' . $request_year . '%')
+                                                                ->get());
+                                                        } else {
+                                                            $lists = count($sub->projects()
+                                                                ->where('active', 1)
+                                                                ->where('unit_id', \Auth::user()->lookup_unit_id)
+                                                                ->where('created_at', 'LIKE', '%' . \Carbon\Carbon::now()->year . '%')
+                                                                ->get());
+                                                        }
                                                     }
                                                 ?>
 
