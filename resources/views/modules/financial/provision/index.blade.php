@@ -17,22 +17,51 @@
                     <div class="panel-body panel-nav">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-sm-2" style="padding-left: 0;">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <select class="form-control">
-                                            <option>2018</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="pull-right">
                                     <div class="btn-group">
-                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="">
+                                        <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="button">
                                             <i class="fa fa-fw fa-search"></i> Carian
                                         </button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div id="search" class="collapse">
+                                <hr>
+
+                                {{ Form::open(['url' => route('search.provision'), 'method' => 'GET']) }}
+                                    <div class="col-md-12">
+                                        {{-- <a href="{{ route('export.file',['type'=>'xlsx']) }}">Download Excel xlsx</a> --}}
+                                        <div class="col-sm-6">
+                                            <label>Tahun</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <select class="form-control" name="search_year">
+                                                    <option value="0">-- Sila Pilih --</option>
+
+                                                    <?php for ($x = \Carbon\Carbon::now()->year; $x >= 2018; $x--) { ?>
+                                                        <option value="{{ $x }}">{{ $x }}</option>
+                                                    <?php }; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <label>Objek Sebagai</label>
+                                            <select class="form-control">
+                                                <option>-- Sila Pilih --</option>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 mrg20B pull-right">
+                                        <button class="btn btn-block btn-primary" type="submit">
+                                            Carian
+                                        </button>
+                                    </div>
+                                {{ Form::close() }}
                             </div>
                         </div>
                     </div>

@@ -74,17 +74,13 @@
                     >
                     
                         <ul class="list-group">
-                            @if (!empty($lists = $projects->where('status', 1)->get()))
+                            @if (!empty($lists = $projects->whereIn('status', [1, 8])->get()))
                                 <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            {{ count($lists) . ' projek perlu semakan.' }}
-                                        </div>
-                                        <div class="col-md-2">
-                                            <a href="{{ route('projects.index') }}" class="btn btn-sm btn-diamond">
-                                                <i class="fa fa-fw fa-paper-plane"></i>
-                                            </a>
-                                        </div>
+                                    {{ count($lists) . ' projek perlu semakan.' }}
+                                    <div class="pull-right">
+                                        <a href="{{ route('projects.index') }}" class="clr-honey">
+                                            <i class="fa fa-fw fa-paper-plane"></i>
+                                        </a>
                                     </div>
                                 </li>
                             @endif

@@ -38,6 +38,7 @@
 
                                 {{ Form::open(['url' => route('search.project'), 'method' => 'GET']) }}
                                     <div class="col-md-12">
+                                        {{-- <a href="{{ route('export.file',['type'=>'xlsx']) }}">Download Excel xlsx</a> --}}
                                         <div class="col-sm-4">
                                             <label>Tahun</label>
                                             <div class="input-group">

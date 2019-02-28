@@ -17,15 +17,6 @@
                     <div class="panel-body panel-nav">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-sm-2" style="padding-left: 0;">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        <select class="form-control">
-                                            <option>2018</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="pull-right">
                                     <div class="btn-group">
                                         <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="">

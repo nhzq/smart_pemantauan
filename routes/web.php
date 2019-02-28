@@ -29,7 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/contract-ends/{project_id}', 'MailController@contractEnd')->name('notify.contract.end');
 
     /* Search */
-    Route::get('/search', 'SearchController@project')->name('search.project');
+    Route::get('/search/project', 'SearchController@project')->name('search.project');
+    Route::get('/search/provision', 'SearchController@provision')->name('search.provision');
+
+    /* Export Excel */
+    Route::get('/export-file', 'ExcelController@export')->name('export.file');
 
     /* Initial section */
     Route::group(['prefix' => 'initial'], function () {
