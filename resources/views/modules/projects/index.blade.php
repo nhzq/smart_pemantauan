@@ -18,6 +18,17 @@
                     <div class="panel-body panel-nav">
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="pull-left">
+                                {{ Form::open(['url' => route('export.file'), 'method' => 'GET']) }}
+                                    <input type="hidden" name="get_year" value="{{ $_GET['search_year'] ?? '' }}">
+                                    <input type="hidden" name="get_name" value="{{ $_GET['search_name'] ?? '' }}">
+
+                                    <button id="project_json" class="btn btn-diamond" type="submit">
+                                        <i class="fa fa-fw fa-print"></i> Excel 
+                                    </button>
+                                {{ Form::close() }}
+                            </div>
+
                                 <div class="pull-right">
                                     <div class="btn-group">
                                         <button class="btn btn-diamond" data-toggle="collapse" data-target="#search" type="button"><i class="fa fa-fw fa-search"></i> Carian</button>
@@ -38,7 +49,6 @@
 
                                 {{ Form::open(['url' => route('search.project'), 'method' => 'GET']) }}
                                     <div class="col-md-12">
-                                        {{-- <a href="{{ route('export.file',['type'=>'xlsx']) }}">Download Excel xlsx</a> --}}
                                         <div class="col-sm-4">
                                             <label>Tahun</label>
                                             <div class="input-group">
@@ -320,9 +330,11 @@
                             </table>
                         </div>
                         
-                        <div class="pull-right">
-                            {{ $projects->links() }}
-                        </div>
+                        @if (count($projects) > 0)
+                            <div class="pull-right">
+                                {{ $projects->links() }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -334,12 +346,7 @@
 @push ('script')
     <script src="{{ asset('adminlte/dist/js/rowspanizer.js') }}"></script>
     <script>
-        // $(function () {
-        //     $("#custom-row").rowspanizer({
-        //         vertical_align: 'middle',
-        //         columns: [0, 1]
-        //     });
-        // });
+        
     </script>
 @endpush
 

@@ -2,16 +2,24 @@
 
 namespace App\Exports;
 
-use App\Models\Project;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class ProjectsExport implements FromCollection
+class ProjectsExport implements FromView
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    private $data;
+
+    public function __construct($data) {
+        $this->data = $data;
+    }
+    
+    public function view(): View
     {
-        return Project::all();
+        return view('templates.project', [
+            'data' => $this->data
+        ]);
     }
 }

@@ -10,10 +10,14 @@ class SearchController extends Controller
 {
     public function project(Request $request)
     {
-        $subs = SubBudget::where('lookup_budget_type_id', 2)->get();
+        $subs = null;
+        $projects = null;
         $request_year = $request->search_year;
-
-        $projects = $this->searchProject($request);
+        
+        if (count($this->searchProject($request)) > 0) {
+            $projects = $this->searchProject($request);
+            $subs = SubBudget::where('lookup_budget_type_id', 2)->get();
+        }
         $projectsForSUB = $this->searchProjectForSUB($request);
 
 
@@ -28,12 +32,12 @@ class SearchController extends Controller
     {
         $projects = Project::query();
 
-        if (!empty($request->search_year)) {
-            $projects = $projects->where('created_at', 'LIKE', '%' . $param . '%');
+        if (!empty($param->search_year)) {
+            $projects = $projects->where('created_at', 'LIKE', '%' . $param->search_year . '%');
         }
 
-        if (!empty($request->search_name)) {
-            $projects = $projects->where('name', 'LIKE', '%' . $param . '%');
+        if (!empty($param->search_name)) {
+            $projects = $projects->where('name', 'LIKE', '%' . $param->search_name . '%');
         }
 
         $projects = $projects->where('active', 1)->paginate(20);
